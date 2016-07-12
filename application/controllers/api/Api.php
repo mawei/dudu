@@ -319,6 +319,10 @@ class Api extends Api_Controller {
 		if (count ( $result ) >= 1) {
 			$this->output_result ( - 1, 'failed', '该用户已注册' );
 		} else {
+			$data['telephone'] = $telephone;
+			$data['password'] = md5($password);
+			$data['customer_type'] = $customer_type;
+			$data['status'] = '未认证';
 			$this->output_result ( 0, 'success', '' );
 		}
 	}
