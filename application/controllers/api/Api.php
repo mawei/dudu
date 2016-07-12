@@ -297,7 +297,7 @@ class Api extends Api_Controller {
 		$result = $this->db->query ( "select * from `t_aci_customer` where telephone = '{$telephone}'" )->result_array ();
 		
 		if (count ( $result ) >= 1) {
-			$result2 = $this->db->query ( "select * from `user` where telephone = '{$telephone}' and password='{$password}'" )->result_array ();
+			$result2 = $this->db->query ( "select * from `t_aci_customer` where telephone = '{$telephone}' and password='{$password}'" )->result_array ();
 			if (count ( $result2 ) >= 1) {
 				$array ['id'] = $this->encrypt->encode ( $result2 [0] ['id'], $this->key );
 				$array ['telephone'] = $result2 [0] ['telephone'];
