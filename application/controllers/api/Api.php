@@ -314,7 +314,7 @@ class Api extends Api_Controller {
 		if ($authcode != $auth_code_secret) {
 			$this->output_result ( - 1, 'failed', '验证码错误' );
 		}
-		$result = $this->db->query ( "select * from `user` where username = '{$telephone}'" )->result_array ();
+		$result = $this->db->query ( "select * from `user` where telephone = '{$telephone}'" )->result_array ();
 		
 		if (count ( $result ) >= 1) {
 			$this->output_result ( - 1, 'failed', '该用户已注册' );
