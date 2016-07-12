@@ -323,6 +323,7 @@ class Api extends Api_Controller {
 			$data['password'] = md5($password);
 			$data['customer_type'] = $customer_type;
 			$data['status'] = '未认证';
+			$this->db->insert('t_aci_customer',$data);
 			$this->output_result ( 0, 'success', '' );
 		}
 	}
