@@ -357,6 +357,27 @@ class Api extends Api_Controller {
 			$this->output_result ( 0, 'success', '' );
 		}
 	}
+
+	function publish_order() {
+		$customer_id = $this->encrypt->decode ( $this->format_get ( 'customer_id' ), $this->key );
+		//$data ['start_place'] = str_replace ( "+", "-", $this->format_get ( 'time' ) );
+		//$data ['address'] = str_replace ( "+", " ", $this->format_get ( 'address' ) );
+		$data ['start_place'] = $this->format_get ( 'start_place' );
+		$data ['end_place'] = $this->format_get ( 'end_place' );
+		$data ['start_time'] = $this->format_get ( 'start_time' );
+		$data ['truck_type'] = $this->format_get ( 'truck_type' );
+		$data ['truck_size'] = $this->format_get ( 'truck_size' );
+		$data ['charge'] = $this->format_get ( 'charge' );
+		$data ['weight'] = $this->format_get ( 'weight' );
+		$data ['status'] = "未接单";
+		
+		$this->db->insert ( 't_aci_order', $data );
+		
+		$this->output_result ( 0, 'success', $this->db->insert_id () );
+		
+		
+	}
+
 	
 	public function login_authcode(){
 		$auth_code_secret = $this->encrypt->decode ( $this->format_get ( 'auth_code_secret' ), $this->key );

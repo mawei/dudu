@@ -640,9 +640,9 @@ $config['aci_module'] = array (
       array (
         'folder' => 'api',
         'controller' => 'api',
-        'method' => 'delete_all',
-        'menu_name' => '删除多个',
-        'caption' => '删除多个',
+        'method' => 'publish_order',
+        'menu_name' => '发单',
+        'caption' => '发单',
       ),
       7 => 
       array (
