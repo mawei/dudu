@@ -616,25 +616,25 @@ $config['aci_module'] = array (
       array (
         'folder' => 'api',
         'controller' => 'api',
-        'method' => 'edit',
-        'menu_name' => '修改',
-        'caption' => '修改',
+        'method' => 'customer_login',
+        'menu_name' => '货主登陆',
+        'caption' => '货主登陆',
       ),
       4 => 
       array (
         'folder' => 'api',
         'controller' => 'api',
-        'method' => 'choose',
-        'menu_name' => '选择弹窗',
-        'caption' => '选择弹窗',
+        'method' => 'driver_register',
+        'menu_name' => '司机注册',
+        'caption' => '司机注册',
       ),
       5 => 
       array (
         'folder' => 'api',
         'controller' => 'api',
-        'method' => 'delete_one',
-        'menu_name' => '删除单个',
-        'caption' => '删除单个',
+        'method' => 'driver_login',
+        'menu_name' => '司机登陆',
+        'caption' => '司机登陆',
       ),
       6 => 
       array (
