@@ -359,7 +359,7 @@ class Api extends Api_Controller {
 	}
 
 	function publish_order() {
-		$customer_id = $this->encrypt->decode ( $this->format_get ( 'customer_id' ), $this->key );
+		$data['customer_id'] = $this->encrypt->decode ( $this->format_get ( 'customer_id' ), $this->key );
 		//$data ['start_place'] = str_replace ( "+", "-", $this->format_get ( 'time' ) );
 		//$data ['address'] = str_replace ( "+", " ", $this->format_get ( 'address' ) );
 		$data ['start_place'] = $this->format_get ( 'start_place' );
@@ -370,6 +370,7 @@ class Api extends Api_Controller {
 		$data ['charge'] = $this->format_get ( 'charge' );
 		$data ['weight'] = $this->format_get ( 'weight' );
 		$data ['status'] = "未接单";
+
 		
 		$this->db->insert ( 't_aci_order', $data );
 		
