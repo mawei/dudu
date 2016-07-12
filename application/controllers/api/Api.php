@@ -264,9 +264,7 @@ class Api extends Api_Controller {
 	// 登陆
 	public function login() {
 		$username = $this->format_get ( 'username' );
-		$authcode = $this->format_get ( 'code' );
 		$password = md5 ( $this->key . $this->format_get ( 'password' ) );
-
 		
 		$result = $this->db->query ( "select * from `user` where username = '{$username}'" )->result_array ();
 		
@@ -289,6 +287,38 @@ class Api extends Api_Controller {
 			$this->output_result ( - 2, 'failed', '用户不存在' );
 		}
 	}
+
+	// 货主登陆
+	public function customer_login() {
+		$telephone = $this->format_get ( 'telephone' );
+		$password = md5 ( $this->key . $this->format_get ( 'password' ) );
+
+
+		$result = $this->db->query ( "select * from `user` where telephone = '{$telephone}'" )->result_array ();
+		
+		if (count ( $result ) >= 1) {
+			$result2 = $this->db->query ( "select * from `user` where telephone = '{$telephone}' and password='{$password}'" )->result_array ();
+			if (count ( $result2 ) >= 1) {
+				$array ['id'] = $this->encrypt->encode ( $result2 [0] ['id'], $this->key );
+				$array ['telephone'] = $result2 [0] ['telephone'];
+				$array ['name'] = $result2 [0] ['name'];
+				$array ['identity'] = $result2 [0] ['identity'];
+				$array ['wuliu_name'] = $result2 [0] ['wuliu_name'];
+				$array ['wuliu_license'] = $result2 [0] ['wuliu_license'];
+				$array ['company_name'] = $result2 [0] ['company_name'];
+				$array ['company_license'] = $result2 [0] ['company_license'];
+				$array ['status'] = $result2 [0] ['status'];
+				$array ['last_login'] = $result2 [0] ['last_login'];
+				$this->output_result ( 0, 'success', $array );
+			} else {
+				$this->output_result ( - 3, 'failed', '密码错误' );
+			}
+		} else {
+			$this->output_result ( - 2, 'failed', '用户不存在' );
+		}
+	}
+
+	//货主注册
 	public function customer_register() {
 		$telephone = $this->format_get ( 'telephone' );
 		$customer_type = $this->format_get('customer_type');
