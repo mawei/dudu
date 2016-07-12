@@ -294,7 +294,7 @@ class Api extends Api_Controller {
 		$password = md5 ( $this->key . $this->format_get ( 'password' ) );
 
 
-		$result = $this->db->query ( "select * from `user` where telephone = '{$telephone}'" )->result_array ();
+		$result = $this->db->query ( "select * from `t_aci_customer` where telephone = '{$telephone}'" )->result_array ();
 		
 		if (count ( $result ) >= 1) {
 			$result2 = $this->db->query ( "select * from `user` where telephone = '{$telephone}' and password='{$password}'" )->result_array ();
