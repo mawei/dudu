@@ -350,7 +350,7 @@ class Api extends Api_Controller {
 			$this->output_result ( - 1, 'failed', '该用户已注册' );
 		} else {
 			$data['telephone'] = $telephone;
-			$data['password'] = md5($password);
+			$data['password'] = md5 ( $this->key . $password);
 			$data['customer_type'] = $customer_type;
 			$data['status'] = '未认证';
 			$this->db->insert('t_aci_customer',$data);
