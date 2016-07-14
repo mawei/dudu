@@ -392,7 +392,7 @@ class Api extends Api_Controller {
 
 	function update_address()
 	{
-		$address_id = $this->format_get ( 'address_id' );
+		$where['address_id'] = $this->format_get ( 'address_id' );
 		$data['order_id'] = $this->format_get ( 'order_id' );
 		$data ['type'] = $this->format_get ( 'type' );
 		$data ['address'] = $this->format_get ( 'address' );
@@ -402,7 +402,7 @@ class Api extends Api_Controller {
 		$data ['street'] = $this->format_get ( 'street' );
 		$data ['latitude'] = $this->format_get ( 'latitude' );
 		$data ['longitude'] = $this->format_get ( 'longitude' );
-		$this->db->update ( 't_aci_address', $address_id, $data );
+		$this->db->update ( 't_aci_address', $data ,$where);
 		
 	}
 	
