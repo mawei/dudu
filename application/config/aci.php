@@ -648,17 +648,17 @@ $config['aci_module'] = array (
       array (
         'folder' => 'api',
         'controller' => 'api',
-        'method' => 'readonly',
-        'menu_name' => '查看',
-        'caption' => '查看',
+        'method' => 'create_address',
+        'menu_name' => '创建地址',
+        'caption' => '创建地址',
       ),
       8 => 
       array (
         'folder' => 'api',
         'controller' => 'api',
-        'method' => 'upload',
-        'menu_name' => '上传',
-        'caption' => '上传',
+        'method' => 'update_address',
+        'menu_name' => '更新地址',
+        'caption' => '更新地址',
       ),
     ),
   ),

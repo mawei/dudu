@@ -338,7 +338,6 @@ class Api extends Api_Controller {
 			$this->output_result ( - 1, 'failed', '密码不能为空' );
 		}
 
-
 		$auth_code_secret = $this->encrypt->decode ( $this->format_get ( 'auth_code_secret' ), $this->key );
 		$authcode = $this->format_get ( 'code' );
 		if ($authcode != $auth_code_secret) {
@@ -370,15 +369,42 @@ class Api extends Api_Controller {
 		$data ['charge'] = $this->format_get ( 'charge' );
 		$data ['weight'] = $this->format_get ( 'weight' );
 		$data ['status'] = "未接单";
-
-		
 		$this->db->insert ( 't_aci_order', $data );
 		
-		$this->output_result ( 0, 'success', $this->db->insert_id () );
-		
-		
+		$this->output_result ( 0, 'success', $this->db->insert_id () );		
 	}
 
+	function create_address()
+	{
+		$data['order_id'] = $this->format_get ( 'order_id' );
+		$data ['type'] = $this->format_get ( 'type' );
+		$data ['address'] = $this->format_get ( 'address' );
+		$data ['state'] = $this->format_get ( 'state' );
+		$data ['city'] = $this->format_get ( 'city' );
+		$data ['area'] = $this->format_get ( 'area' );
+		$data ['street'] = $this->format_get ( 'street' );
+		$data ['latitude'] = $this->format_get ( 'latitude' );
+		$data ['longitude'] = $this->format_get ( 'longitude' );
+		$this->db->insert ( 't_aci_address', $data );
+		
+		$this->output_result ( 0, 'success', $this->db->insert_id () );		
+	}
+
+	function update_address()
+	{
+		$address_id = $this->format_get ( 'address_id' );
+		$data['order_id'] = $this->format_get ( 'order_id' );
+		$data ['type'] = $this->format_get ( 'type' );
+		$data ['address'] = $this->format_get ( 'address' );
+		$data ['state'] = $this->format_get ( 'state' );
+		$data ['city'] = $this->format_get ( 'city' );
+		$data ['area'] = $this->format_get ( 'area' );
+		$data ['street'] = $this->format_get ( 'street' );
+		$data ['latitude'] = $this->format_get ( 'latitude' );
+		$data ['longitude'] = $this->format_get ( 'longitude' );
+		$this->db->update ( 't_aci_address', $address_id, $data );
+		
+	}
 	
 	public function login_authcode(){
 		$auth_code_secret = $this->encrypt->decode ( $this->format_get ( 'auth_code_secret' ), $this->key );
