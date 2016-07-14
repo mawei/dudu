@@ -405,7 +405,35 @@ class Api extends Api_Controller {
 		$this->db->update ( 't_aci_address', $data ,"address_id={$address_id}");
 		$this->output_result ( 0, 'success',  "{$address_id}");		
 	}
+
+	function get_orderlist_by_customer（）
+	{
+		$customer_id = $this->encrypt->decode ( $this->format_get ( 'customer_id' ), $this->key );
+		$page = addslashes ( $_GET ['page'] );
+		$number = addslashes ( $_GET ['number'] );
+		$start = ($page - 1) * $number;
+		
+		$query_str = " select * from `t_aci_order` where customer_id='{$customer_id}' limit {$start},{$number}";
+		$query = $this->db->query ( $query_str );
+		
+		$this->output_result ( 0, 'success', $query->result_array () );
+	}
+
+	function get_orderlist_by_driver（）
+	{
+		$driver_id = $this->encrypt->decode ( $this->format_get ( 'driver_id' ), $this->key );
+		$page = addslashes ( $_GET ['page'] );
+		$number = addslashes ( $_GET ['number'] );
+		$start = ($page - 1) * $number;
+		
+		$query_str = " select * from `t_aci_order` where driver_id='{$driver_id}' limit {$start},{$number}";
+		$query = $this->db->query ( $query_str );
+		
+		$this->output_result ( 0, 'success', $query->result_array () );
+	}
 	
+
+
 	public function login_authcode(){
 		$auth_code_secret = $this->encrypt->decode ( $this->format_get ( 'auth_code_secret' ), $this->key );
 		$authcode = $this->format_get ( 'code' );	

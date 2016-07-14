@@ -660,6 +660,30 @@ $config['aci_module'] = array (
         'menu_name' => '更新地址',
         'caption' => '更新地址',
       ),
+      9 => 
+      array (
+        'folder' => 'api',
+        'controller' => 'api',
+        'method' => 'get_orderlist_by_customer',
+        'menu_name' => '获取货主订单列表',
+        'caption' => '获取货主订单列表',
+      ),
+      10 => 
+      array (
+        'folder' => 'api',
+        'controller' => 'api',
+        'method' => 'get_orderlist_by_driver',
+        'menu_name' => '获取司机订单列表',
+        'caption' => '获取司机订单列表',
+      ),
+      11 => 
+      array (
+        'folder' => 'api',
+        'controller' => 'api',
+        'method' => 'update_address2',
+        'menu_name' => '更新地址',
+        'caption' => '更新地址',
+      ),
     ),
   ),
   'order' => 
