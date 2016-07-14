@@ -406,7 +406,7 @@ class Api extends Api_Controller {
 		$this->output_result ( 0, 'success',  "{$address_id}");		
 	}
 
-	function get_orderlist_by_customer（）
+	function get_orderlist_by_customer()
 	{
 		$customer_id = $this->encrypt->decode ( $this->format_get ( 'customer_id' ), $this->key );
 		$page = addslashes ( $_GET ['page'] );
@@ -419,7 +419,7 @@ class Api extends Api_Controller {
 		$this->output_result ( 0, 'success', $query->result_array () );
 	}
 
-	function get_orderlist_by_driver（）
+	function get_orderlist_by_driver()
 	{
 		$driver_id = $this->encrypt->decode ( $this->format_get ( 'driver_id' ), $this->key );
 		$page = addslashes ( $_GET ['page'] );
