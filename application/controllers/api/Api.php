@@ -403,7 +403,7 @@ class Api extends Api_Controller {
 		$data ['latitude'] = $this->format_get ( 'latitude' );
 		$data ['longitude'] = $this->format_get ( 'longitude' );
 		$this->db->update ( 't_aci_address', $data ,"address_id={$address_id}");
-		$this->output_result ( 0, 'success',  $address_id);		
+		$this->output_result ( 0, 'success',  "{$address_id}");		
 	}
 	
 	public function login_authcode(){
