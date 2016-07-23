@@ -161,9 +161,15 @@ class Api extends Api_Controller {
 		$data ['weight'] = $this->format_get ( 'weight' );
 		$data ['infomation_charge'] = $this->format_get ( 'infomation_charge' );
 		$data ['create_time'] = time ();
-		
+
+		$start_address_id = $this->format_get("start_address_id");
+		$end_address_id = $this->format_get("end_address_id");
+
 		$this->db->insert ( 'order', $data );
-		$this->db->insert_id ();
+		$order_id = $this->db->insert_id ();
+
+		$this->db->query("update `address` set order_id='{$order_id}' where address_id in ({$start_address_id},{$end_address_id})");
+
 		$this->output_result ( 0, 'success', $this->db->insert_id () );
 		
 	}
@@ -186,6 +192,8 @@ class Api extends Api_Controller {
 	public function get_order_list() {
 		$page = addslashes ( $_GET ['page'] );
 		$number = addslashes ( $_GET ['number'] );
+
+		//"select * from `t_aci_order` t1 where "
 		
 		$distance = addslashes( $_GET['distance'] );
 		$start = ($page - 1) * $number;
@@ -207,6 +215,8 @@ class Api extends Api_Controller {
 					  				" );
 		$this->output_result ( 0, 'success', $query->result_array () );
 	}
+
+
 
 	public function getDriverInfoById()
 	{
