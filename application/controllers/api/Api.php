@@ -146,32 +146,49 @@ class Api extends Api_Controller {
 	}
 
 	//上传订单
-	public function create_order(){
-		$data ['customer_id'] = $this->encrypt->decode ( $this->format_get ( 'customer_id' ), $this->key );
+	// public function create_order(){
+	// 	$data ['customer_id'] = $this->encrypt->decode ( $this->format_get ( 'customer_id' ), $this->key );
+	// 	$data ['start_place'] = $this->format_get ( 'start_place' );
+	// 	$data ['start_place_latitude'] = $this->format_get ( 'start_place_latitude' );
+	// 	$data ['start_place_longitude'] = $this->format_get ( 'start_place_longitude' );
+	// 	$data ['end_place'] = $this->format_get ( 'end_place' );
+	// 	$data ['end_place_latitude'] = $this->format_get ( 'end_place_latitude' );
+	// 	$data ['end_place_longitude'] = $this->format_get ( 'end_place_longitude' );
+	// 	$data ['strat_time'] = $this->format_get ( 'strat_time' );
+	// 	$data ['truck_type'] = $this->format_get ( 'truck_type' );
+	// 	$data ['truck_size'] = $this->format_get ( 'truck_size' );
+	// 	$data ['charge'] = $this->format_get ( 'charge' );
+	// 	$data ['weight'] = $this->format_get ( 'weight' );
+	// 	$data ['infomation_charge'] = $this->format_get ( 'infomation_charge' );
+	// 	$data ['create_time'] = time ();
+
+		
+	// 	$this->db->insert ( 'order', $data );
+	// 	$order_id = $this->db->insert_id ();
+
+
+	// 	$this->output_result ( 0, 'success', $this->db->insert_id () );
+		
+	// }
+
+	function publish_order() {
+		$data['customer_id'] = $this->encrypt->decode ( $this->format_get ( 'customer_id' ), $this->key );
+		//$data ['start_place'] = str_replace ( "+", "-", $this->format_get ( 'time' ) );
+		//$data ['address'] = str_replace ( "+", " ", $this->format_get ( 'address' ) );
 		$data ['start_place'] = $this->format_get ( 'start_place' );
-		$data ['start_place_latitude'] = $this->format_get ( 'start_place_latitude' );
-		$data ['start_place_longitude'] = $this->format_get ( 'start_place_longitude' );
 		$data ['end_place'] = $this->format_get ( 'end_place' );
-		$data ['end_place_latitude'] = $this->format_get ( 'end_place_latitude' );
-		$data ['end_place_longitude'] = $this->format_get ( 'end_place_longitude' );
-		$data ['strat_time'] = $this->format_get ( 'strat_time' );
+		$data ['start_time'] = $this->format_get ( 'start_time' );
 		$data ['truck_type'] = $this->format_get ( 'truck_type' );
 		$data ['truck_size'] = $this->format_get ( 'truck_size' );
 		$data ['charge'] = $this->format_get ( 'charge' );
 		$data ['weight'] = $this->format_get ( 'weight' );
-		$data ['infomation_charge'] = $this->format_get ( 'infomation_charge' );
-		$data ['create_time'] = time ();
-
+		$data ['status'] = "未接单";
+		$this->db->insert ( 't_aci_order', $data );
 		$start_address_id = $this->format_get("start_address_id");
 		$end_address_id = $this->format_get("end_address_id");
-
-		$this->db->insert ( 'order', $data );
-		$order_id = $this->db->insert_id ();
-
 		$this->db->query("update `address` set order_id='{$order_id}' where address_id in ({$start_address_id},{$end_address_id})");
 
-		$this->output_result ( 0, 'success', $this->db->insert_id () );
-		
+		$this->output_result ( 0, 'success', $this->db->insert_id () );		
 	}
 
 	// //获取订单列表
@@ -367,22 +384,7 @@ class Api extends Api_Controller {
 		}
 	}
 
-	function publish_order() {
-		$data['customer_id'] = $this->encrypt->decode ( $this->format_get ( 'customer_id' ), $this->key );
-		//$data ['start_place'] = str_replace ( "+", "-", $this->format_get ( 'time' ) );
-		//$data ['address'] = str_replace ( "+", " ", $this->format_get ( 'address' ) );
-		$data ['start_place'] = $this->format_get ( 'start_place' );
-		$data ['end_place'] = $this->format_get ( 'end_place' );
-		$data ['start_time'] = $this->format_get ( 'start_time' );
-		$data ['truck_type'] = $this->format_get ( 'truck_type' );
-		$data ['truck_size'] = $this->format_get ( 'truck_size' );
-		$data ['charge'] = $this->format_get ( 'charge' );
-		$data ['weight'] = $this->format_get ( 'weight' );
-		$data ['status'] = "未接单";
-		$this->db->insert ( 't_aci_order', $data );
-		
-		$this->output_result ( 0, 'success', $this->db->insert_id () );		
-	}
+
 
 	function create_address()
 	{
