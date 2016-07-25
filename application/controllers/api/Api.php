@@ -184,9 +184,10 @@ class Api extends Api_Controller {
 		$data ['weight'] = $this->format_get ( 'weight' );
 		$data ['status'] = "未接单";
 		$this->db->insert ( 't_aci_order', $data );
+		
 		$start_address_id = $this->format_get("start_address_id");
 		$end_address_id = $this->format_get("end_address_id");
-		$this->db->query("update `address` set order_id='{$order_id}' where address_id in ({$start_address_id},{$end_address_id})");
+		$this->db->query("update `t_aci_address` set order_id='{$order_id}' where address_id in ({$start_address_id},{$end_address_id})");
 
 		$this->output_result ( 0, 'success', $this->db->insert_id () );		
 	}
