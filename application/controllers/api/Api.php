@@ -208,16 +208,32 @@ class Api extends Api_Controller {
 
 	//按范围获取订单列表（用于地图）
 	public function get_order_list() {
-		$page = addslashes ( $_GET ['page'] );
-		$number = addslashes ( $_GET ['number'] );
+		//$page = addslashes ( $_GET ['page'] );
+		//$number = addslashes ( $_GET ['number'] );
 
 		//"select * from `t_aci_order` t1 where "
 		
-		$distance = addslashes( $_GET['distance'] );
-		$start = ($page - 1) * $number;
-		$query = $this->db->query ( "select t1.*,t2.name,t2.company_name,t2.wuliu_name
-					sqrt(POW((6370693.5 * cos({$latitude} * 0.01745329252) * ({$longitude} * 0.01745329252 - t1.longitude * 0.01745329252)),2) + POW((6370693.5 * ({$latitude} * 0.01745329252 - t1.latitude * 0.01745329252)),2)) as 'distance'
-					from `t_aci_order` t1 left join `t_aci_customer` t2 on t1.customer_id = t2.customer_id order by t1.create_time desc limit {$start},{$number}" );
+		//$distance = addslashes( $_GET['distance'] );
+		$start_state = addslashes ( $this->format_get ['start_state'],"上海市" );
+		$start_city = addslashes ( $this->format_get ['start_city'], "上海市" );
+		$start_area = addslashes ( $this->format_get ['start_area'],"金山区" );
+		$end_state = addslashes ( $this->format_get ['end_state'] ,"上海市");
+		$end_city = addslashes ( $this->format_get ['end_city'],"上海市" );
+		$end_area = addslashes ( $this->format_get ['end_area'] ,"金山区");
+
+		$query_str = "
+
+			select t4.*,t3.`truck_type`,t3.`truck_size` from t_aci_order  t3
+			JOIN(
+				SELECT t1.order_id,t1.`latitude` as start_place_latitude,t1.`longitude` as start_place_longitude,t2.`latitude`  as end_place_latitude,t2.`longitude` as end_place_longitude FROM `t_aci_address`  t1  LEFT join `t_aci_address` t2 on t1.order_id=t2.order_id where  t1.state='{$start_state}' AND t1.city='{$start_city}' AND t1.area='{$start_area}' and t1.type='出发地'
+				and  t2.state='{$end_state}' AND t2.city='{$end_city}' AND t2.area='{$end_area}' and t2.type='目的地'
+    		) t4 on t3.order_id=t4.order_id
+			";
+		$query = $this->db->query($query_str);
+		//$start = ($page - 1) * $number;
+		//$query = $this->db->query ( "select t1.*,t2.name,t2.company_name,t2.wuliu_name
+					// sqrt(POW((6370693.5 * cos({$latitude} * 0.01745329252) * ({$longitude} * 0.01745329252 - t1.longitude * 0.01745329252)),2) + POW((6370693.5 * ({$latitude} * 0.01745329252 - t1.latitude * 0.01745329252)),2)) as 'distance'
+					// from `t_aci_order` t1 left join `t_aci_customer` t2 on t1.customer_id = t2.customer_id order by t1.create_time desc limit {$start},{$number}" );
 		$this->output_result ( 0, 'success', $query->result_array () );
 	}
 
