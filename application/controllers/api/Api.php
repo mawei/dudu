@@ -214,12 +214,12 @@ class Api extends Api_Controller {
 		//"select * from `t_aci_order` t1 where "
 		
 		//$distance = addslashes( $_GET['distance'] );
-		$start_state = addslashes ( $this->format_get ['start_state'],"上海市" );
-		$start_city = addslashes ( $this->format_get ['start_city'], "上海市" );
-		$start_area = addslashes ( $this->format_get ['start_area'],"金山区" );
-		$end_state = addslashes ( $this->format_get ['end_state'] ,"上海市");
-		$end_city = addslashes ( $this->format_get ['end_city'],"上海市" );
-		$end_area = addslashes ( $this->format_get ['end_area'] ,"金山区");
+		$start_state =  $this->format_get ('start_state',"上海市");
+		$start_city =  $this->format_get ('start_city', "上海市");
+		$start_area =  $this->format_get ('start_area',"金山区" );
+		$end_state =  $this->format_get ('end_state' ,"上海市");
+		$end_city =  $this->format_get ('end_city',"上海市" );
+		$end_area =  $this->format_get ('end_area' ,"金山区");
 
 		$query_str = "
 
