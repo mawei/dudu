@@ -684,6 +684,14 @@ $config['aci_module'] = array (
         'menu_name' => '更新地址',
         'caption' => '更新地址',
       ),
+      12 => 
+      array (
+        'folder' => 'api',
+        'controller' => 'api',
+        'method' => 'get_order_list',
+        'menu_name' => '获取订单列表（地图）',
+        'caption' => '获取订单列表（地图）',
+      ),
     ),
   ),
   'order' => 
