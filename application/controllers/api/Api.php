@@ -396,7 +396,7 @@ class Api extends Api_Controller {
 		$data ['latitude'] = $this->format_get ( 'latitude' );
 		$data ['longitude'] = $this->format_get ( 'longitude' );
 		$this->db->insert ( 't_aci_address', $data );
-		$result['id'] = $this->db->insert_id ()}
+		$result['id'] = $this->db->insert_id ();
 		$this->output_result ( 0, 'success', $result );		
 	}
 
