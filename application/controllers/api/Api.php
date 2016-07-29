@@ -604,7 +604,7 @@ class Api extends Api_Controller {
 		} else {
 			$photo = '/upload/customer/' . $this->upload->data ()['file_name'];
 		}
-		$customer_type = $this->db->query("select customer_type from `t_aci_customer` where customer_id={$customer_id}")->result_array[0]['customer_type'];
+		$customer_type = $this->db->query("select customer_type from `t_aci_customer` where customer_id={$customer_id}")->result_array()[0]['customer_type'];
 		switch ($customer_type) {
 			case '个人':
 				$this->db->query ( "update `t_aci_customer` set identity='{$photo}',name='{$name}' where customer_id={$customer_id}" );
