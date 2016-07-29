@@ -365,6 +365,10 @@ class Api extends Api_Controller {
 	//货主注册
 	public function customer_register() {
 		$telephone = $this->format_get ( 'telephone' );
+		$authcode = $this->format_get ( 'authcode' );
+		// $secret_authcode = $this->format_get ( 'secret_authcode' );
+		// $secret_telephone = $this->format_get ( 'secret_telephone' );
+		$telephone = $this->format_get ( 'telephone' );
 		$customer_type = $this->format_get('customer_type');
 		$password = $this->format_get('password');
 
@@ -382,8 +386,12 @@ class Api extends Api_Controller {
 			$this->output_result ( - 1, 'failed', '密码不能为空' );
 		}
 
-		$auth_code_secret = $this->encrypt->decode ( $this->format_get ( 'auth_code_secret' ), $this->key );
-		$authcode = $this->format_get ( 'code' );
+		$secret_telephone = $this->encrypt->decode ( $this->format_get ( 'secret_telephone' ), $this->key );
+		if ($telephone != $secret_telephone) {
+			$this->output_result ( －888, 'failed', '非法操作' );
+		}
+		$auth_code_secret = $this->encrypt->decode ( $this->format_get ( 'secret_authcode' ), $this->key );
+		$authcode = $this->format_get ( 'authcode' );
 		if ($authcode != $auth_code_secret) {
 			$this->output_result ( - 1, 'failed', '验证码错误' );
 		}
@@ -547,20 +555,11 @@ class Api extends Api_Controller {
 		$mobile = $this->format_get ( 'mobile' );
 		$authcode = mt_rand ( 111111, 999999 );
 		$result = $this->sms_code ( $mobile, $authcode );
-		$res['username'] = $this->encrypt->encode ( $mobile, $this->key );
-		$res['authcode'] = $this->encrypt->encode ( $authcode, $this->key );
-		$this->output_result ( 0, 'success', $res);
-	}
 	
-	public function register_get_authcode() {
-		$mobile = $this->format_get ( 'mobile' );
-		$authcode = mt_rand ( 111111, 999999 );
-		$result = $this->sms_code ( $mobile, $authcode );
-	
-		$res['username'] = $this->encrypt->encode ( $mobile, $this->key );
+		$res['telephone'] = $this->encrypt->encode ( $mobile, $this->key );
 		$res['authcode'] = $this->encrypt->encode ( $authcode, $this->key );
 	
-		$result = $this->db->query ( "select * from `user` where username = '{$mobile}'" )->result_array ();
+		$result = $this->db->query ( "select * from `t_aci_customer` where telephone = '{$mobile}'" )->result_array ();
 		if(count($result) == 0)
 		{
 			$this->output_result(0, 'success', $res);

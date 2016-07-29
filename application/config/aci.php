@@ -692,6 +692,15 @@ $config['aci_module'] = array (
         'menu_name' => '获取订单列表（地图）',
         'caption' => '获取订单列表（地图）',
       ),
+      13 => 
+      array (
+        'folder' => 'api',
+        'controller' => 'api',
+        'method' => 'register_authcode',
+        'menu_name' => '获取验证码',
+        'caption' => '获取验证码',
+      ),
+      
     ),
   ),
   'order' => 
