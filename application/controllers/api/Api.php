@@ -353,6 +353,7 @@ class Api extends Api_Controller {
 				$array ['company_license'] = $result2 [0] ['company_license'];
 				$array ['status'] = $result2 [0] ['status'];
 				$array ['last_login'] = $result2 [0] ['last_login'];
+				$array ['customer_type'] = $result2 [0] ['customer_type'];
 				$this->output_result ( 0, 'success', $array );
 			} else {
 				$this->output_result ( - 3, 'failed', '密码错误' );
