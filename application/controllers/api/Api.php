@@ -554,7 +554,6 @@ class Api extends Api_Controller {
 	public function get_authcode() {
 		$mobile = $this->format_get ( 'mobile' );
 		$authcode = mt_rand ( 111111, 999999 );
-		$result = $this->sms_code ( $mobile, $authcode );
 	
 		$res['telephone'] = $this->encrypt->encode ( $mobile, $this->key );
 		$res['authcode'] = $this->encrypt->encode ( $authcode, $this->key );
@@ -562,6 +561,7 @@ class Api extends Api_Controller {
 		$result = $this->db->query ( "select * from `t_aci_customer` where telephone = '{$mobile}'" )->result_array ();
 		if(count($result) == 0)
 		{
+			$this->sms_code ( $mobile, $authcode );
 			$this->output_result(0, 'success', $res);
 		}else{
 			$this->output_result(-1, 'failed', '该手机号已注册');
