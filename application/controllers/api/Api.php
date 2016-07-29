@@ -388,7 +388,7 @@ class Api extends Api_Controller {
 
 		$secret_telephone = $this->encrypt->decode ( $this->format_get ( 'secret_telephone' ), $this->key );
 		if ($telephone != $secret_telephone) {
-			$this->output_result ( －888, 'failed', '非法操作' );
+			$this->output_result ( - 888, 'failed', '非法操作' );
 		}
 		$auth_code_secret = $this->encrypt->decode ( $this->format_get ( 'secret_authcode' ), $this->key );
 		$authcode = $this->format_get ( 'authcode' );
