@@ -696,7 +696,7 @@ $config['aci_module'] = array (
       array (
         'folder' => 'api',
         'controller' => 'api',
-        'method' => 'register_authcode',
+        'method' => 'get_authcode',
         'menu_name' => '获取验证码',
         'caption' => '获取验证码',
       ),
