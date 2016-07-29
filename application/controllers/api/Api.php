@@ -587,6 +587,43 @@ class Api extends Api_Controller {
 		$this->db->query ( "update `user` set photo='{$photo}' where id='{$user_id}'" );
 		$this->output_result ( 0, 'success', $photo );
 	}
+
+	function upload_customer_info() {
+		$customer_id = $this->encrypt->decode ( $this->format_get ( 'customer_id' ), $this->key );
+		$name = $this->format_get ( 'name' );
+		$config ['upload_path'] = getcwd () . '/upload/customer/';
+		$config ['file_name'] = 'customer_' . random_string () . '-' . $customer_id;
+		$config ['allowed_types'] = 'gif|jpg|png';
+		$this->load->library ( 'upload', $config );
+		$this->upload->initialize ( $config );
+		if (! $this->upload->do_upload ( 'user_info' )) {
+			$data ['log'] = $this->upload->display_errors ();
+			$data ['create_time'] = time ();
+			$this->db->insert ( 'log', $data );
+			$this->output_result ( - 1, 'failed', $this->upload->display_errors () );
+		} else {
+			$photo = '/upload/customer/' . $this->upload->data ()['file_name'];
+		}
+		$customer_type = $this->db->query('select customer_type from `t_aci_customer` where customer_id={$customer_id}')->result_array[0]['customer_type'];
+		switch ($customer_type) {
+			case '个人':
+				$this->db->query ( "update `t_aci_customer` set identity='{$photo}',name='{$name}' where customer_id='{$customer_id}'" );
+				break;
+
+			case '企业':
+				$this->db->query ( "update `t_aci_customer` set company_license='{$photo}',company_name='{$name}' where customer_id='{$customer_id}'" );
+				break;
+			
+			case '物流公司':
+				$this->db->query ( "update `t_aci_customer` set wuliu_license='{$photo}',wuliu_name='{$name}' where customer_id='{$customer_id}'" );
+				break;
+			default:
+				break;
+		}
+		$this->output_result ( 0, 'success', $photo );
+	}
+
+	
 	
 	public  function change_interest() {
 		$userid = $this->encrypt->decode($this->format_get('user_id'),$this->key);

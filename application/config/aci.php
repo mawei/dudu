@@ -700,6 +700,15 @@ $config['aci_module'] = array (
         'menu_name' => '获取验证码',
         'caption' => '获取验证码',
       ),
+      14 => 
+      array (
+        'folder' => 'api',
+        'controller' => 'api',
+        'method' => 'upload_customer_info',
+        'menu_name' => '上传资料',
+        'caption' => '上传资料',
+      ),
+      
       
     ),
   ),
