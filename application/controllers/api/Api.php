@@ -450,9 +450,15 @@ class Api extends Api_Controller {
 		$customer_id = $this->encrypt->decode ( $this->format_get ( 'customer_id' ), $this->key );
 		$page = addslashes ( $_GET ['page'] );
 		$number = addslashes ( $_GET ['number'] );
+		$status = $this->format_get( 'status' );
 		$start = ($page - 1) * $number;
-		
-		$query_str = " select * from `t_aci_order` where customer_id='{$customer_id}' limit {$start},{$number}";
+		if($status == 0)
+		{
+			$query_str = " select t1.*,t2.photo,t2.nickname,t2.telephone from `t_aci_order` t1 left join `t_aci_driver` t2 on t1.driver_id=t2.driver_id where t1.customer_id='{$customer_id}' and t1.status not in ('已完成','已取消') limit {$start},{$number}";
+		}else{
+			$query_str = " select t1.*,t2.photo,t2.nickname,t2.telephone from `t_aci_order` t1 left join `t_aci_driver` t2 on t1.driver_id=t2.driver_id where t1.customer_id='{$customer_id}' and t1.status in ('已完成','已取消') limit {$start},{$number}";
+
+		}
 		$query = $this->db->query ( $query_str );
 		
 		$this->output_result ( 0, 'success', $query->result_array () );
