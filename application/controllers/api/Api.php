@@ -454,14 +454,21 @@ class Api extends Api_Controller {
 		$start = ($page - 1) * $number;
 		if($status == 0)
 		{
-			$query_str = " select t1.*,t2.photo,t2.nickname,t2.telephone from `t_aci_order` t1 left join `t_aci_driver` t2 on t1.driver_id=t2.driver_id where t1.customer_id='{$customer_id}' and t1.status not in ('已完成','已取消') limit {$start},{$number}";
+			$query_str = " select t1.* from `t_aci_order` t1 where t1.customer_id='{$customer_id}' and t1.status not in ('已完成','已取消') limit {$start},{$number}";
 		}else{
-			$query_str = " select t1.*,t2.photo,t2.nickname,t2.telephone from `t_aci_order` t1 left join `t_aci_driver` t2 on t1.driver_id=t2.driver_id where t1.customer_id='{$customer_id}' and t1.status in ('已完成','已取消') limit {$start},{$number}";
-
+			$query_str = " select t1.* from `t_aci_order` t1 where t1.customer_id='{$customer_id}' and t1.status in ('已完成','已取消') limit {$start},{$number}";
 		}
 		$query = $this->db->query ( $query_str );
-		
 		$this->output_result ( 0, 'success', $query->result_array () );
+	}
+
+	function get_order_detail_by_customer()
+	{
+		$customer_id = $this->encrypt->decode ( $this->format_get ( 'customer_id' ), $this->key );
+		$order_id = $this->format_get('order_id');
+		$query_str = " select t1.*,t2.photo,t2.nickname,t2.telephone from `t_aci_order` t1 left join `t_aci_driver` t2 on t1.driver_id=t2.driver_id where t1.order_id='{$order_id}' and t1.customer_id='{$customer_id}'";
+		$query = $this->db->query ( $query_str );
+		$this->output_result ( 0, 'success', $query->result_array ()[0] );
 	}
 
 	function get_orderlist_by_driver()
@@ -476,8 +483,6 @@ class Api extends Api_Controller {
 		
 		$this->output_result ( 0, 'success', $query->result_array () );
 	}
-	
-
 
 	public function login_authcode(){
 		$auth_code_secret = $this->encrypt->decode ( $this->format_get ( 'auth_code_secret' ), $this->key );

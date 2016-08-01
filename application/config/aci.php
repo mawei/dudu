@@ -708,6 +708,30 @@ $config['aci_module'] = array (
         'menu_name' => '上传资料',
         'caption' => '上传资料',
       ),
+      15 => 
+      array (
+        'folder' => 'api',
+        'controller' => 'api',
+        'method' => 'get_order_detail_by_customer',
+        'menu_name' => '获取订单详情',//货主
+        'caption' => '获取订单详情',
+      ),
+      16 => 
+      array (
+        'folder' => 'api',
+        'controller' => 'api',
+        'method' => 'get_order_detail_by_driver',
+        'menu_name' => '获取订单详情',//司机
+        'caption' => '获取订单详情',
+      ),
+      // 14 => 
+      // array (
+      //   'folder' => 'api',
+      //   'controller' => 'api',
+      //   'method' => 'upload_customer_info',
+      //   'menu_name' => '上传资料',
+      //   'caption' => '上传资料',
+      // ),
       
       
     ),
