@@ -466,7 +466,7 @@ class Api extends Api_Controller {
 	{
 		$customer_id = $this->encrypt->decode ( $this->format_get ( 'customer_id' ), $this->key );
 		$order_id = $this->format_get('order_id');
-		$query_str = " select t1.*,t2.photo,t2.nickname,t2.telephone from `t_aci_order` t1 left join `t_aci_driver` t2 on t1.driver_id=t2.driver_id where t1.order_id='{$order_id}' and t1.customer_id='{$customer_id}'";
+		$query_str = " select t1.*,t2.photo as driver_photo,t2.nickname as driver_nickname,t2.telephone as driver_telephone from `t_aci_order` t1 left join `t_aci_driver` t2 on t1.driver_id=t2.driver_id where t1.order_id='{$order_id}' and t1.customer_id='{$customer_id}'";
 		$result = $this->db->query ( $query_str )->result_array ();
 		if(count($result) > 0)
 		{
