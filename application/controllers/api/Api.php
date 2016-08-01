@@ -183,7 +183,7 @@ class Api extends Api_Controller {
 		$data ['charge'] = $this->format_get ( 'charge' );
 		$data ['weight'] = $this->format_get ( 'weight' );
 		$data ['status'] = "未接单";
-		$date ['create_time'] = date(”Y-m-d H:i:s”,time();
+		$date ['create_time'] = date("Y-m-d H:i:s",time());
 		$this->db->insert ( 't_aci_order', $data );
 		$order_id = $this->db->insert_id ();
 		$start_address_id = $this->format_get("start_address_id");
