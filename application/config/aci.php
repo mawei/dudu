@@ -364,210 +364,6 @@ $config['aci_module'] = array (
       ),
     ),
   ),
-  'customer' => 
-  array (
-    'version' => '1',
-    'charset' => 'utf-8',
-    'lastUpdate' => '2016-06-27 16:31:55',
-    'moduleName' => 'customer',
-    'modulePath' => 'adminpanel',
-    'moduleCaption' => '货主管理',
-    'description' => '由autoCodeigniter 自动生成的模块',
-    'fileList' => 
-    array (
-      0 => 'application/views/adminpanel/customer/edit.php',
-      1 => 'scripts/adminpanel/customer/edit.js',
-      2 => 'application/views/adminpanel/customer/readonly.php',
-      3 => 'application/views/adminpanel/customer/lists.php',
-      4 => 'scripts/adminpanel/customer/lists.js',
-      5 => 'application/views/adminpanel/customer/choose.php',
-      6 => 'application/views/adminpanel/customer/upload.php',
-      7 => 'application/controllers/adminpanel/Customer.php',
-      8 => 'application/models/Customer_model.php',
-    ),
-    'works' => true,
-    'moduleUrl' => 'adminpanel/customer',
-    'system' => false,
-    'coder' => '胡子锅',
-    'website' => 'http://',
-    'moduleDetails' => 
-    array (
-      0 => 
-      array (
-        'folder' => 'adminpanel',
-        'controller' => 'customer',
-        'method' => 'index',
-        'menu_name' => '管理货主管理',
-        'caption' => '管理货主管理',
-      ),
-      1 => 
-      array (
-        'folder' => 'adminpanel',
-        'controller' => 'customer',
-        'method' => 'index',
-        'menu_name' => '货主管理列表',
-        'caption' => '货主管理列表',
-      ),
-      2 => 
-      array (
-        'folder' => 'adminpanel',
-        'controller' => 'customer',
-        'method' => 'add',
-        'menu_name' => '新增',
-        'caption' => '新增',
-      ),
-      3 => 
-      array (
-        'folder' => 'adminpanel',
-        'controller' => 'customer',
-        'method' => 'edit',
-        'menu_name' => '修改',
-        'caption' => '修改',
-      ),
-      4 => 
-      array (
-        'folder' => 'adminpanel',
-        'controller' => 'customer',
-        'method' => 'choose',
-        'menu_name' => '选择弹窗',
-        'caption' => '选择弹窗',
-      ),
-      5 => 
-      array (
-        'folder' => 'adminpanel',
-        'controller' => 'customer',
-        'method' => 'delete_one',
-        'menu_name' => '删除单个',
-        'caption' => '删除单个',
-      ),
-      6 => 
-      array (
-        'folder' => 'adminpanel',
-        'controller' => 'customer',
-        'method' => 'delete_all',
-        'menu_name' => '删除多个',
-        'caption' => '删除多个',
-      ),
-      7 => 
-      array (
-        'folder' => 'adminpanel',
-        'controller' => 'customer',
-        'method' => 'readonly',
-        'menu_name' => '查看',
-        'caption' => '查看',
-      ),
-      8 => 
-      array (
-        'folder' => 'adminpanel',
-        'controller' => 'customer',
-        'method' => 'upload',
-        'menu_name' => '上传',
-        'caption' => '上传',
-      ),
-    ),
-  ),
-  'driver' => 
-  array (
-    'version' => '1',
-    'charset' => 'utf-8',
-    'lastUpdate' => '2016-06-27 15:04:53',
-    'moduleName' => 'driver',
-    'modulePath' => 'adminpanel',
-    'moduleCaption' => '司机管理',
-    'description' => '由autoCodeigniter 自动生成的模块',
-    'fileList' => 
-    array (
-      0 => 'application/views/adminpanel/driver/edit.php',
-      1 => 'scripts/adminpanel/driver/edit.js',
-      2 => 'application/views/adminpanel/driver/readonly.php',
-      3 => 'application/views/adminpanel/driver/lists.php',
-      4 => 'scripts/adminpanel/driver/lists.js',
-      5 => 'application/views/adminpanel/driver/choose.php',
-      6 => 'application/views/adminpanel/driver/upload.php',
-      7 => 'application/controllers/adminpanel/Driver.php',
-      8 => 'application/models/Driver_model.php',
-    ),
-    'works' => true,
-    'moduleUrl' => 'adminpanel/driver',
-    'system' => false,
-    'coder' => '胡子锅',
-    'website' => 'http://',
-    'moduleDetails' => 
-    array (
-      0 => 
-      array (
-        'folder' => 'adminpanel',
-        'controller' => 'driver',
-        'method' => 'index',
-        'menu_name' => '管理司机管理',
-        'caption' => '管理司机管理',
-      ),
-      1 => 
-      array (
-        'folder' => 'adminpanel',
-        'controller' => 'driver',
-        'method' => 'index',
-        'menu_name' => '司机管理列表',
-        'caption' => '司机管理列表',
-      ),
-      2 => 
-      array (
-        'folder' => 'adminpanel',
-        'controller' => 'driver',
-        'method' => 'add',
-        'menu_name' => '新增',
-        'caption' => '新增',
-      ),
-      3 => 
-      array (
-        'folder' => 'adminpanel',
-        'controller' => 'driver',
-        'method' => 'edit',
-        'menu_name' => '修改',
-        'caption' => '修改',
-      ),
-      4 => 
-      array (
-        'folder' => 'adminpanel',
-        'controller' => 'driver',
-        'method' => 'choose',
-        'menu_name' => '选择弹窗',
-        'caption' => '选择弹窗',
-      ),
-      5 => 
-      array (
-        'folder' => 'adminpanel',
-        'controller' => 'driver',
-        'method' => 'delete_one',
-        'menu_name' => '删除单个',
-        'caption' => '删除单个',
-      ),
-      6 => 
-      array (
-        'folder' => 'adminpanel',
-        'controller' => 'driver',
-        'method' => 'delete_all',
-        'menu_name' => '删除多个',
-        'caption' => '删除多个',
-      ),
-      7 => 
-      array (
-        'folder' => 'adminpanel',
-        'controller' => 'driver',
-        'method' => 'readonly',
-        'menu_name' => '查看',
-        'caption' => '查看',
-      ),
-      8 => 
-      array (
-        'folder' => 'adminpanel',
-        'controller' => 'driver',
-        'method' => 'upload',
-        'menu_name' => '上传',
-        'caption' => '上传',
-      ),
-    ),
-  ),
   'api' => 
   array (
     'version' => '1',
@@ -724,23 +520,115 @@ $config['aci_module'] = array (
         'menu_name' => '获取订单详情',//司机
         'caption' => '获取订单详情',
       ),
-      // 14 => 
-      // array (
-      //   'folder' => 'api',
-      //   'controller' => 'api',
-      //   'method' => 'upload_customer_info',
-      //   'menu_name' => '上传资料',
-      //   'caption' => '上传资料',
-      // ),
-      
-      
+    ),
+  ),
+  'customer' => 
+  array (
+    'version' => '1',
+    'charset' => 'utf-8',
+    'lastUpdate' => '2016-06-27 16:31:55',
+    'moduleName' => 'customer',
+    'modulePath' => 'adminpanel',
+    'moduleCaption' => '货主管理',
+    'description' => '由autoCodeigniter 自动生成的模块',
+    'fileList' => 
+    array (
+      0 => 'application/views/adminpanel/customer/edit.php',
+      1 => 'scripts/adminpanel/customer/edit.js',
+      2 => 'application/views/adminpanel/customer/readonly.php',
+      3 => 'application/views/adminpanel/customer/lists.php',
+      4 => 'scripts/adminpanel/customer/lists.js',
+      5 => 'application/views/adminpanel/customer/choose.php',
+      6 => 'application/views/adminpanel/customer/upload.php',
+      7 => 'application/controllers/adminpanel/Customer.php',
+      8 => 'application/models/Customer_model.php',
+    ),
+    'works' => true,
+    'moduleUrl' => 'adminpanel/customer',
+    'system' => false,
+    'coder' => '胡子锅',
+    'website' => 'http://',
+    'moduleDetails' => 
+    array (
+      0 => 
+      array (
+        'folder' => 'adminpanel',
+        'controller' => 'customer',
+        'method' => 'index',
+        'menu_name' => '管理货主管理',
+        'caption' => '管理货主管理',
+      ),
+      1 => 
+      array (
+        'folder' => 'adminpanel',
+        'controller' => 'customer',
+        'method' => 'index',
+        'menu_name' => '货主管理列表',
+        'caption' => '货主管理列表',
+      ),
+      2 => 
+      array (
+        'folder' => 'adminpanel',
+        'controller' => 'customer',
+        'method' => 'add',
+        'menu_name' => '新增',
+        'caption' => '新增',
+      ),
+      3 => 
+      array (
+        'folder' => 'adminpanel',
+        'controller' => 'customer',
+        'method' => 'edit',
+        'menu_name' => '修改',
+        'caption' => '修改',
+      ),
+      4 => 
+      array (
+        'folder' => 'adminpanel',
+        'controller' => 'customer',
+        'method' => 'choose',
+        'menu_name' => '选择弹窗',
+        'caption' => '选择弹窗',
+      ),
+      5 => 
+      array (
+        'folder' => 'adminpanel',
+        'controller' => 'customer',
+        'method' => 'delete_one',
+        'menu_name' => '删除单个',
+        'caption' => '删除单个',
+      ),
+      6 => 
+      array (
+        'folder' => 'adminpanel',
+        'controller' => 'customer',
+        'method' => 'delete_all',
+        'menu_name' => '删除多个',
+        'caption' => '删除多个',
+      ),
+      7 => 
+      array (
+        'folder' => 'adminpanel',
+        'controller' => 'customer',
+        'method' => 'readonly',
+        'menu_name' => '查看',
+        'caption' => '查看',
+      ),
+      8 => 
+      array (
+        'folder' => 'adminpanel',
+        'controller' => 'customer',
+        'method' => 'upload',
+        'menu_name' => '上传',
+        'caption' => '上传',
+      ),
     ),
   ),
   'order' => 
   array (
     'version' => '1',
     'charset' => 'utf-8',
-    'lastUpdate' => '2016-06-27 16:29:50',
+    'lastUpdate' => '2016-08-01 14:18:00',
     'moduleName' => 'order',
     'modulePath' => 'adminpanel',
     'moduleCaption' => '订单管理',
@@ -831,6 +719,108 @@ $config['aci_module'] = array (
       array (
         'folder' => 'adminpanel',
         'controller' => 'order',
+        'method' => 'upload',
+        'menu_name' => '上传',
+        'caption' => '上传',
+      ),
+    ),
+  ),
+  'driver' => 
+  array (
+    'version' => '1',
+    'charset' => 'utf-8',
+    'lastUpdate' => '2016-06-27 15:04:53',
+    'moduleName' => 'driver',
+    'modulePath' => 'adminpanel',
+    'moduleCaption' => '司机管理',
+    'description' => '由autoCodeigniter 自动生成的模块',
+    'fileList' => 
+    array (
+      0 => 'application/views/adminpanel/driver/edit.php',
+      1 => 'scripts/adminpanel/driver/edit.js',
+      2 => 'application/views/adminpanel/driver/readonly.php',
+      3 => 'application/views/adminpanel/driver/lists.php',
+      4 => 'scripts/adminpanel/driver/lists.js',
+      5 => 'application/views/adminpanel/driver/choose.php',
+      6 => 'application/views/adminpanel/driver/upload.php',
+      7 => 'application/controllers/adminpanel/Driver.php',
+      8 => 'application/models/Driver_model.php',
+    ),
+    'works' => true,
+    'moduleUrl' => 'adminpanel/driver',
+    'system' => false,
+    'coder' => '胡子锅',
+    'website' => 'http://',
+    'moduleDetails' => 
+    array (
+      0 => 
+      array (
+        'folder' => 'adminpanel',
+        'controller' => 'driver',
+        'method' => 'index',
+        'menu_name' => '管理司机管理',
+        'caption' => '管理司机管理',
+      ),
+      1 => 
+      array (
+        'folder' => 'adminpanel',
+        'controller' => 'driver',
+        'method' => 'index',
+        'menu_name' => '司机管理列表',
+        'caption' => '司机管理列表',
+      ),
+      2 => 
+      array (
+        'folder' => 'adminpanel',
+        'controller' => 'driver',
+        'method' => 'add',
+        'menu_name' => '新增',
+        'caption' => '新增',
+      ),
+      3 => 
+      array (
+        'folder' => 'adminpanel',
+        'controller' => 'driver',
+        'method' => 'edit',
+        'menu_name' => '修改',
+        'caption' => '修改',
+      ),
+      4 => 
+      array (
+        'folder' => 'adminpanel',
+        'controller' => 'driver',
+        'method' => 'choose',
+        'menu_name' => '选择弹窗',
+        'caption' => '选择弹窗',
+      ),
+      5 => 
+      array (
+        'folder' => 'adminpanel',
+        'controller' => 'driver',
+        'method' => 'delete_one',
+        'menu_name' => '删除单个',
+        'caption' => '删除单个',
+      ),
+      6 => 
+      array (
+        'folder' => 'adminpanel',
+        'controller' => 'driver',
+        'method' => 'delete_all',
+        'menu_name' => '删除多个',
+        'caption' => '删除多个',
+      ),
+      7 => 
+      array (
+        'folder' => 'adminpanel',
+        'controller' => 'driver',
+        'method' => 'readonly',
+        'menu_name' => '查看',
+        'caption' => '查看',
+      ),
+      8 => 
+      array (
+        'folder' => 'adminpanel',
+        'controller' => 'driver',
         'method' => 'upload',
         'menu_name' => '上传',
         'caption' => '上传',
