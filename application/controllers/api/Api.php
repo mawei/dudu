@@ -490,10 +490,14 @@ class Api extends Api_Controller {
 		$driver_id = $this->encrypt->decode ( $this->format_get ( 'driver_id' ), $this->key );
 		$page = addslashes ( $_GET ['page'] );
 		$number = addslashes ( $_GET ['number'] );
+		$status = $this->format_get( 'status' );
 		$start = ($page - 1) * $number;
-		
-		$query_str = " select * from `t_aci_order` where driver_id='{$driver_id}' limit {$start},{$number}";
-		$query = $this->db->query ( $query_str );
+		if($status == 0)
+		{
+			$query_str = " select t1.* from `t_aci_order` t1 where t1.driver_id='{$driver_id}' and t1.status not in ('已完成','已取消') limit {$start},{$number}";
+		}else{
+			$query_str = " select t1.* from `t_aci_order` t1 where t1.driver_id='{$driver_id}' and t1.status in ('已完成','已取消') limit {$start},{$number}";
+		}
 		
 		$this->output_result ( 0, 'success', $query->result_array () );
 	}
