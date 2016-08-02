@@ -234,7 +234,7 @@ class Api extends Api_Controller {
 			JOIN(
 				SELECT t1.order_id,
 					sqrt(POW((6370693.5 * cos({$latitude} * 0.01745329252) * ({$longitude} * 0.01745329252 - t1.longitude * 0.01745329252)),2) + POW((6370693.5 * ({$latitude} * 0.01745329252 - t1.latitude * 0.01745329252)),2)) as 'distance',
-					sqrt(POW((6370693.5 * cos({$maplatitude} * 0.01745329252) * ({$maplongitude} * 0.01745329252 - t1.maplongitude * 0.01745329252)),2) + POW((6370693.5 * ({$maplatitude} * 0.01745329252 - t1.maplatitude * 0.01745329252)),2)) as 'mapdistance',
+					sqrt(POW((6370693.5 * cos({$maplatitude} * 0.01745329252) * ({$maplongitude} * 0.01745329252 - t1.longitude * 0.01745329252)),2) + POW((6370693.5 * ({$maplatitude} * 0.01745329252 - t1.latitude * 0.01745329252)),2)) as 'mapdistance',
 				t1.`latitude` as start_place_latitude,t1.`longitude` as start_place_longitude,t2.`latitude`  as end_place_latitude,t2.`longitude` as end_place_longitude FROM `t_aci_address`  t1  LEFT join `t_aci_address` t2 on t1.order_id=t2.order_id where  t1.state='{$start_state}' AND t1.city='{$start_city}' AND t1.area='{$start_area}' and t1.type='出发地'
 				and  t2.state='{$end_state}' AND t2.city='{$end_city}' AND t2.area='{$end_area}' and t2.type='目的地'
     		) t4 on t3.order_id=t4.order_id where t4.mapdistance <= $distance order by t4.distance desc
