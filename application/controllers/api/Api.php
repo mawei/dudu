@@ -485,6 +485,20 @@ class Api extends Api_Controller {
 		}
 	}
 
+	function get_order_detail_by_driver()
+	{
+		$driver_id = $this->encrypt->decode ( $this->format_get ( 'driver_id' ), $this->key );
+		$order_id = $this->format_get('order_id');
+		$query_str = " select t1.*,t2.photo as driver_photo,t2.nickname as driver_nickname,t2.telephone as driver_telephone from `t_aci_order` t1 left join `t_aci_driver` t2 on t1.driver_id=t2.driver_id where t1.order_id='{$order_id}' and (t1.driver_id='{$driver_id}' or t1.driver_id IS NULL)";
+		$result = $this->db->query ( $query_str )->result_array ();
+		if(count($result) > 0)
+		{
+			$this->output_result ( 0, 'success', $result[0] );
+		}else{
+			$this->output_result ( 0, 'failed', '非法操作' );
+		}
+	}
+
 	function get_orderlist_by_driver()
 	{
 		$driver_id = $this->encrypt->decode ( $this->format_get ( 'driver_id' ), $this->key );
