@@ -216,8 +216,8 @@ class Api extends Api_Controller {
 		
 		//$distance = addslashes( $_GET['distance'] );
 
-		$latitude =  $this->format_get ('latitude');
-		$longitude =  $this->format_get ('longitude');
+		$latitude =  $this->format_get ('latitude',0);
+		$longitude =  $this->format_get ('longitude',0);
 		$start_state =  $this->format_get ('start_state',"上海市");
 		$start_city =  $this->format_get ('start_city', "上海市");
 		$start_area =  $this->format_get ('start_area',"金山区" );
