@@ -420,6 +420,41 @@ class Api extends Api_Controller {
 		}
 	}
 
+	// 车主登陆
+	public function driver_login() {
+		$telephone = $this->format_get ( 'telephone' );
+		$password = md5 ( $this->key . $this->format_get ( 'password' ) );
+
+
+		$result = $this->db->query ( "select * from `t_aci_driver` where telephone = '{$telephone}'" )->result_array ();
+		
+		if (count ( $result ) >= 1) {
+			$result2 = $this->db->query ( "select * from `t_aci_driver` where telephone = '{$telephone}' and password='{$password}'" )->result_array ();
+			if (count ( $result2 ) >= 1) {
+				$array ['driver_id'] = $this->encrypt->encode ( $result2 [0] ['driver_id'], $this->key );
+				$array ['telephone'] = $result2 [0] ['telephone'];
+				$array ['nickname'] = $result2 [0] ['nickname'];
+				$array ['photo'] = $result2 [0] ['photo'];
+
+				// $array ['name'] = $result2 [0] ['name'];
+				// $array ['identity'] = $result2 [0] ['identity'];
+				// $array ['wuliu_name'] = $result2 [0] ['wuliu_name'];
+				// $array ['wuliu_license'] = $result2 [0] ['wuliu_license'];
+				// $array ['company_name'] = $result2 [0] ['company_name'];
+				// $array ['company_license'] = $result2 [0] ['company_license'];
+				$array ['status'] = $result2 [0] ['status'];
+				$array ['last_login'] = $result2 [0] ['last_login'];
+				//$array ['customer_type'] = $result2 [0] ['customer_type'];
+				$this->output_result ( 0, 'success', $array );
+			} else {
+				$this->output_result ( - 3, 'failed', '密码错误' );
+			}
+		} else {
+			$this->output_result ( - 2, 'failed', '用户不存在' );
+		}
+	}
+
+
 
 
 	function create_address()
