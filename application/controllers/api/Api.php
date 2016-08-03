@@ -718,7 +718,7 @@ class Api extends Api_Controller {
 
 		} else {
 			$driver_license_image = '/driver/' . $this->upload->data ()['file_name'];
-			$this->db->query ( "update `t_aci_driver` set driver_license='{$driver_license_image}' where driver_id={$driver_id}" );
+			$this->db->query ( "update `t_aci_driver` set drive_license='{$driver_license_image}' where driver_id={$driver_id}" );
 
 		}
 		if (! $this->upload->do_upload ( 'truck_head_image' )) {
