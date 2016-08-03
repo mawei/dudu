@@ -520,6 +520,14 @@ $config['aci_module'] = array (
         'menu_name' => '获取订单详情',//司机
         'caption' => '获取订单详情',
       ),
+      17 => 
+      array (
+        'folder' => 'api',
+        'controller' => 'api',
+        'method' => 'upload_customer_info',
+        'menu_name' => '上传资料',
+        'caption' => '上传资料',
+      ),
     ),
   ),
   'customer' => 
