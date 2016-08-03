@@ -260,6 +260,29 @@ class Api extends Api_Controller {
 		$this->output_result ( 0, 'success', $query->result_array () );
 	}
 
+	public function get_driver_info_by_id()
+	{
+		$driver_id = $this->encrypt->decode ( $this->format_get ( 'driver_id' ), $this->key );
+		$result = $this->db->query( "select nickname,photo,telephone,truck_type,truck_size,truck_head_photo,drive_license,truck_full_photo,status from `t_aci_driver` where driver_id={$driver_id}" )->result_array();
+		if(count($result) > 0)
+		{
+			$this->output_result ( 0, 'success', $result[0] );
+		}else{
+			$this->output_result ( -1, 'failed', '用户信息有误' );
+		}
+	}
+
+	public function get_customer_info_by_id()
+	{
+		$customer_id = $this->encrypt->decode ( $this->format_get ( 'customer_id' ), $this->key );
+		$result = $this->db->query( "select nickname,photo,telephone,status,customer_type,name,identity,wuliu_name,wuliu_license,company_name,company_license from `t_aci_customer` where customer_id={$customer_id}" )->result_array();
+		if(count($result) > 0)
+		{
+			$this->output_result ( 0, 'success', $result[0] );
+		}else{
+			$this->output_result ( -1, 'failed', '用户信息有误' );
+		}
+	}
 
 
 	public function getDriverInfoById()
@@ -718,7 +741,6 @@ class Api extends Api_Controller {
 
 		} else {
 			$driver_license_image = '/driver/' . $this->upload->data ()['file_name'];
-			$this->db->query ( "update `t_aci_driver` set drive_license='{$driver_license_image}' where driver_id={$driver_id}" );
 
 		}
 		if (! $this->upload->do_upload ( 'truck_head_image' )) {
@@ -728,8 +750,6 @@ class Api extends Api_Controller {
 			$this->output_result ( - 1, 'failed', $this->upload->display_errors () );
 		} else {
 			$truck_head_image = '/driver/' . $this->upload->data ()['file_name'];
-			$this->db->query ( "update `t_aci_driver` set truck_head_photo='{$truck_head_image}' where driver_id={$driver_id}" );
-
 		}
 		if (! $this->upload->do_upload ( 'truck_full_image' )) {
 			$data ['log'] = $this->upload->display_errors ();
@@ -738,10 +758,10 @@ class Api extends Api_Controller {
 			$this->output_result ( - 1, 'failed', $this->upload->display_errors () );
 		} else {
 			$truck_full_image = '/driver/' . $this->upload->data ()['file_name'];
-			$this->db->query ( "update `t_aci_driver` set truck_full_photo='{$truck_full_image}' where driver_id={$driver_id}" );
-
+			
 		}
-		
+		$this->db->query ( "update `t_aci_driver` set drive_license='{$driver_license_image}',truck_head_photo='{$truck_head_image}',truck_full_photo='{$truck_full_image}',status='认证中' where driver_id={$driver_id}" );
+
 		$this->output_result ( 0, 'success', '' );
 	}
 
