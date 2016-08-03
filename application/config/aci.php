@@ -501,7 +501,7 @@ $config['aci_module'] = array (
         'folder' => 'api',
         'controller' => 'api',
         'method' => 'upload_customer_info',
-        'menu_name' => '上传资料',
+        'menu_name' => '上传资料',//货主
         'caption' => '上传资料',
       ),
       15 => 
@@ -524,8 +524,8 @@ $config['aci_module'] = array (
       array (
         'folder' => 'api',
         'controller' => 'api',
-        'method' => 'upload_customer_info',
-        'menu_name' => '上传资料',
+        'method' => 'upload_driver_info',
+        'menu_name' => '上传资料',//司机
         'caption' => '上传资料',
       ),
     ),
