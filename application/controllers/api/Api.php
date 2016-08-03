@@ -705,7 +705,6 @@ class Api extends Api_Controller {
 
 	function upload_driver_info() {
 		$driver_id = $this->encrypt->decode ( $this->format_get ( 'driver_id' ), $this->key );
-		$name = $this->format_get ( 'name' );
 		$config ['upload_path'] = getcwd () . '/upload/driver/';
 		$config ['file_name'] = 'driver_' . random_string () . '-' . $driver_id;
 		$config ['allowed_types'] = 'gif|jpg|png';
@@ -716,8 +715,11 @@ class Api extends Api_Controller {
 			$data ['create_time'] = time ();
 			$this->db->insert ( 'log', $data );
 			$this->output_result ( - 1, 'failed', $this->upload->display_errors () );
+
 		} else {
 			$driver_license_image = '/driver/' . $this->upload->data ()['file_name'];
+			$this->db->query ( "update `t_aci_driver` set driver_license='{$driver_license_image}' where driver_id={$driver_id}" );
+
 		}
 		if (! $this->upload->do_upload ( 'truck_head_image' )) {
 			$data ['log'] = $this->upload->display_errors ();
@@ -726,6 +728,8 @@ class Api extends Api_Controller {
 			$this->output_result ( - 1, 'failed', $this->upload->display_errors () );
 		} else {
 			$truck_head_image = '/driver/' . $this->upload->data ()['file_name'];
+			$this->db->query ( "update `t_aci_driver` set truck_head_photo='{$truck_head_image}' where driver_id={$driver_id}" );
+
 		}
 		if (! $this->upload->do_upload ( 'truck_full_image' )) {
 			$data ['log'] = $this->upload->display_errors ();
@@ -734,8 +738,9 @@ class Api extends Api_Controller {
 			$this->output_result ( - 1, 'failed', $this->upload->display_errors () );
 		} else {
 			$truck_full_image = '/driver/' . $this->upload->data ()['file_name'];
+			$this->db->query ( "update `t_aci_driver` set truck_full_photo='{$truck_full_image}' where driver_id={$driver_id}" );
+
 		}
-		$this->db->query ( "update `t_aci_driver` set driver_license='{$driver_license_image}',truck_head_photo='{$truck_head_image}',truck_full_photo='{$truck_full_image}' where driver_id={$driver_id}" );
 		
 		$this->output_result ( 0, 'success', '' );
 	}
