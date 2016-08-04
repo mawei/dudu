@@ -284,6 +284,14 @@ class Api extends Api_Controller {
 		}
 	}
 
+	public function accept_order_by_driver()
+	{
+		$driver_id = $this->encrypt->decode ( $this->format_get ( 'driver_id' ), $this->key );
+		$order_id = $this->format_get('order_id');
+		$this->db->query("update `t_aci_order` set status='接单中' where driver_id={$driver_id} and order_id={$order_id}");
+		$this->output_result ( 0, 'success', 'success' );
+	}
+
 
 	public function getDriverInfoById()
 	{
