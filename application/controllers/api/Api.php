@@ -288,8 +288,15 @@ class Api extends Api_Controller {
 	{
 		$driver_id = $this->encrypt->decode ( $this->format_get ( 'driver_id' ), $this->key );
 		$order_id = $this->format_get('order_id');
-		$this->db->query("update `t_aci_order` set status='接单中' where driver_id={$driver_id} and order_id={$order_id}");
-		$this->output_result ( 0, 'success', 'success' );
+		$r = $this->db->query("select * from `t_aci_order` where status='未接单' and order_id={$order_id}")->result_array();
+		if(count($r) == 0)
+		{
+			$this->output_result ( 0, 'failed', '该订单已被抢走，下次记得抢快点哦' );
+		}else{
+			$this->db->query("update `t_aci_order` set status='接单中' , driver_id={$driver_id} where order_id={$order_id}");
+			
+			$this->output_result ( 0, 'success', 'success' );
+		}
 	}
 
 
