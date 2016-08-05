@@ -295,7 +295,7 @@ class Api extends Api_Controller {
 			$this->output_result ( 0, 'failed', '该订单已被抢走，下次记得抢快点哦' );
 		}else{
 			$this->db->query("update `t_aci_order` set status='接单中' , driver_id={$driver_id} , accept_order_time=accept_order_time where order_id={$order_id}");
-			$customer_telephone = $this->db->query("select telephone from `t_aci_customer` where cutomer_id={$r[0]['customer_id']}")->result_array()[0]['telephone'];
+			$customer_telephone = $this->db->query("select telephone from `t_aci_customer` where customer_id={$r[0]['customer_id']}")->result_array()[0]['telephone'];
 
 			$this->sms_code($customer_telephone,"【嘟嘟找车】您的订单已有货车司机接单，请在三分钟内进入app进行确认");
 			$this->output_result ( 0, 'success', 'success' );
