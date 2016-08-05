@@ -589,7 +589,7 @@ class Api extends Api_Controller {
 					$result[0]['status'] == '未接单';
 				}else{
 					$time = time() - strtotime($result[0]['accept_order_time']);
-					$result[0]['accept_order_time'] == $time;		
+					$result[0]['accept_remain_time'] == $time;		
 				}
 				
 			}
