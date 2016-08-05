@@ -563,9 +563,9 @@ class Api extends Api_Controller {
 					$this->db->query("update `t_aci_order` set status='未接单' ,accept_order_time=NULL where order_id={$order_id}");
 					$result[0]['status'] == '未接单';
 				}else{
-					$result[0]['accept_order_time'] == time() - strtotime($result[0]['accept_order_time']);		
+					$time = time() - strtotime($result[0]['accept_order_time']);
+					$result[0]['accept_order_time'] == $time;					
 				}
-				
 			}
 			$this->output_result ( 0, 'success', $result[0] );
 		}else{
@@ -588,7 +588,8 @@ class Api extends Api_Controller {
 					$this->db->query("update `t_aci_order` set status='未接单' ,accept_order_time=NULL where order_id={$order_id}");
 					$result[0]['status'] == '未接单';
 				}else{
-					$result[0]['accept_order_time'] == time() - strtotime($result[0]['accept_order_time']);		
+					$time = time() - strtotime($result[0]['accept_order_time']);
+					$result[0]['accept_order_time'] == $time;		
 				}
 				
 			}
