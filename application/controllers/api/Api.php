@@ -556,6 +556,11 @@ class Api extends Api_Controller {
 		$result = $this->db->query ( $query_str )->result_array ();
 		if(count($result) > 0)
 		{
+			if($result[0]['status'] == '接单中' && (time() - strtotime($result[0]['accept_order_time']))  >= 180)
+			{
+				$this->db->query("update `t_aci_order set status='未接单' ,accept_order_time=NULL where order_id={$order_id}");
+				$result[0]['status'] == '未接单';
+			}
 			$this->output_result ( 0, 'success', $result[0] );
 		}else{
 			$this->output_result ( 0, 'failed', '非法操作' );
@@ -570,6 +575,11 @@ class Api extends Api_Controller {
 		$result = $this->db->query ( $query_str )->result_array ();
 		if(count($result) > 0)
 		{
+			if($result[0]['status'] == '接单中' && (time() - strtotime($result[0]['accept_order_time']))  >= 180)
+			{
+				$this->db->query("update `t_aci_order set status='未接单' ,accept_order_time=NULL where order_id={$order_id}");
+				$result[0]['status'] == '未接单';
+			}
 			$this->output_result ( 0, 'success', $result[0] );
 		}else{
 			$this->output_result ( 0, 'failed', '非法操作' );
