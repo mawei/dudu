@@ -303,6 +303,89 @@ class Api extends Api_Controller {
 		}
 	}
 
+	//取消订单
+	function cancel_order_by_driver()
+	{
+		$driver_id = $this->encrypt->decode ( $this->format_get ( 'driver_id' ), $this->key );
+		$order_id = $this->format_get('order_id');
+		//$accept_order_time = date("Y-m-d H:i:s",time());
+		$r = $this->db->query("select * from `t_aci_order` where status='已接单' and order_id={$order_id} and driver_id={$driver_id}")->result_array();
+		if(count($r) == 0)
+		{
+			$this->output_result ( 0, 'failed', '非法操作' );
+		}else{
+			$this->db->query("update `t_aci_order` set status='司机取消订单' where order_id={$order_id}");
+
+			$customer_telephone = $this->db->query("select telephone from `t_aci_customer` where customer_id={$r[0]['customer_id']}")->result_array()[0]['telephone'];
+
+			$this->sms_content($customer_telephone,"【嘟嘟找车】货车司机已取消订单，请查看信息");
+			$this->output_result ( 0, 'success', 'success' );
+		}
+	}
+
+	//反对取消订单
+	function against_order_by_driver()
+	{
+		$driver_id = $this->encrypt->decode ( $this->format_get ( 'driver_id' ), $this->key );
+		$order_id = $this->format_get('order_id');
+		//$accept_order_time = date("Y-m-d H:i:s",time());
+		$r = $this->db->query("select * from `t_aci_order` where status='货主取消订单' and order_id={$order_id} and driver_id={$driver_id}")->result_array();
+		if(count($r) == 0)
+		{
+			$this->output_result ( 0, 'failed', '非法操作' );
+		}else{
+			$this->db->query("update `t_aci_order` set status='司机反对取消订单' where order_id={$order_id}");
+
+			$customer_telephone = $this->db->query("select telephone from `t_aci_customer` where customer_id={$r[0]['customer_id']}")->result_array()[0]['telephone'];
+
+			$this->sms_content($customer_telephone,"【嘟嘟找车】货车司机反对您的取消订单操作，请尽快电话联系车主");
+			$this->output_result ( 0, 'success', 'success' );
+		}
+	}
+
+	//同意取消订单
+	function agree_cancel_order_by_driver()
+	{
+		$driver_id = $this->encrypt->decode ( $this->format_get ( 'driver_id' ), $this->key );
+		$order_id = $this->format_get('order_id');
+		//$accept_order_time = date("Y-m-d H:i:s",time());
+		$r = $this->db->query("select * from `t_aci_order` where status='货主取消订单' and order_id={$order_id} and driver_id={$driver_id}")->result_array();
+		if(count($r) == 0)
+		{
+			$this->output_result ( 0, 'failed', '非法操作' );
+		}else{
+			$this->db->query("update `t_aci_order` set status='未接单',driver_id='' where order_id={$order_id}");
+
+			$customer_telephone = $this->db->query("select telephone from `t_aci_customer` where customer_id={$r[0]['customer_id']}")->result_array()[0]['telephone'];
+
+			$this->sms_content($customer_telephone,"【嘟嘟找车】货车司机同意您的取消订单操作，请重新等待其它车主接单");
+			$this->output_result ( 0, 'success', 'success' );
+		}
+	}
+
+	//装货完毕
+	function against_order_by_driver()
+	{
+		$driver_id = $this->encrypt->decode ( $this->format_get ( 'driver_id' ), $this->key );
+		$order_id = $this->format_get('order_id');
+		//$accept_order_time = date("Y-m-d H:i:s",time());
+		$r = $this->db->query("select * from `t_aci_order` where status='已接单' and order_id={$order_id} and driver_id={$driver_id}")->result_array();
+		if(count($r) == 0)
+		{
+			$this->output_result ( 0, 'failed', '非法操作' );
+		}else{
+			$this->db->query("update `t_aci_order` set status='货主装货完毕' where order_id={$order_id}");
+
+			$customer_telephone = $this->db->query("select telephone from `t_aci_customer` where customer_id={$r[0]['customer_id']}")->result_array()[0]['telephone'];
+
+			$this->sms_content($customer_telephone,"【嘟嘟找车】货车司机已为您装货完毕");
+			$this->output_result ( 0, 'success', 'success' );
+		}
+	}
+
+
+
+
 
 	public function getDriverInfoById()
 	{
@@ -594,6 +677,7 @@ class Api extends Api_Controller {
 			$this->output_result ( 0, 'failed', '非法操作' );
 		}
 	}
+
 
 	function get_orderlist_by_driver()
 	{
