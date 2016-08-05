@@ -364,7 +364,7 @@ class Api extends Api_Controller {
 	}
 
 	//装货完毕
-	function against_order_by_driver()
+	function loading_complete_by_driver()
 	{
 		$driver_id = $this->encrypt->decode ( $this->format_get ( 'driver_id' ), $this->key );
 		$order_id = $this->format_get('order_id');
@@ -374,7 +374,7 @@ class Api extends Api_Controller {
 		{
 			$this->output_result ( 0, 'failed', '非法操作' );
 		}else{
-			$this->db->query("update `t_aci_order` set status='货主装货完毕' where order_id={$order_id}");
+			$this->db->query("update `t_aci_order` set status='司机装货完毕' where order_id={$order_id}");
 
 			$customer_telephone = $this->db->query("select telephone from `t_aci_customer` where customer_id={$r[0]['customer_id']}")->result_array()[0]['telephone'];
 
@@ -382,6 +382,27 @@ class Api extends Api_Controller {
 			$this->output_result ( 0, 'success', 'success' );
 		}
 	}
+
+		//司机任务完成
+	function complete_order_by_driver()
+	{
+		$driver_id = $this->encrypt->decode ( $this->format_get ( 'driver_id' ), $this->key );
+		$order_id = $this->format_get('order_id');
+		//$accept_order_time = date("Y-m-d H:i:s",time());
+		$r = $this->db->query("select * from `t_aci_order` where status='货主确认装货完毕' and order_id={$order_id} and driver_id={$driver_id}")->result_array();
+		if(count($r) == 0)
+		{
+			$this->output_result ( 0, 'failed', '非法操作' );
+		}else{
+			$this->db->query("update `t_aci_order` set status='司机完成任务' where order_id={$order_id}");
+
+			$customer_telephone = $this->db->query("select telephone from `t_aci_customer` where customer_id={$r[0]['customer_id']}")->result_array()[0]['telephone'];
+
+			$this->sms_content($customer_telephone,"【嘟嘟找车】货车司机已完成任务，快去确认吧");
+			$this->output_result ( 0, 'success', 'success' );
+		}
+	}
+
 
 
 
