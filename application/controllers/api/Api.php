@@ -338,7 +338,7 @@ class Api extends Api_Controller {
 
 			$customer_telephone = $this->db->query("select telephone from `t_aci_customer` where customer_id={$r[0]['customer_id']}")->result_array()[0]['telephone'];
 
-			$this->sms_content($customer_telephone,"【嘟嘟找车】货车司机反对您的取消订单操作，请尽快电话联系车主");
+			$this->sms_content($customer_telephone,"【嘟嘟找车】货车司机对您的取消订单操作有异义，请尽快电话联系车主");
 			$this->output_result ( 0, 'success', 'success' );
 		}
 	}
@@ -392,7 +392,7 @@ class Api extends Api_Controller {
 		$r = $this->db->query("select * from `t_aci_order` where status='货主确认装货完毕' and order_id={$order_id} and driver_id={$driver_id}")->result_array();
 		if(count($r) == 0)
 		{
-			$this->output_result ( 0, 'failed', '非法操作' );
+			$this->output_result ( 0, 'failed', '请等待用户确认装货完毕' );
 		}else{
 			$this->db->query("update `t_aci_order` set status='司机完成任务' where order_id={$order_id}");
 
@@ -402,6 +402,8 @@ class Api extends Api_Controller {
 			$this->output_result ( 0, 'success', 'success' );
 		}
 	}
+
+
 
 
 
@@ -717,6 +719,16 @@ class Api extends Api_Controller {
 
 		$this->output_result ( 0, 'success', $query->result_array () );
 	}
+
+	function get_routes()
+	{
+		$driver_id = $this->encrypt->decode ( $this->format_get ( 'driver_id' ), $this->key );
+		$query_str = " select t1.* from `t_aci_general_route` t1 where t1.driver_id='{$driver_id}' ";
+		$query = $this->db->query ( $query_str );
+		$this->output_result ( 0, 'success', $query->result_array () );
+	}
+
+
 
 	public function login_authcode(){
 		$auth_code_secret = $this->encrypt->decode ( $this->format_get ( 'auth_code_secret' ), $this->key );
