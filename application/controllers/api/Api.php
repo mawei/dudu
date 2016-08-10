@@ -283,6 +283,14 @@ class Api extends Api_Controller {
 		}
 	}
 
+	public function set_default_route()
+	{
+		$driver_id = $this->encrypt->decode ( $this->format_get ( 'driver_id' ), $this->key );
+		$route_id = $this->format_get ( 'route_id' );
+		$this->db->query("update `t_aci_driver` set default_route_id={$route_id} where driver_id={$driver_id}");
+		$this->output_result ( 0, 'success', "修改成功");
+	}
+
 	public function get_customer_info_by_id()
 	{
 		$customer_id = $this->encrypt->decode ( $this->format_get ( 'customer_id' ), $this->key );
