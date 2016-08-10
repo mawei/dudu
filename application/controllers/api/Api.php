@@ -747,6 +747,15 @@ class Api extends Api_Controller {
 		$this->output_result ( 0, 'success', $query->result_array () );
 	}
 
+	function get_route_info_by_driver()
+	{
+		$driver_id = $this->encrypt->decode ( $this->format_get ( 'driver_id' ), $this->key );
+		$route_id = $this->format_get('route_id');
+		$query_str = " select t1.* from `t_aci_general_route` t1 where t1.driver_id='{$driver_id}' and t1.route_id='{$route_id}'";
+		$query = $this->db->query ( $query_str );
+		$this->output_result ( 0, 'success', $query->result_array ()[0] );
+	}
+
 	function add_route_by_driver()
 	{
 		$driver_id = $this->encrypt->decode ( $this->format_get ( 'driver_id' ), $this->key );
