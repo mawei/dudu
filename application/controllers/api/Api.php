@@ -739,7 +739,7 @@ class Api extends Api_Controller {
 		$data['end_city'] = $this->format_get('end_city');
 		$data['end_area'] = $this->format_get('end_area');
 		$this->db->insert('t_aci_general_route',$data);
-		$this->output_result ( 0, 'success', $query->result_array () );
+		$this->output_result ( 0, 'success', '添加成功' );
 	}
 
 	function delete_route_by_driver(){
