@@ -748,7 +748,7 @@ class Api extends Api_Controller {
 		$result = $this->db->query("select * from `t_aci_general_route` where id={$route_id} and driver_id={$driver_id}")->result_array();
 		if(count($result) > 0)
 		{
-			$this->db->query("delete from `t_aci_general_route` where id={$route_id} and driver_id={$driver_id}");
+			$this->db->query("delete from `t_aci_general_route` where general_route_id={$route_id} and driver_id={$driver_id}");
 			$this->output_result ( 0, 'success', "删除成功" );
 		}else{
 			$this->output_result ( -1, 'failed', "操作失败，请联系管理员" );
