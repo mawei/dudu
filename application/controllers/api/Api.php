@@ -720,7 +720,7 @@ class Api extends Api_Controller {
 		$this->output_result ( 0, 'success', $query->result_array () );
 	}
 
-	function get_routes()
+	function get_routes_by_driver()
 	{
 		$driver_id = $this->encrypt->decode ( $this->format_get ( 'driver_id' ), $this->key );
 		$query_str = " select t1.* from `t_aci_general_route` t1 where t1.driver_id='{$driver_id}' ";
@@ -728,7 +728,32 @@ class Api extends Api_Controller {
 		$this->output_result ( 0, 'success', $query->result_array () );
 	}
 
+	function add_route_by_driver()
+	{
+		$driver_id = $this->encrypt->decode ( $this->format_get ( 'driver_id' ), $this->key );
+		$data['driver_id'] = $driver_id;
+		$data['start_state'] = $this->format_get('start_state');
+		$data['start_city'] = $this->format_get('start_city');
+		$data['start_area'] = $this->format_get('start_area');
+		$data['end_state'] = $this->format_get('end_state');
+		$data['end_city'] = $this->format_get('end_city');
+		$data['end_area'] = $this->format_get('end_area');
+		$this->db->insert('t_aci_general_route',$data);
+		$this->output_result ( 0, 'success', $query->result_array () );
+	}
 
+	function delete_route_by_driver(){
+		$driver_id = $this->encrypt->decode ( $this->format_get ( 'driver_id' ), $this->key );
+		$route_id = $this->format_get('route_id');
+		$result = $this->db->query("select * from `t_aci_general_route` where id={$route_id} and driver_id={$driver_id}")->result_array();
+		if(count($result) > 0)
+		{
+			$this->db->query("delete from `t_aci_general_route` where id={$route_id} and driver_id={$driver_id}");
+			$this->output_result ( 0, 'success', "删除成功" );
+		}else{
+			$this->output_result ( -1, 'failed', "操作失败，请联系管理员" );
+		}
+	}
 
 	public function login_authcode(){
 		$auth_code_secret = $this->encrypt->decode ( $this->format_get ( 'auth_code_secret' ), $this->key );
