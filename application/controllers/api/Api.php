@@ -222,12 +222,12 @@ class Api extends Api_Controller {
 		$maplongitude =  $this->format_get ('maplongitude',0);
 		$distance =  $this->format_get ('distance');
 
-		$start_state =  $this->format_get ('start_state',"上海市");
-		$start_city =  $this->format_get ('start_city', "上海市");
-		$start_area =  $this->format_get ('start_area',"金山区" );
-		$end_state =  $this->format_get ('end_state' ,"上海市");
-		$end_city =  $this->format_get ('end_city',"上海市" );
-		$end_area =  $this->format_get ('end_area' ,"金山区");
+		$start_state =  $this->format_get ('start_state',"");
+		$start_city =  $this->format_get ('start_city', "");
+		$start_area =  $this->format_get ('start_area',"" );
+		$end_state =  $this->format_get ('end_state' ,"");
+		$end_city =  $this->format_get ('end_city',"" );
+		$end_area =  $this->format_get ('end_area' ,"");
 		if($distance == 0){
 			$query_str = "
 			select t4.*,t3.`truck_type`,t3.`truck_size`,t3.start_place,t3.end_place,t3.charge from t_aci_order  t3
