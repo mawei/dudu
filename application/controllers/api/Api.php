@@ -745,7 +745,7 @@ class Api extends Api_Controller {
 	function delete_route_by_driver(){
 		$driver_id = $this->encrypt->decode ( $this->format_get ( 'driver_id' ), $this->key );
 		$route_id = $this->format_get('route_id');
-		$result = $this->db->query("select * from `t_aci_general_route` where id={$route_id} and driver_id={$driver_id}")->result_array();
+		$result = $this->db->query("select * from `t_aci_general_route` where general_route_id={$route_id} and driver_id={$driver_id}")->result_array();
 		if(count($result) > 0)
 		{
 			$this->db->query("delete from `t_aci_general_route` where general_route_id={$route_id} and driver_id={$driver_id}");
