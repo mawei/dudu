@@ -228,8 +228,17 @@ class Api extends Api_Controller {
 		$end_state =  $this->format_get ('end_state' ,"上海市");
 		$end_city =  $this->format_get ('end_city',"上海市" );
 		$end_area =  $this->format_get ('end_area' ,"金山区");
-
-		$query_str = "
+		if($distance == 0){
+			$query_str = "
+			select t4.*,t3.`truck_type`,t3.`truck_size`,t3.start_place,t3.end_place,t3.charge from t_aci_order  t3
+			JOIN(
+				SELECT t1.order_id,
+				t1.`latitude` as start_place_latitude,t1.`longitude` as start_place_longitude,t2.`latitude`  as end_place_latitude,t2.`longitude` as end_place_longitude FROM `t_aci_address`  t1  LEFT join `t_aci_address` t2 on t1.order_id=t2.order_id where  t1.state='{$start_state}' AND t1.city='{$start_city}' AND t1.area='{$start_area}' and t1.type='出发地'
+				and  t2.state='{$end_state}' AND t2.city='{$end_city}' AND t2.area='{$end_area}' and t2.type='目的地'
+    		) t4 on t3.order_id=t4.order_id order by t3.start_time desc
+			";
+		}else{
+			$query_str = "
 			select t4.*,t3.`truck_type`,t3.`truck_size`,t3.start_place,t3.end_place,t3.charge from t_aci_order  t3
 			JOIN(
 				SELECT t1.order_id,
@@ -239,6 +248,8 @@ class Api extends Api_Controller {
 				and  t2.state='{$end_state}' AND t2.city='{$end_city}' AND t2.area='{$end_area}' and t2.type='目的地'
     		) t4 on t3.order_id=t4.order_id where t4.mapdistance <= $distance order by t4.distance desc
 			";
+		}
+		
 		$query = $this->db->query($query_str);
 		//$start = ($page - 1) * $number;
 		//$query = $this->db->query ( "select t1.*,t2.name,t2.company_name,t2.wuliu_name
