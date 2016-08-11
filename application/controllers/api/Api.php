@@ -915,22 +915,7 @@ class Api extends Api_Controller {
 		} else {
 			$photo = '/customer/' . $this->upload->data ()['file_name'];
 		}
-		$customer_type = $this->db->query("select customer_type from `t_aci_customer` where customer_id={$customer_id}")->result_array()[0]['customer_type'];
-		switch ($customer_type) {
-			case '个人':
-				$this->db->query ( "update `t_aci_customer` set identity='{$photo}',name='{$name}' where customer_id={$customer_id}" );
-				break;
-
-			case '企业':
-				$this->db->query ( "update `t_aci_customer` set company_license='{$photo}',company_name='{$name}' where customer_id={$customer_id}" );
-				break;
-			
-			case '物流公司':
-				$this->db->query ( "update `t_aci_customer` set wuliu_license='{$photo}',wuliu_name='{$name}' where customer_id={$customer_id}" );
-				break;
-			default:
-				break;
-		}
+		$this->db->query ( "update `t_aci_customer` set identity_photo='{$photo}',name='{$name}',status='认证中' where customer_id={$customer_id}" );
 		$this->output_result ( 0, 'success', $photo );
 	}
 
