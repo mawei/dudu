@@ -294,7 +294,7 @@ class Api extends Api_Controller {
 	public function get_customer_info_by_id()
 	{
 		$customer_id = $this->encrypt->decode ( $this->format_get ( 'customer_id' ), $this->key );
-		$result = $this->db->query( "select nickname,photo,telephone,status,customer_type,name,identity,wuliu_name,wuliu_license,company_name,company_license,status_memo from `t_aci_customer` where customer_id={$customer_id}" )->result_array();
+		$result = $this->db->query( "select nickname,photo,telephone,status,customer_type,name,identity_photo,status_memo from `t_aci_customer` where customer_id={$customer_id}" )->result_array();
 		if(count($result) > 0)
 		{
 			$this->output_result ( 0, 'success', $result[0] );
