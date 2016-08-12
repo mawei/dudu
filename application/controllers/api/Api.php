@@ -322,7 +322,7 @@ class Api extends Api_Controller {
 		}
 	}
 
-	public function confirm_accept_order_by_driver()
+	public function confirm_accept_order_by_customer()
 	{
 		$customer_id = $this->encrypt->decode ( $this->format_get ( 'customer_id' ), $this->key );
 		$order_id = $this->format_get('order_id');
