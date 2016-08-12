@@ -334,7 +334,7 @@ class Api extends Api_Controller {
 		}else{
 			$this->db->query("update `t_aci_order` set status='已接单' where order_id={$order_id}");
 
-			$drvier_telephone = $this->db->query("select telephone from `t_aci_driver` where driver_id={$r[0]['driver_id']}")->result_array()[0]['telephone'];
+			$customer_telephone = $this->db->query("select telephone from `t_aci_driver` where driver_id={$r[0]['driver_id']}")->result_array()[0]['telephone'];
 
 			$this->sms_content($customer_telephone,"【嘟嘟找货】货主已确认您的接单，请尽快联系车主");
 			$this->output_result ( 0, 'success', 'success' );
