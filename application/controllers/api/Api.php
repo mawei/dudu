@@ -379,7 +379,7 @@ class Api extends Api_Controller {
 			}else{
 				$this->db->query("update `t_aci_order` set status='货主取消订单' where order_id={$order_id}");
 
-				$customer_telephone = $this->db->query("select telephone from `t_aci_customer` where driver_id={$r[0]['driver_id']}")->result_array()[0]['telephone'];
+				$customer_telephone = $this->db->query("select telephone from `t_aci_driver` where driver_id={$r[0]['driver_id']}")->result_array()[0]['telephone'];
 
 				$this->sms_content($customer_telephone,"【嘟嘟找货】货主已取消订单，请查看信息");
 				$this->output_result ( 0, 'success', 'success' );
@@ -420,7 +420,7 @@ class Api extends Api_Controller {
 		}else{
 			$this->db->query("update `t_aci_order` set status='货主反对取消订单' where order_id={$order_id}");
 
-			$customer_telephone = $this->db->query("select telephone from `t_aci_customer` where driver_id={$r[0]['driver_id']}")->result_array()[0]['telephone'];
+			$customer_telephone = $this->db->query("select telephone from `t_aci_driver` where driver_id={$r[0]['driver_id']}")->result_array()[0]['telephone'];
 
 			$this->sms_content($customer_telephone,"【嘟嘟找货】货主对您的取消订单操作有异义，请尽快电话联系车主");
 			$this->output_result ( 0, 'success', 'success' );
@@ -460,7 +460,7 @@ class Api extends Api_Controller {
 		}else{
 			$this->db->query("update `t_aci_order` set status='未接单',driver_id='' where order_id={$order_id}");
 
-			$customer_telephone = $this->db->query("select telephone from `t_aci_customer` where driver_id={$r[0]['driver_id']}")->result_array()[0]['telephone'];
+			$customer_telephone = $this->db->query("select telephone from `t_aci_driver` where driver_id={$r[0]['driver_id']}")->result_array()[0]['telephone'];
 
 			$this->sms_content($customer_telephone,"【嘟嘟找货】货主同意您的取消订单操作，请重新等待其它车主接单");
 			$this->output_result ( 0, 'success', 'success' );
@@ -501,7 +501,7 @@ class Api extends Api_Controller {
 		}else{
 			$this->db->query("update `t_aci_order` set status='货主确认装货完毕' where order_id={$order_id}");
 
-			$customer_telephone = $this->db->query("select telephone from `t_aci_customer` where driver_id={$r[0]['driver_id']}")->result_array()[0]['telephone'];
+			$customer_telephone = $this->db->query("select telephone from `t_aci_driver` where driver_id={$r[0]['driver_id']}")->result_array()[0]['telephone'];
 
 			$this->sms_content($customer_telephone,"【嘟嘟找货】货主已确认装货完毕");
 			$this->output_result ( 0, 'success', 'success' );
@@ -541,7 +541,7 @@ class Api extends Api_Controller {
 		}else{
 			$this->db->query("update `t_aci_order` set status='已完成' where order_id={$order_id}");
 
-			$customer_telephone = $this->db->query("select telephone from `t_aci_customer` where driver_id={$r[0]['driver_id']}")->result_array()[0]['telephone'];
+			$customer_telephone = $this->db->query("select telephone from `t_aci_driver` where driver_id={$r[0]['driver_id']}")->result_array()[0]['telephone'];
 
 			$this->sms_content($customer_telephone,"【嘟嘟找货】货主已确认完成任务");
 			$this->output_result ( 0, 'success', 'success' );
