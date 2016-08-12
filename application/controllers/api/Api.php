@@ -336,7 +336,7 @@ class Api extends Api_Controller {
 
 			$drvier_telephone = $this->db->query("select telephone from `t_aci_driver` where driver_id={$r[0]['driver_id']}")->result_array()[0]['telephone'];
 
-			$this->sms_content($customer_telephone,"【嘟嘟找车】货主已确认您的接单，请尽快联系货主");
+			$this->sms_content($customer_telephone,"【嘟嘟找货】货主已确认您的接单，请尽快联系车主");
 			$this->output_result ( 0, 'success', 'success' );
 		}
 	}
@@ -372,12 +372,18 @@ class Api extends Api_Controller {
 		{
 			$this->output_result ( 0, 'failed', '非法操作' );
 		}else{
-			$this->db->query("update `t_aci_order` set status='货主取消订单' where order_id={$order_id}");
+			if($r[0]['driver_id'] == "")
+			{
+				$this->db->query("update `t_aci_order` set status='已取消' where order_id={$order_id}");
+				$this->output_result ( 0, 'success', 'success' );
+			}else{
+				$this->db->query("update `t_aci_order` set status='货主取消订单' where order_id={$order_id}");
 
-			$customer_telephone = $this->db->query("select telephone from `t_aci_customer` where customer_id={$r[0]['customer_id']}")->result_array()[0]['telephone'];
+				$customer_telephone = $this->db->query("select telephone from `t_aci_customer` where driver_id={$r[0]['driver_id']}")->result_array()[0]['telephone'];
 
-			$this->sms_content($customer_telephone,"【嘟嘟找车】货主已取消订单，请查看信息");
-			$this->output_result ( 0, 'success', 'success' );
+				$this->sms_content($customer_telephone,"【嘟嘟找货】货主已取消订单，请查看信息");
+				$this->output_result ( 0, 'success', 'success' );
+			}
 		}
 	}
 
@@ -416,7 +422,7 @@ class Api extends Api_Controller {
 
 			$customer_telephone = $this->db->query("select telephone from `t_aci_customer` where driver_id={$r[0]['driver_id']}")->result_array()[0]['telephone'];
 
-			$this->sms_content($customer_telephone,"【嘟嘟找车】货主对您的取消订单操作有异义，请尽快电话联系车主");
+			$this->sms_content($customer_telephone,"【嘟嘟找货】货主对您的取消订单操作有异义，请尽快电话联系车主");
 			$this->output_result ( 0, 'success', 'success' );
 		}
 	}
@@ -456,7 +462,7 @@ class Api extends Api_Controller {
 
 			$customer_telephone = $this->db->query("select telephone from `t_aci_customer` where driver_id={$r[0]['driver_id']}")->result_array()[0]['telephone'];
 
-			$this->sms_content($customer_telephone,"【嘟嘟找车】货主同意您的取消订单操作，请重新等待其它车主接单");
+			$this->sms_content($customer_telephone,"【嘟嘟找货】货主同意您的取消订单操作，请重新等待其它车主接单");
 			$this->output_result ( 0, 'success', 'success' );
 		}
 	}
@@ -497,7 +503,7 @@ class Api extends Api_Controller {
 
 			$customer_telephone = $this->db->query("select telephone from `t_aci_customer` where driver_id={$r[0]['driver_id']}")->result_array()[0]['telephone'];
 
-			$this->sms_content($customer_telephone,"【嘟嘟找车】货主已确认装货完毕");
+			$this->sms_content($customer_telephone,"【嘟嘟找货】货主已确认装货完毕");
 			$this->output_result ( 0, 'success', 'success' );
 		}
 	}
@@ -537,7 +543,7 @@ class Api extends Api_Controller {
 
 			$customer_telephone = $this->db->query("select telephone from `t_aci_customer` where driver_id={$r[0]['driver_id']}")->result_array()[0]['telephone'];
 
-			$this->sms_content($customer_telephone,"【嘟嘟找车】货主已确认完成任务");
+			$this->sms_content($customer_telephone,"【嘟嘟找货】货主已确认完成任务");
 			$this->output_result ( 0, 'success', 'success' );
 		}
 	}
