@@ -652,6 +652,7 @@ class Api extends Api_Controller {
 				$array ['name'] = $result2 [0] ['name'];
 				$array ['identity_photo'] = $result2 [0] ['identity_photo'];
 				$array ['status'] = $result2 [0] ['status'];
+				$array ['status_memo'] = $result2 [0] ['status_memo'];
 				$array ['last_login'] = $result2 [0] ['last_login'];
 				$array ['customer_type'] = $result2 [0] ['customer_type'];
 				$this->output_result ( 0, 'success', $array );
