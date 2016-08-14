@@ -711,6 +711,59 @@ class Api extends Api_Controller {
 		}
 	}
 
+	//车主注册
+	public function driver_register() {
+		$telephone = $this->format_get ( 'telephone' );
+		$authcode = $this->format_get ( 'authcode' );
+		// $secret_authcode = $this->format_get ( 'secret_authcode' );
+		// $secret_telephone = $this->format_get ( 'secret_telephone' );
+		$telephone = $this->format_get ( 'telephone' );
+		$truck_type = $this->format_get('truck_type');
+		$truck_size = $this->format_get('truck_size');
+		$password = $this->format_get('password');
+
+
+		if($telephone == "")
+		{
+			$this->output_result ( - 1, 'failed', '手机号码不能为空' );
+		}
+		if($truck_type == "")
+		{
+			$this->output_result ( - 1, 'failed', '货车类型不能为空' );
+		}
+		if($truck_size == "")
+		{
+			$this->output_result ( - 1, 'failed', '车重／车长不能为空' );
+		}
+		if($password == "")
+		{
+			$this->output_result ( - 1, 'failed', '密码不能为空' );
+		}
+
+		$secret_telephone = $this->encrypt->decode ( $this->format_get ( 'secret_telephone' ), $this->key );
+		if ($telephone != $secret_telephone) {
+			$this->output_result ( - 888, 'failed', '非法操作' );
+		}
+		$auth_code_secret = $this->encrypt->decode ( $this->format_get ( 'secret_authcode' ), $this->key );
+		$authcode = $this->format_get ( 'authcode' );
+		if ($authcode != $auth_code_secret) {
+			$this->output_result ( - 1, 'failed', '验证码错误' );
+		}
+		$result = $this->db->query ( "select * from `t_aci_driver` where telephone = '{$telephone}'" )->result_array ();
+		
+		if (count ( $result ) >= 1) {
+			$this->output_result ( - 1, 'failed', '该用户已注册' );
+		} else {
+			$data['telephone'] = $telephone;
+			$data['password'] = md5 ( $this->key . $password);
+			$data['truck_type'] = $truck_type;
+			$data['truck_size'] = $truck_size;
+			$data['status'] = '未认证';
+			$this->db->insert('t_aci_driver',$data);
+			$this->output_result ( 0, 'success', '' );
+		}
+	}
+
 	// 车主登陆
 	public function driver_login() {
 		$telephone = $this->format_get ( 'telephone' );
@@ -734,6 +787,7 @@ class Api extends Api_Controller {
 				// $array ['company_name'] = $result2 [0] ['company_name'];
 				// $array ['company_license'] = $result2 [0] ['company_license'];
 				$array ['status'] = $result2 [0] ['status'];
+				$array ['status_memo'] = $result2 [0] ['status_memo'];
 				$array ['last_login'] = $result2 [0] ['last_login'];
 				//$array ['customer_type'] = $result2 [0] ['customer_type'];
 				$this->output_result ( 0, 'success', $array );
