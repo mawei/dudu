@@ -650,11 +650,7 @@ class Api extends Api_Controller {
 				$array ['customer_id'] = $this->encrypt->encode ( $result2 [0] ['customer_id'], $this->key );
 				$array ['telephone'] = $result2 [0] ['telephone'];
 				$array ['name'] = $result2 [0] ['name'];
-				$array ['identity'] = $result2 [0] ['identity'];
-				$array ['wuliu_name'] = $result2 [0] ['wuliu_name'];
-				$array ['wuliu_license'] = $result2 [0] ['wuliu_license'];
-				$array ['company_name'] = $result2 [0] ['company_name'];
-				$array ['company_license'] = $result2 [0] ['company_license'];
+				$array ['identity_photo'] = $result2 [0] ['identity_photo'];
 				$array ['status'] = $result2 [0] ['status'];
 				$array ['last_login'] = $result2 [0] ['last_login'];
 				$array ['customer_type'] = $result2 [0] ['customer_type'];
