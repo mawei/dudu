@@ -1058,6 +1058,24 @@ class Api extends Api_Controller {
 			$this->output_result(-1, 'failed', '该手机号已注册');
 		}
 	}
+
+	public function get_authcode_by_driver() {
+		$mobile = $this->format_get ( 'mobile' );
+		$authcode = mt_rand ( 111111, 999999 );
+	
+		$res['telephone'] = $this->encrypt->encode ( $mobile, $this->key );
+		$res['authcode'] = $this->encrypt->encode ( $authcode, $this->key );
+	
+		$result = $this->db->query ( "select * from `t_aci_driver` where telephone = '{$mobile}'" )->result_array ();
+		if(count($result) == 0)
+		{
+			$this->sms_code ( $mobile, $authcode );
+			$this->output_result(0, 'success', $res);
+		}else{
+			$this->output_result(-1, 'failed', '该手机号已注册');
+		}
+	}
+
 	
 	function upload_user_photo() {
 		$user_id = $this->encrypt->decode ( $this->format_get ( 'user_id' ), $this->key );
