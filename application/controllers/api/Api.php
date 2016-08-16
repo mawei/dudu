@@ -282,6 +282,7 @@ class Api extends Api_Controller {
 			$this->output_result ( -1, 'failed', '用户信息有误' );
 		}
 	}
+	
 
 	public function set_default_route()
 	{
