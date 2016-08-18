@@ -334,6 +334,15 @@ class Api extends Api_Controller {
 		}
 	}
 
+	public function update_driver_location()
+	{
+		$data ['latitude'] = $this->format_get ( 'latitude' );
+		$data ['longitude'] = $this->format_get ( 'longitude' );
+		$driver_id = $this->encrypt->decode ( $this->format_get ( 'driver_id' ), $this->key );
+		$this->db->query("update `t_aci_driver` set longitude='{$data ['longitude']}',latitude='{$data ['latitude']}' where driver_id={$driver_id}");
+		$this->output_result ( 0, 'success', 'success' );
+	}
+
 	public function confirm_accept_order_by_customer()
 	{
 		$customer_id = $this->encrypt->decode ( $this->format_get ( 'customer_id' ), $this->key );
