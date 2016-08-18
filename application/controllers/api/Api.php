@@ -860,7 +860,7 @@ class Api extends Api_Controller {
 			{
 				if($r['accept_remain_time']  >= 180)
 				{
-					$this->db->query("update `t_aci_order` set status='未接单' ,accept_order_time=NULL where order_id={$order_id}");
+					$this->db->query("update `t_aci_order` set status='未接单',driver_id=NULL ,accept_order_time=NULL where order_id={$order_id}");
 					$r['status'] == '未接单';
 				}
 			}
@@ -883,7 +883,7 @@ class Api extends Api_Controller {
 			{
 				if($r['accept_remain_time']  >= 180)
 				{
-					$this->db->query("update `t_aci_order` set status='未接单' ,accept_order_time=NULL where order_id={$order_id}");
+					$this->db->query("update `t_aci_order` set status='未接单',driver_id=NULL ,accept_order_time=NULL where order_id={$order_id}");
 					$r['status'] == '未接单';
 				}
 			}
