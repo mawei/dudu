@@ -316,7 +316,7 @@ class Api extends Api_Controller {
 			$this->output_result ( -1, 'failed', '该订单已被抢走，下次记得抢快点哦' );
 		}else{
 			$driver = $this->db->query("select * from `t_aci_driver` where driver_id={$driver_id}")->result_array()[0];
-			$order = $this->db->query("select * from `t_aci_order` t1 where status='未接单' and order_id={$order_id} and truck_type={$driver['truck_type']} and truck_size={$driver['truck_size']}")->result_array();
+			$order = $this->db->query("select * from `t_aci_order` t1 where status='未接单' and order_id={$order_id} and truck_type='{$driver['truck_type']}' and truck_size='{$driver['truck_size']}'")->result_array();
 
 			if(count($order) > 0)
 			{
