@@ -1095,7 +1095,7 @@ class Api extends Api_Controller {
 	function upload_photo_by_customer() {
 		$customer_id = $this->encrypt->decode ( $this->format_get ( 'customer_id' ), $this->key );
 		$config ['upload_path'] = getcwd () . '/upload/customer/';
-		$config ['file_name'] = 'customer_photo_' . random_string () . '-' . $driver_id;
+		$config ['file_name'] = 'customer_photo_' . random_string () . '-' . $customer_id;
 		$config ['allowed_types'] = 'gif|jpg|png';
 		$this->load->library ( 'upload', $config );
 		$this->upload->initialize ( $config );
