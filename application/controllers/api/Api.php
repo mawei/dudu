@@ -1093,7 +1093,7 @@ class Api extends Api_Controller {
 	}
 
 	function upload_photo_by_customer() {
-		$driver_id = $this->encrypt->decode ( $this->format_get ( 'customer_id' ), $this->key );
+		$customer_id = $this->encrypt->decode ( $this->format_get ( 'customer_id' ), $this->key );
 		$config ['upload_path'] = getcwd () . '/upload/customer/';
 		$config ['file_name'] = 'customer_photo_' . random_string () . '-' . $driver_id;
 		$config ['allowed_types'] = 'gif|jpg|png';
@@ -1109,7 +1109,7 @@ class Api extends Api_Controller {
 			$customer_photo = '/customer/' . $this->upload->data ()['file_name'];
 		}
 		
-		$this->db->query ( "update `t_aci_customer` set photo='{$driver_photo}' where customer_id={$customer_photo}" );
+		$this->db->query ( "update `t_aci_customer` set photo='{$customer_photo}' where customer_id={$customer_id}" );
 		$this->output_result ( 0, 'success', $customer_photo );
 	}
 
