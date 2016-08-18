@@ -313,14 +313,24 @@ class Api extends Api_Controller {
 		$r = $this->db->query("select * from `t_aci_order` where status='未接单' and order_id={$order_id}")->result_array();
 		if(count($r) == 0)
 		{
-			$this->output_result ( 0, 'failed', '该订单已被抢走，下次记得抢快点哦' );
+			$this->output_result ( -1, 'failed', '该订单已被抢走，下次记得抢快点哦' );
 		}else{
-			$this->db->query("update `t_aci_order` set status='接单中' , driver_id={$driver_id} , accept_order_time='{$accept_order_time}' where order_id={$order_id}");
+			$driver = $this->db->query("select * from `t_aci_driver` where driver_id={$driver_id}")->result_array()[0];
+			$order = $this->db->query("select * from `t_aci_order` t1 where status='未接单' and order_id={$order_id} and truck_type={$driver['truck_type']} and truck_size={$driver['truck_size']}")->result_array();
 
-			$customer_telephone = $this->db->query("select telephone from `t_aci_customer` where customer_id={$r[0]['customer_id']}")->result_array()[0]['telephone'];
+			if(count($order) > 0)
+			{
+				$this->db->query("update `t_aci_order` set status='接单中' , driver_id={$driver_id} , accept_order_time='{$accept_order_time}' where order_id={$order_id}");
 
-			$this->sms_content($customer_telephone,"【嘟嘟找车】您的订单已有货车司机接单，请在三分钟内进入app进行确认");
-			$this->output_result ( 0, 'success', 'success' );
+
+
+				$customer_telephone = $this->db->query("select telephone from `t_aci_customer` where customer_id={$r[0]['customer_id']}")->result_array()[0]['telephone'];
+
+				$this->sms_content($customer_telephone,"【嘟嘟找车】您的订单已有货车司机接单，请在三分钟内进入app进行确认");
+				$this->output_result ( 0, 'success', 'success' );
+			}else{
+				$this->output_result ( -1, 'failed', '您的车辆信息不符合该订单要求' );
+			}
 		}
 	}
 
