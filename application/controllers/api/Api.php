@@ -284,6 +284,7 @@ class Api extends Api_Controller {
 	}
 	
 
+
 	public function set_default_route()
 	{
 		$driver_id = $this->encrypt->decode ( $this->format_get ( 'driver_id' ), $this->key );
@@ -548,14 +549,6 @@ class Api extends Api_Controller {
 			$this->output_result ( 0, 'success', 'success' );
 		}
 	}
-
-
-
-
-
-
-
-
 
 	public function getDriverInfoById()
 	{
@@ -1078,23 +1071,46 @@ class Api extends Api_Controller {
 	}
 
 	
-	function upload_user_photo() {
-		$user_id = $this->encrypt->decode ( $this->format_get ( 'user_id' ), $this->key );
-		$config ['upload_path'] = getcwd () . '/uploads/user/';
-		$config ['file_name'] = 'user_' . random_string () . '-' . $user_id;
+	function upload_photo_by_driver() {
+		$driver_id = $this->encrypt->decode ( $this->format_get ( 'driver_id' ), $this->key );
+		$config ['upload_path'] = getcwd () . '/upload/driver/';
+		$config ['file_name'] = 'driver_photo_' . random_string () . '-' . $driver_id;
 		$config ['allowed_types'] = 'gif|jpg|png';
 		$this->load->library ( 'upload', $config );
 		$this->upload->initialize ( $config );
-		if (! $this->upload->do_upload ( 'user_image' )) {
+		if (! $this->upload->do_upload ( 'driver_photo' )) {
 			$data ['log'] = $this->upload->display_errors ();
 			$data ['create_time'] = time ();
 			$this->db->insert ( 'log', $data );
 			$this->output_result ( - 1, 'failed', $this->upload->display_errors () );
+
 		} else {
-			$photo = '/uploads/user/' . $this->upload->data ()['file_name'];
+			$driver_photo = '/driver/' . $this->upload->data ()['file_name'];
 		}
-		$this->db->query ( "update `user` set photo='{$photo}' where id='{$user_id}'" );
-		$this->output_result ( 0, 'success', $photo );
+		
+		$this->db->query ( "update `t_aci_driver` set photo='{$driver_photo}' where driver_id={$driver_id}" );
+		$this->output_result ( 0, 'success', $driver_photo );
+	}
+
+	function upload_photo_by_customer() {
+		$driver_id = $this->encrypt->decode ( $this->format_get ( 'customer_id' ), $this->key );
+		$config ['upload_path'] = getcwd () . '/upload/customer/';
+		$config ['file_name'] = 'customer_photo_' . random_string () . '-' . $driver_id;
+		$config ['allowed_types'] = 'gif|jpg|png';
+		$this->load->library ( 'upload', $config );
+		$this->upload->initialize ( $config );
+		if (! $this->upload->do_upload ( 'customer_photo' )) {
+			$data ['log'] = $this->upload->display_errors ();
+			$data ['create_time'] = time ();
+			$this->db->insert ( 'log', $data );
+			$this->output_result ( - 1, 'failed', $this->upload->display_errors () );
+
+		} else {
+			$customer_photo = '/customer/' . $this->upload->data ()['file_name'];
+		}
+		
+		$this->db->query ( "update `t_aci_customer` set photo='{$driver_photo}' where customer_id={$customer_photo}" );
+		$this->output_result ( 0, 'success', $customer_photo );
 	}
 
 	function upload_customer_info() {
@@ -1177,19 +1193,32 @@ class Api extends Api_Controller {
 		$this->output_result ( 0, 'success', $result );
 	}
 	
-	public  function change_nickname() {
-		$userid = $this->encrypt->decode($this->format_get('user_id'),$this->key);
+	public  function update_nickname_by_driver() {
+		$driver_id = $this->encrypt->decode($this->format_get('driver_id'),$this->key);
 		$nickname = $this->format_get('nickname');
-		$result = $this->db->query("select * from `user` where id={$userid}")->result_array();
+		$result = $this->db->query("select * from `t_aci_driver` where driver_id={$driver_id}")->result_array();
 		if(count($result) > 0)
 		{
-			$this->db->query("update `user` set nickname='{$nickname}' where id={$userid}");
+			$this->db->query("update `t_aci_driver` set nickname='{$nickname}' where driver_id={$driver_id}");
 			$this->output_result ( 0, 'success', '修改成功' );
 		}else{
 			$this->output_result ( 0, 'success', '用户不存在' );
 		}
 	}
 	
+	public  function update_nickname_by_customer() {
+		$customer_id = $this->encrypt->decode($this->format_get('customer_id'),$this->key);
+		$nickname = $this->format_get('nickname');
+		$result = $this->db->query("select * from `t_aci_customer` where customer_id={$customer_id}")->result_array();
+		if(count($result) > 0)
+		{
+			$this->db->query("update `t_aci_customer` set nickname='{$nickname}' where customer_id={$customer_id}");
+			$this->output_result ( 0, 'success', '修改成功' );
+		}else{
+			$this->output_result ( 0, 'success', '用户不存在' );
+		}
+	}
+
 	public function complete_userinfo() {
 		$userid = $this->encrypt->decode($this->format_get('user_id'),$this->key);
 		$nickname = $this->format_get ( 'nickname' );
