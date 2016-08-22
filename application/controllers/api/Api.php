@@ -189,6 +189,10 @@ class Api extends Api_Controller {
 		$start_address_id = $this->format_get("start_address_id");
 		$end_address_id = $this->format_get("end_address_id");
 		$this->db->query("update `t_aci_address` set order_id='{$order_id}' where address_id in ({$start_address_id},{$end_address_id})");
+		$start_address = $this->db->query("select * from `t_aci_address` where address_id={$start_address_id}")->result_array()[0];
+		$end_address = $this->db->query("select * from `t_aci_address` where address_id={$end_address_id}")->result_array()[0];
+		$miles = sqrt(POW((6370693.5 * cos($start_address['latitude'] * 0.01745329252) * ($end_address['longitude'] * 0.01745329252 - $start_address['longitude'] * 0.01745329252)),2) + POW((6370693.5 * ($end_address['latitude'] * 0.01745329252 - $start_address['latitude'] * 0.01745329252)),2));
+		$this->db->query("update `t_aci_order` set miles='{$miles}' where order_id={$order_id}");
 
 		$this->output_result ( 0, 'success', $order_id );		
 	}
@@ -209,12 +213,6 @@ class Api extends Api_Controller {
 
 	//按范围获取订单列表（用于地图）
 	public function get_order_list() {
-		//$page = addslashes ( $_GET ['page'] );
-		//$number = addslashes ( $_GET ['number'] );
-
-		//"select * from `t_aci_order` t1 where "
-		
-		//$distance = addslashes( $_GET['distance'] );
 
 		$latitude =  $this->format_get ('latitude',0);
 		$longitude =  $this->format_get ('longitude',0);
@@ -230,7 +228,7 @@ class Api extends Api_Controller {
 		$end_area =  $this->format_get ('end_area' ,"");
 		if($distance == 0){
 			$query_str = "
-			select t4.*,t3.`truck_type`,t3.`truck_size`,t3.start_place,t3.end_place,t3.charge from t_aci_order  t3
+			select t4.*,t3.`truck_type`,t3.`truck_size`,t3.start_place,t3.end_place,t3.charge,t3.miles from t_aci_order  t3
 			JOIN(
 				SELECT t1.order_id,
 				t1.`latitude` as start_place_latitude,t1.`longitude` as start_place_longitude,t2.`latitude`  as end_place_latitude,t2.`longitude` as end_place_longitude FROM `t_aci_address`  t1  LEFT join `t_aci_address` t2 on t1.order_id=t2.order_id where  t1.state='{$start_state}' AND t1.city='{$start_city}' AND t1.area='{$start_area}' and t1.type='出发地'
@@ -239,7 +237,7 @@ class Api extends Api_Controller {
 			";
 		}else{
 			$query_str = "
-			select t4.*,t3.`truck_type`,t3.`truck_size`,t3.start_place,t3.end_place,t3.charge from t_aci_order  t3
+			select t4.*,t3.`truck_type`,t3.`truck_size`,t3.start_place,t3.end_place,t3.charge,t3.miles from t_aci_order  t3
 			JOIN(
 				SELECT t1.order_id,
 					sqrt(POW((6370693.5 * cos({$latitude} * 0.01745329252) * ({$longitude} * 0.01745329252 - t1.longitude * 0.01745329252)),2) + POW((6370693.5 * ({$latitude} * 0.01745329252 - t1.latitude * 0.01745329252)),2)) as 'distance',
