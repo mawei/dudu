@@ -191,7 +191,7 @@ class Api extends Api_Controller {
 		$this->db->query("update `t_aci_address` set order_id='{$order_id}' where address_id in ({$start_address_id},{$end_address_id})");
 		$start_address = $this->db->query("select * from `t_aci_address` where address_id={$start_address_id}")->result_array()[0];
 		$end_address = $this->db->query("select * from `t_aci_address` where address_id={$end_address_id}")->result_array()[0];
-		$miles = sqrt(POW((6370693.5 * cos($start_address['latitude'] * 0.01745329252) * ($end_address['longitude'] * 0.01745329252 - $start_address['longitude'] * 0.01745329252)),2) + POW((6370693.5 * ($end_address['latitude'] * 0.01745329252 - $start_address['latitude'] * 0.01745329252)),2));
+		$miles = sqrt(POW((6370693.5 * cos($start_address['latitude'] * 0.01745329252) * ($end_address['longitude'] * 0.01745329252 - $start_address['longitude'] * 0.01745329252)),2) + POW((6370693.5 * ($end_address['latitude'] * 0.01745329252 - $start_address['latitude'] * 0.01745329252)),2)) ＊ 1.1;
 		$this->db->query("update `t_aci_order` set miles='{$miles}' where order_id={$order_id}");
 
 		$this->output_result ( 0, 'success', $order_id );		
@@ -236,6 +236,7 @@ class Api extends Api_Controller {
     		) t4 on t3.order_id=t4.order_id where t3.status='未接单' order by t3.start_time desc
 			";
 		}else{
+			$distance = $distance >= 50000 ? 50000 : $distance;
 			$query_str = "
 			select t4.*,t3.`truck_type`,t3.`truck_size`,t3.start_place,t3.end_place,t3.charge,t3.miles from t_aci_order  t3
 			JOIN(
@@ -260,6 +261,7 @@ class Api extends Api_Controller {
 		$latitude = addslashes ( $_GET ['latitude'] );
 		$longitude = addslashes ( $_GET ['longitude'] );
 		$distance = addslashes( $_GET['distance'] );
+		$distance = $distance >= 50000 ? 50000 : $distance;
 		$query = $this->db->query ( " select * from (select t1.truck_type,t1.truck_size,
 									sqrt(POW((6370693.5 * cos({$latitude} * 0.01745329252) * ({$longitude} * 0.01745329252 - t1.longitude * 0.01745329252)),2) + POW((6370693.5 * ({$latitude} * 0.01745329252 - t1.latitude * 0.01745329252)),2)) as 'distance',t1.latitude,t1.longitude,t1.driver_id
 									from `t_aci_driver` t1 where t1.online_status='online' order by t1.driver_id ) t2 
