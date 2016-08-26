@@ -879,15 +879,15 @@ class Api extends Api_Controller {
 		}
 		if ($time == '7天内')
 		{
-			$query_str .= " and datediff(now(),create_time) <= 7"
+			$query_str .= " and datediff(now(),create_time) <= 7";
 		}
 		if ($time == '30天内')
 		{
-			$query_str .= " and datediff(now(),create_time) <= 30"
+			$query_str .= " and datediff(now(),create_time) <= 30";
 		}
 		if ($time == '90天内')
 		{
-			$query_str .= " and datediff(now(),create_time) <= 90"
+			$query_str .= " and datediff(now(),create_time) <= 90";
 		}
 		$query = $this->db->query ( $query_str );
 		$this->output_result ( 0, 'success', $query->result_array () );
