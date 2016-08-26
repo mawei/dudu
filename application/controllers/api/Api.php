@@ -870,7 +870,6 @@ class Api extends Api_Controller {
 		$status = $this->format_get( 'status' );
 		$time = $this->format_get( 'time');
 
-		$start = ($page - 1) * $number;
 		if($status == 0)
 		{
 			$query_str = " select t1.* from `t_aci_order` t1 where t1.customer_id='{$customer_id}' and t1.status not in ('已完成','已取消') ";
