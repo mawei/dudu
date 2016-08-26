@@ -897,9 +897,8 @@ class Api extends Api_Controller {
 		$customer_id = $this->encrypt->decode ( $this->format_get ( 'customer_id' ), $this->key );
 		$status = $this->format_get( 'mail' );
 		$ids = $this->format_get( 'ids');
-		$order_ids = explode(",", $ids);
 
-		$query = $this->db->query("select * from `t_aci_order` WHERE customer_id= {$customer_id} and order_id in ({$order_ids})"); 
+		$query = $this->db->query("select * from `t_aci_order` WHERE customer_id= {$customer_id} and order_id in ({$ids})"); 
 		$query = mb_convert_encoding("gb2312", "UTF-8", $query); 
 		if(!$query) 
 			return false; 
