@@ -874,7 +874,7 @@ class Api extends Api_Controller {
 		{
 			$query_str .= " and t1.status not in ('已完成','已取消') ";
 		}else if($status == 2){
-			$query_str = "  and t1.status in ('已完成')";
+			$query_str .= "  and t1.status in ('已完成')";
 		}
 		if ($time == '7天内')
 		{
