@@ -869,12 +869,12 @@ class Api extends Api_Controller {
 		$customer_id = $this->encrypt->decode ( $this->format_get ( 'customer_id' ), $this->key );
 		$status = $this->format_get( 'status' );
 		$time = $this->format_get( 'time');
-
-		if($status == 0)
+		$query_str = " select t1.* from `t_aci_order` t1 where t1.customer_id='{$customer_id}'";
+		if($status == 1)
 		{
-			$query_str = " select t1.* from `t_aci_order` t1 where t1.customer_id='{$customer_id}' and t1.status not in ('已完成','已取消') ";
-		}else{
-			$query_str = " select t1.* from `t_aci_order` t1 where t1.customer_id='{$customer_id}' and t1.status in ('已完成','已取消')";
+			$query_str .= " and t1.status not in ('已完成','已取消') ";
+		}else if($status == 2){
+			$query_str = "  and t1.status in ('已完成')";
 		}
 		if ($time == '7天内')
 		{
