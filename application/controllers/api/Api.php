@@ -864,6 +864,35 @@ class Api extends Api_Controller {
 		$this->output_result ( 0, 'success', $query->result_array () );
 	}
 
+	function get_output_orderlist_by_customer()
+	{
+		$customer_id = $this->encrypt->decode ( $this->format_get ( 'customer_id' ), $this->key );
+		$status = $this->format_get( 'status' );
+		$time = $this->format_get( 'time');
+
+		$start = ($page - 1) * $number;
+		if($status == 0)
+		{
+			$query_str = " select t1.* from `t_aci_order` t1 where t1.customer_id='{$customer_id}' and t1.status not in ('已完成','已取消') ";
+		}else{
+			$query_str = " select t1.* from `t_aci_order` t1 where t1.customer_id='{$customer_id}' and t1.status in ('已完成','已取消')";
+		}
+		if ($time == '7天内')
+		{
+			$query_str .= " and datediff(now(),create_time) <= 7"
+		}
+		if ($time == '30天内')
+		{
+			$query_str .= " and datediff(now(),create_time) <= 30"
+		}
+		if ($time == '90天内')
+		{
+			$query_str .= " and datediff(now(),create_time) <= 90"
+		}
+		$query = $this->db->query ( $query_str );
+		$this->output_result ( 0, 'success', $query->result_array () );
+	}
+
 	function get_order_detail_by_customer()
 	{
 		$customer_id = $this->encrypt->decode ( $this->format_get ( 'customer_id' ), $this->key );
