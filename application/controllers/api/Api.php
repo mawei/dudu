@@ -899,7 +899,7 @@ class Api extends Api_Controller {
 		$ids = $this->format_get( 'ids');
 
 		$query = $this->db->query("select * from `t_aci_order` WHERE customer_id= {$customer_id} and order_id in ({$ids})"); 
-		$query = mb_convert_encoding("gb2312", "UTF-8", $query); 
+		//$query = mb_convert_encoding("gb2312", "UTF-8", $query); 
 		if(!$query) 
 			return false; 
 		// Starting the PHPExcel library 
@@ -912,7 +912,7 @@ class Api extends Api_Controller {
 		->setCellValue('B2', 'world!') 
 		->setCellValue('C1', 'Hello'); 
 		// Field names in the first row 
-		$fields = $query->list_fields(); 
+		$fields = $query->list_fields; 
 		$col = 0; 
 		foreach ($fields as $field) 
 		{ 
