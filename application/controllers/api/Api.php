@@ -920,8 +920,8 @@ class Api extends Api_Controller {
 		$fields['end_place'] = "目的地";
 		$fields['start_time'] = "出发时间";
 		$fields['charge'] = "费用";
-		$fields['weight'] = "重量";
-		$fields['miles'] = "公里数";
+		$fields['weight'] = "重量(t)";
+		$fields['miles'] = "公里数(km)";
 		$col = 0; 
 
 		foreach ($fields as $field) 
@@ -972,6 +972,7 @@ class Api extends Api_Controller {
 		$this->email->message('附件为导出的相关订单，请您查收');
 
 		$this->email->send();
+		$this->output_result ( 0, 'success', '导出成功' );
 	}
 
 	function get_order_detail_by_customer()
