@@ -949,7 +949,21 @@ class Api extends Api_Controller {
 		
 		$this->load->library('email');
 
-		$this->email->from('mawei78951@126.com', '嘟嘟找车');
+		$config['protocol'] = 'smtp';
+		$config['smtp_host'] = 'smtp.126.com';
+        $config['smtp_user'] = 'mawei7895123@126.com';//这里写上你的163邮箱账户
+		$config['smtp_pass'] = '19880709abc';//这里写上你的163邮箱密码
+		$config['mailtype'] = 'html';
+		$config['validate'] = true;
+		$config['priority'] = 1;
+		$config['crlf']  = "\r\n";
+		$config['smtp_port'] = 25;
+		$config['charset'] = 'utf-8';
+		$config['wordwrap'] = TRUE;
+
+        $this->email->initialize($config);
+
+		$this->email->from('mawei7895123@126.com', '嘟嘟找车');
 		$this->email->to($mail);
 		//$this->email->cc('another@another-example.com');
 		//$this->email->bcc('them@their-example.com');
