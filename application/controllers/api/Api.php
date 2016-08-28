@@ -999,6 +999,21 @@ class Api extends Api_Controller {
 		}
 	}
 
+	function get_current_order_by_customer()
+	{
+		$customer_id = $this->encrypt->decode ( $this->format_get ( 'customer_id' ), $this->key );
+		$order_id = $this->format_get('order_id');
+		$query_str = " select t1.* from `t_aci_order` where t1.status not in ('已完成','已取消') and t1.customer_id='{$customer_id}' order by t1.create_time desc";
+		$result = $this->db->query ( $query_str )->result_array ();
+		if(count($result) > 0)
+		{
+			$r = $result[0];
+			$this->output_result ( 0, 'success', $r );
+		}else{
+			$this->output_result ( 0, 'failed', '当前没有未处理完订单' );
+		}
+	}
+
 	function get_order_detail_by_driver()
 	{
 		$driver_id = $this->encrypt->decode ( $this->format_get ( 'driver_id' ), $this->key );
