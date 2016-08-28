@@ -895,7 +895,7 @@ class Api extends Api_Controller {
 	function output_orders_by_customer() 
 	{ 
 		$customer_id = $this->encrypt->decode ( $this->format_get ( 'customer_id' ), $this->key );
-		$status = $this->format_get( 'mail' );
+		$mail = $this->format_get( 'mail' );
 		$ids = $this->format_get( 'ids');
 
 		$query = $this->db->query("select * from `t_aci_order` WHERE customer_id= {$customer_id} and order_id in ({$ids})"); 
@@ -916,6 +916,12 @@ class Api extends Api_Controller {
 		$fields['create_time'] = "创建时间"; 
 		$fields['truck_type'] = "货车类型"; 
 		$fields['truck_size'] = "货车大小"; 
+		$fields['start_place'] = "出发地";
+		$fields['end_place'] = "目的地";
+		$fields['start_time'] = "出发时间";
+		$fields['charge'] = "费用";
+		$fields['weight'] = "重量";
+		$fields['miles'] = "公里数";
 		$col = 0; 
 
 		foreach ($fields as $field) 
@@ -938,8 +944,20 @@ class Api extends Api_Controller {
 		$objPHPExcel->setActiveSheetIndex(0); 
 		$objWriter = IOFactory::createWriter($objPHPExcel, 'Excel5'); 
 		//发送标题强制用户下载文件 
-		$objWriter->save( getcwd () . '/output/123.xls' );
+		$file_name = getcwd () . '/output/order_' .$customer_id . time() .'.xls';
+		$objWriter->save( $file_name );
 		
+		$this->load->library('email');
+
+		$this->email->from('mawei78951@126.com', '嘟嘟找车');
+		$this->email->to($mail);
+		//$this->email->cc('another@another-example.com');
+		//$this->email->bcc('them@their-example.com');
+		$this->email->attach($file_name);
+		$this->email->subject('订单导出');
+		$this->email->message('附件为导出的相关订单，请您查收');
+
+		$this->email->send();
 	}
 
 	function get_order_detail_by_customer()
