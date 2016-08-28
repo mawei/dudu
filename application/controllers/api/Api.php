@@ -908,12 +908,16 @@ class Api extends Api_Controller {
 		$objPHPExcel = new PHPExcel(); 
 		$objPHPExcel->getProperties()->setTitle("export")->setDescription("none"); 
 		$objPHPExcel->setActiveSheetIndex(0) 
-		->setCellValue('A1', iconv('gbk', 'utf-8', '中文Hello')) 
+		->setCellValue('A1', 'sss') 
 		->setCellValue('B2', 'world!') 
 		->setCellValue('C1', 'Hello'); 
 		// Field names in the first row 
-		$fields = $query->list_fields; 
+		$fields['order_id'] = "订单id"; 
+		$fields['create_time'] = "创建时间"; 
+		$fields['truck_type'] = "货车类型"; 
+		$fields['truck_size'] = "货车大小"; 
 		$col = 0; 
+
 		foreach ($fields as $field) 
 		{ 
 			$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col, 1, $field); 
@@ -934,11 +938,8 @@ class Api extends Api_Controller {
 		$objPHPExcel->setActiveSheetIndex(0); 
 		$objWriter = IOFactory::createWriter($objPHPExcel, 'Excel5'); 
 		//发送标题强制用户下载文件 
-		header('Content-Type: application/vnd.ms-excel'); 
-		header('Content-Disposition: attachment;filename="Products_'.date('dMy').'.xls"'); 
-		header('Cache-Control: max-age=0'); 
-		$objWriter->save('php://output'); 
-		$objWriter->save('/'); 
+		$objWriter->save( getcwd () . '/output/123.xls' );
+		
 	}
 
 	function get_order_detail_by_customer()
