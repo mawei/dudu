@@ -925,12 +925,12 @@ class Api extends Api_Controller {
 		} 
 		// Fetching the table data 
 		$row = 2; 
-		foreach($query->result() as $data) 
+		foreach($query->result_array() as $data) 
 		{ 
 			$col = 0; 
-			foreach ($fields as $field) 
+			foreach ($fields as $key=>$field) 
 			{ 
-				$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col, $row, $data->$field); 
+				$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col, $row, $data[$key]); 
 				$col++; 
 			} 
 			$row++; 
