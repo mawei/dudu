@@ -1003,7 +1003,7 @@ class Api extends Api_Controller {
 	{
 		$customer_id = $this->encrypt->decode ( $this->format_get ( 'customer_id' ), $this->key );
 		$order_id = $this->format_get('order_id');
-		$query_str = " select t1.* from `t_aci_order` where t1.status not in ('已完成','已取消') and t1.customer_id='{$customer_id}' order by t1.create_time desc";
+		$query_str = " select t1.* from `t_aci_order` t1 where t1.status not in ('已完成','已取消') and t1.customer_id='{$customer_id}' order by t1.create_time desc";
 		$result = $this->db->query ( $query_str )->result_array ();
 		if(count($result) > 0)
 		{
