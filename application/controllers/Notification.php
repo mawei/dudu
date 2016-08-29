@@ -294,7 +294,7 @@ class Notification {
 		}
 	}
 
-	function sendIOSCustomizedcast() {
+	function sendIOSCustomizedcast($alias_type,$alias,$content) {
 		try {
 			$customizedcast = new IOSCustomizedcast();
 			$customizedcast->setAppMasterSecret($this->appMasterSecret);
@@ -307,7 +307,7 @@ class Notification {
 			$customizedcast->setPredefinedKeyValue("alias", "xx");
 			// Set your alias_type here
 			$customizedcast->setPredefinedKeyValue("alias_type", "xx");
-			$customizedcast->setPredefinedKeyValue("alert", "IOS 个性化测试");
+			$customizedcast->setPredefinedKeyValue("alert", $content);
 			$customizedcast->setPredefinedKeyValue("badge", 0);
 			$customizedcast->setPredefinedKeyValue("sound", "chime");
 			// Set 'production_mode' to 'true' if your app is under production mode

@@ -49,10 +49,12 @@ class Api extends Api_Controller {
 	// $this->load->view('login',$error);
 	// }
 
-	function zhaoche_notification()
+	function zhaoche_notification($alias_type,$alias,$content)
 	{
 		$notification = new Notification($this->zhaoche_notification_key, $this->zhaoche_notification_secret);
-		$notification->sendIOSListcast("您的订单已有司机接单，请查看", "efe56ea024ec1738fb00a0b8a8946cb0be88e7738ff30635285056caad8e29d0");
+		$notification->sendIOSCustomizedcast($alias_type,$alias,$content);
+		// $notification->sendIOSListcast("您的订单已有司机接单，请查看", "efe56ea024ec1738fb00a0b8a8946cb0be88e7738ff30635285056caad8e29d0");
+
 		// $demo = new Demo("your appkey", "your app master secret");
 		// $demo->sendAndroidUnicast();
 	}
@@ -332,7 +334,7 @@ class Api extends Api_Controller {
 
 
 				$customer_telephone = $this->db->query("select telephone from `t_aci_customer` where customer_id={$r[0]['customer_id']}")->result_array()[0]['telephone'];
-				$this->zhaoche_notification();
+				$this->zhaoche_notification("customer",$r[0]['customer_id'],"您的订单已有货车司机接单,点击查看");
 				$this->sms_content($customer_telephone,"【嘟嘟找车】您的订单已有货车司机接单，请在三分钟内进入app进行确认");
 				$this->output_result ( 0, 'success', 'success' );
 			}else{
