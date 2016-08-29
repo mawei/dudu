@@ -251,14 +251,14 @@ class Api extends Api_Controller {
 			}
 			if($start_area != "" && $start_area != "全市")
 			{
-				$str .= " and t1.area='{$area}'";
+				$str .= " and t1.area='{$start_area}'";
 			}
 			if($end_city != "" && $end_city != "全市" && $end_city != "全省"){
-				$str .= " and t2.city='{$start_city}'";
+				$str .= " and t2.city='{$end_city}'";
 			}
 			if($end_area != "" && $end_area != "全市")
 			{
-				$str .= " and t2.area='{$area}'";
+				$str .= " and t2.area='{$end_area}'";
 			}
 			$query_str = "
 			select t4.*,t3.`truck_type`,t3.`truck_size`,t3.start_place,t3.end_place,t3.charge,t3.miles from t_aci_order  t3
