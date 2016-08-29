@@ -308,13 +308,14 @@ class Notification {
 			// Set your alias_type here
 			$customizedcast->setPredefinedKeyValue("alias_type", $alias_type);
 			$customizedcast->setPredefinedKeyValue("alert", $content);
+			$customizedcast->setPredefinedKeyValue("description", "通知");
 			$customizedcast->setPredefinedKeyValue("badge", 0);
 			$customizedcast->setPredefinedKeyValue("sound", "chime");
 			// Set 'production_mode' to 'true' if your app is under production mode
 			$customizedcast->setPredefinedKeyValue("production_mode", "false");
-			print("Sending customizedcast notification, please wait...\r\n");
+			//print("Sending customizedcast notification, please wait...\r\n");
 			$customizedcast->send();
-			print("Sent SUCCESS\r\n");
+			//print("Sent SUCCESS\r\n");
 		} catch (Exception $e) {
 			print("Caught exception: " . $e->getMessage());
 		}
