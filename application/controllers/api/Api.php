@@ -61,7 +61,7 @@ class Api extends Api_Controller {
 
 	public function test_notification()
 	{
-		zhaoche_notification("customer","13761011304","test");
+		$this->zhaoche_notification("customer","13761011304","test");
 	}
 
 
