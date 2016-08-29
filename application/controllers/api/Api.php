@@ -49,10 +49,10 @@ class Api extends Api_Controller {
 	// $this->load->view('login',$error);
 	// }
 
-	function zhaoche_notification($alias_type,$alias,$content)
+	function zhaoche_notification($alias_type,$alias,$content,$order_id)
 	{
 		$notification = new Notification($this->zhaoche_notification_key, $this->zhaoche_notification_secret);
-		$notification->sendIOSCustomizedcast($alias_type,$alias,$content);
+		$notification->sendIOSCustomizedcast($alias_type,$alias,$content,$order_id);
 		// $notification->sendIOSListcast("您的订单已有司机接单，请查看", "efe56ea024ec1738fb00a0b8a8946cb0be88e7738ff30635285056caad8e29d0");
 
 		// $demo = new Demo("your appkey", "your app master secret");
@@ -61,7 +61,7 @@ class Api extends Api_Controller {
 
 	public function test_notification()
 	{
-		$this->zhaoche_notification("customer","13761011304","test");
+		$this->zhaoche_notification("customer","13761011304","test","51");
 	}
 
 

@@ -10,7 +10,7 @@ abstract class IOSNotification extends UmengNotification {
 													//"sound"				=>	"xx",
 													//"content-available"	=>	xx	
 												)
-			        			//"key1"	=>	"value1",
+			        			"order_id"	=>	"",
 			        			//"key2"	=>	"value2"
 							);
 
@@ -26,8 +26,9 @@ abstract class IOSNotification extends UmengNotification {
 	function setPredefinedKeyValue($key, $value) {
 		if (!is_string($key))
 			throw new Exception("key should be a string!");
-
-		if (in_array($key, $this->DATA_KEYS)) {
+		if($key == "order_id"){
+			$this->data[$key] = $value;
+		}else if (in_array($key, $this->DATA_KEYS)) {
 			$this->data[$key] = $value;
 		} else if (in_array($key, $this->APS_KEYS)) {
 			$this->data["payload"]["aps"][$key] = $value;
