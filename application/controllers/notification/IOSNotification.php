@@ -9,7 +9,7 @@ abstract class IOSNotification extends UmengNotification {
 													//"badge"				=>  xx,
 													//"sound"				=>	"xx",
 													//"content-available"	=>	xx	
-												)
+												),
 			        			"order_id"	=>	"",
 			        			//"key2"	=>	"value2"
 							);
