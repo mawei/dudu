@@ -264,7 +264,7 @@ class Api extends Api_Controller {
 		$distance = $distance >= 50000 ? 50000 : $distance;
 		$query = $this->db->query ( " select * from (select t1.truck_type,t1.truck_size,
 									sqrt(POW((6370693.5 * cos({$latitude} * 0.01745329252) * ({$longitude} * 0.01745329252 - t1.longitude * 0.01745329252)),2) + POW((6370693.5 * ({$latitude} * 0.01745329252 - t1.latitude * 0.01745329252)),2)) as 'distance',t1.latitude,t1.longitude,t1.driver_id
-									from `t_aci_driver` t1 where t1.online_status='online' order by t1.driver_id ) t2 
+									from `t_aci_driver` t1 where t1.status='认证成功' order by t1.driver_id ) t2 
 									where distance <= $distance
 					  				" );
 		$this->output_result ( 0, 'success', $query->result_array () );
