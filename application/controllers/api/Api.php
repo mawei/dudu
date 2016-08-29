@@ -245,7 +245,7 @@ class Api extends Api_Controller {
 		$end_city =  $this->format_get ('end_city',"" );
 		$end_area =  $this->format_get ('end_area' ,"");
 		if($distance == 0){
-			$str = ""
+			$str = "";
 			if($start_city != "" && $start_city != "全市" && $start_city != "全省"){
 				$str .= " and t1.city='{$start_city}'";
 			}
