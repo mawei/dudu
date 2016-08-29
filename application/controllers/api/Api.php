@@ -245,12 +245,27 @@ class Api extends Api_Controller {
 		$end_city =  $this->format_get ('end_city',"" );
 		$end_area =  $this->format_get ('end_area' ,"");
 		if($distance == 0){
+			$str = ""
+			if($start_city != "" && $start_city != "全市" && $start_state != "全省"){
+				$str .= " and t1.city='{$start_city}'";
+			}
+			if($start_area != "" && $start_area != "全市")
+			{
+				$str .= " and t1.area='{$area}'";
+			}
+			if($end_city != "" && $end_city != "全市" && $end_city != "全省"){
+				$str .= " and t2.city='{$start_city}'";
+			}
+			if($end_area != "" && $end_area != "全市")
+			{
+				$str .= " and t2.area='{$area}'";
+			}
 			$query_str = "
 			select t4.*,t3.`truck_type`,t3.`truck_size`,t3.start_place,t3.end_place,t3.charge,t3.miles from t_aci_order  t3
 			JOIN(
 				SELECT t1.order_id,
-				t1.`latitude` as start_place_latitude,t1.`longitude` as start_place_longitude,t2.`latitude`  as end_place_latitude,t2.`longitude` as end_place_longitude FROM `t_aci_address`  t1  LEFT join `t_aci_address` t2 on t1.order_id=t2.order_id where  t1.state='{$start_state}' AND t1.city='{$start_city}' AND t1.area='{$start_area}' and t1.type='出发地'
-				and  t2.state='{$end_state}' AND t2.city='{$end_city}' AND t2.area='{$end_area}' and t2.type='目的地'
+				t1.`latitude` as start_place_latitude,t1.`longitude` as start_place_longitude,t2.`latitude`  as end_place_latitude,t2.`longitude` as end_place_longitude FROM `t_aci_address`  t1  LEFT join `t_aci_address` t2 on t1.order_id=t2.order_id where  t1.state='{$start_state}'" . $str . " and t1.type='出发地'
+				and  t2.state='{$end_state}' and t2.type='目的地'
     		) t4 on t3.order_id=t4.order_id where t3.status='未接单' order by t3.start_time desc
 			";
 		}else{
