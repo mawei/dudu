@@ -858,7 +858,7 @@ class Api extends Api_Controller {
 		{
 			$query_str = " select t1.* from `t_aci_order` t1 where t1.customer_id='{$customer_id}' and t1.status not in ('已完成','已取消') limit {$start},{$number}";
 		}else{
-			$query_str = " select t1.* from `t_aci_order` t1 where t1.customer_id='{$customer_id}' and t1.status in ('已完成','已取消') limit {$start},{$number}";
+			$query_str = " select t1.* from `t_aci_order` t1 where t1.customer_id='{$customer_id}' and t1.status in ('已完成') limit {$start},{$number}";
 		}
 		$query = $this->db->query ( $query_str );
 		$this->output_result ( 0, 'success', $query->result_array () );
