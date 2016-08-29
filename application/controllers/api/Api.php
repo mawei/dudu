@@ -59,6 +59,11 @@ class Api extends Api_Controller {
 		// $demo->sendAndroidUnicast();
 	}
 
+	public function test_notification()
+	{
+		zhaoche_notification("customer","13761011304","test");
+	}
+
 
 	public function output_result($code, $message, $data) {
 		$result = array ();
