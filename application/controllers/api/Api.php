@@ -1502,15 +1502,7 @@ class Api extends Api_Controller {
 		
 		
 	}
-	
-	function test_notification()
-	{
-		$notification = new Notification($this->UmengKey, $this->UmengSecret);
-		$notification->sendIOSListcast("***在你周边发起了羽毛球活动", "33992a3218007b7323f207f296b4873fc20c40684c3fa41e089d15fdf6e1cd01");
-		// $demo = new Demo("your appkey", "your app master secret");
-		// $demo->sendAndroidUnicast();
-	}
-	
+		
 	function report_activity() {
 		$user_id = $this->encrypt->decode ( $this->format_get ( 'user_id' ), $this->key );
 		$data ['activity_id'] = $this->format_get ( 'activity_id' );
