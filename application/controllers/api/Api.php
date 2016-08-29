@@ -334,7 +334,7 @@ class Api extends Api_Controller {
 
 
 				$customer_telephone = $this->db->query("select telephone from `t_aci_customer` where customer_id={$r[0]['customer_id']}")->result_array()[0]['telephone'];
-				$this->zhaoche_notification("customer",$r[0]['customer_id'],"您的订单已有货车司机接单,点击查看");
+				$this->zhaoche_notification("customer",$customer_telephone,"您的订单已有货车司机接单,点击查看");
 				$this->sms_content($customer_telephone,"【嘟嘟找车】您的订单已有货车司机接单，请在三分钟内进入app进行确认");
 				$this->output_result ( 0, 'success', 'success' );
 			}else{
