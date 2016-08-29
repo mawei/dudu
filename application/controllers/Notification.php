@@ -304,9 +304,9 @@ class Notification {
 			// Set your alias here, and use comma to split them if there are multiple alias.
 			// And if you have many alias, you can also upload a file containing these alias, then 
 			// use file_id to send customized notification.
-			$customizedcast->setPredefinedKeyValue("alias", "xx");
+			$customizedcast->setPredefinedKeyValue("alias", $alias);
 			// Set your alias_type here
-			$customizedcast->setPredefinedKeyValue("alias_type", "xx");
+			$customizedcast->setPredefinedKeyValue("alias_type", $alias_type);
 			$customizedcast->setPredefinedKeyValue("alert", $content);
 			$customizedcast->setPredefinedKeyValue("badge", 0);
 			$customizedcast->setPredefinedKeyValue("sound", "chime");
