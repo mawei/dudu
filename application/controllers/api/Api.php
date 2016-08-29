@@ -315,7 +315,7 @@ class Api extends Api_Controller {
 			$this->output_result ( -1, 'failed', '该订单已被抢走，下次记得抢快点哦' );
 		}else{
 			$driver = $this->db->query("select * from `t_aci_driver` where driver_id={$driver_id}")->result_array()[0];
-			$order = $this->db->query("select * from `t_aci_order` t1 where status='未接单' and order_id={$order_id} and truck_type='{$driver['truck_type']}' and truck_size='{$driver['truck_size']}'")->result_array();
+			$order = $this->db->query("select * from `t_aci_order` t1 where status='未接单' and order_id={$order_id} and truck_type='{$driver['truck_type']}' and truck_size LIKE '%{$driver['truck_size']}%'")->result_array();
 
 			if(count($order) > 0)
 			{
@@ -1069,8 +1069,13 @@ class Api extends Api_Controller {
 		$driver_id = $this->encrypt->decode ( $this->format_get ( 'driver_id' ), $this->key );
 		$route_id = $this->format_get('route_id');
 		$query_str = " select t1.* from `t_aci_general_route` t1 where t1.driver_id='{$driver_id}' and t1.general_route_id='{$route_id}'";
-		$query = $this->db->query ( $query_str );
-		$this->output_result ( 0, 'success', $query->result_array ()[0] );
+		$query = $this->db->query ( $query_str )->result_array ();
+		if(count($query) > 0)
+		{
+			$this->output_result ( 0, 'success', $query[0] );
+		}else{
+			$this->output_result ( -1, 'error', "请重新设置首选常跑路线" );
+		}
 	}
 
 	function add_route_by_driver()
