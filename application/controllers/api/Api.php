@@ -35,9 +35,10 @@ class Api extends Api_Controller {
 		$this->load->library ( 'encrypt' );
 		
 		$this->key = '&(*&(*';
-		$this->UmengKey = "5710924be0f55a8aba000646";
-		$this->UmengSecret = "vuqkrc5tc08uolcgvolti87y60uhieyc";
-		
+		$this->zhaoche_notification_key = "57ac4f0867e58e6f0d000073";
+		$this->zhaohuo_notification_key = "57ac4f8467e58ef6d1003707";
+		$this->zhaoche_notification_secret = "oe7rsiprejirbmuhszi4hngymrlrzjm9";
+		$this->zhaohuo_notification_secret = "ssvowwlptvmoifjylyzbqnxqp2b209mk";
 		// 验证˙
 		// $this->auth_token();
 	}
@@ -48,6 +49,13 @@ class Api extends Api_Controller {
 	// $this->load->view('login',$error);
 	// }
 
+	function zhaoche_notification()
+	{
+		$notification = new Notification($this->UmengKey, $this->zhaoche_notification_secret);
+		$notification->sendIOSListcast("您的订单已有司机接单，请查看", "efe56ea024ec1738fb00a0b8a8946cb0be88e7738ff30635285056caad8e29d0");
+		// $demo = new Demo("your appkey", "your app master secret");
+		// $demo->sendAndroidUnicast();
+	}
 
 
 	public function output_result($code, $message, $data) {
@@ -324,7 +332,7 @@ class Api extends Api_Controller {
 
 
 				$customer_telephone = $this->db->query("select telephone from `t_aci_customer` where customer_id={$r[0]['customer_id']}")->result_array()[0]['telephone'];
-
+				$this->zhaoche_notification();
 				$this->sms_content($customer_telephone,"【嘟嘟找车】您的订单已有货车司机接单，请在三分钟内进入app进行确认");
 				$this->output_result ( 0, 'success', 'success' );
 			}else{
