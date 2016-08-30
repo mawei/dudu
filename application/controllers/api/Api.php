@@ -763,6 +763,45 @@ class Api extends Api_Controller {
 	}
 
 	//车主注册
+	public function customer_reset_password() {
+		$telephone = $this->format_get ( 'telephone' );
+		$authcode = $this->format_get ( 'authcode' );
+		// $secret_authcode = $this->format_get ( 'secret_authcode' );
+		// $secret_telephone = $this->format_get ( 'secret_telephone' );
+		$telephone = $this->format_get ( 'telephone' );
+		$password = $this->format_get('password');
+
+
+		if($telephone == "")
+		{
+			$this->output_result ( - 1, 'failed', '手机号码不能为空' );
+		}
+		if($password == "")
+		{
+			$this->output_result ( - 1, 'failed', '密码不能为空' );
+		}
+
+		$secret_telephone = $this->encrypt->decode ( $this->format_get ( 'secret_telephone' ), $this->key );
+		if ($telephone != $secret_telephone) {
+			$this->output_result ( - 888, 'failed', '非法操作' );
+		}
+		$auth_code_secret = $this->encrypt->decode ( $this->format_get ( 'secret_authcode' ), $this->key );
+		$authcode = $this->format_get ( 'authcode' );
+		if ($authcode != $auth_code_secret) {
+			$this->output_result ( - 1, 'failed', '验证码错误' );
+		}
+		$result = $this->db->query ( "select * from `t_aci_customer` where telephone = '{$telephone}'" )->result_array ();
+		
+		if (count ( $result ) >= 1) {
+			$password = md5 ( $this->key . $password);
+			$this->db->query("update `t_aci_customer` set password='{$password}' where telephone='{$telephone}'");
+			$this->output_result ( 0, 'success', '' );
+		} else {
+			$this->output_result ( - 1, 'failed', '该用户不存在' );
+		}
+	}
+
+	//车主注册
 	public function driver_register() {
 		$telephone = $this->format_get ( 'telephone' );
 		$authcode = $this->format_get ( 'authcode' );
@@ -814,6 +853,46 @@ class Api extends Api_Controller {
 			$this->output_result ( 0, 'success', '' );
 		}
 	}
+
+		//车主注册
+	public function driver_reset_password() {
+		$telephone = $this->format_get ( 'telephone' );
+		$authcode = $this->format_get ( 'authcode' );
+		// $secret_authcode = $this->format_get ( 'secret_authcode' );
+		// $secret_telephone = $this->format_get ( 'secret_telephone' );
+		$telephone = $this->format_get ( 'telephone' );
+		$password = $this->format_get('password');
+
+
+		if($telephone == "")
+		{
+			$this->output_result ( - 1, 'failed', '手机号码不能为空' );
+		}
+		if($password == "")
+		{
+			$this->output_result ( - 1, 'failed', '密码不能为空' );
+		}
+
+		$secret_telephone = $this->encrypt->decode ( $this->format_get ( 'secret_telephone' ), $this->key );
+		if ($telephone != $secret_telephone) {
+			$this->output_result ( - 888, 'failed', '非法操作' );
+		}
+		$auth_code_secret = $this->encrypt->decode ( $this->format_get ( 'secret_authcode' ), $this->key );
+		$authcode = $this->format_get ( 'authcode' );
+		if ($authcode != $auth_code_secret) {
+			$this->output_result ( - 1, 'failed', '验证码错误' );
+		}
+		$result = $this->db->query ( "select * from `t_aci_driver` where telephone = '{$telephone}'" )->result_array ();
+		
+		if (count ( $result ) >= 1) {
+			$password = md5 ( $this->key . $password);
+			$this->db->query("update `t_aci_driver` set password='{$password}' where telephone='{$telephone}'");
+			$this->output_result ( 0, 'success', '' );
+		} else {
+			$this->output_result ( - 1, 'failed', '该用户不存在' );
+		}
+	}
+
 
 	// 车主登陆
 	public function driver_login() {
