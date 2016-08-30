@@ -1237,7 +1237,13 @@ class Api extends Api_Controller {
 			$this->sms_code ( $mobile, $authcode );
 			$this->output_result(0, 'success', $res);
 		}else{
-			$this->output_result(-1, 'failed', '该手机号已注册');
+			if ($this->format_get ( 'method',"" ) == 'reset_password')
+			{
+				$this->sms_code ( $mobile, $authcode );
+				$this->output_result(0, 'success', $res);
+			}else{
+				$this->output_result(-1, 'failed', '该手机号已注册');
+			}
 		}
 	}
 
@@ -1254,7 +1260,13 @@ class Api extends Api_Controller {
 			$this->sms_code ( $mobile, $authcode );
 			$this->output_result(0, 'success', $res);
 		}else{
-			$this->output_result(-1, 'failed', '该手机号已注册');
+			if ($this->format_get ( 'method',"" ) == 'reset_password')
+			{
+				$this->sms_code ( $mobile, $authcode );
+				$this->output_result(0, 'success', $res);
+			}else{
+				$this->output_result(-1, 'failed', '该手机号已注册');
+			}
 		}
 	}
 
