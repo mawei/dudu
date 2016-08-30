@@ -909,6 +909,8 @@ class Api extends Api_Controller {
 				$array ['telephone'] = $result2 [0] ['telephone'];
 				$array ['nickname'] = $result2 [0] ['nickname'];
 				$array ['photo'] = $result2 [0] ['photo'];
+				$array ['truck_size'] = $result2 [0] ['truck_size'];
+				$array ['truck_type'] = $result2 [0] ['truck_type'];
 
 				// $array ['name'] = $result2 [0] ['name'];
 				// $array ['identity'] = $result2 [0] ['identity'];
