@@ -1313,12 +1313,17 @@ class Api extends Api_Controller {
 		$res['authcode'] = $this->encrypt->encode ( $authcode, $this->key );
 	
 		$result = $this->db->query ( "select * from `t_aci_customer` where telephone = '{$mobile}'" )->result_array ();
-		if(count($result) == 0)
+		if ($this->format_get ( 'method',"" ) == 'reset_password')
 		{
-			$this->sms_code ( $mobile, $authcode );
-			$this->output_result(0, 'success', $res);
+			if(count($result) == 0)
+			{
+				$this->output_result(-1, 'failed', '该手机号未注册');
+			}else{
+				$this->sms_code ( $mobile, $authcode );
+				$this->output_result(0, 'success', $res);
+			}
 		}else{
-			if ($this->format_get ( 'method',"" ) == 'reset_password')
+			if(count($result) == 0)
 			{
 				$this->sms_code ( $mobile, $authcode );
 				$this->output_result(0, 'success', $res);
@@ -1326,6 +1331,7 @@ class Api extends Api_Controller {
 				$this->output_result(-1, 'failed', '该手机号已注册');
 			}
 		}
+			
 	}
 
 	public function get_authcode_by_driver() {
@@ -1336,12 +1342,17 @@ class Api extends Api_Controller {
 		$res['authcode'] = $this->encrypt->encode ( $authcode, $this->key );
 	
 		$result = $this->db->query ( "select * from `t_aci_driver` where telephone = '{$mobile}'" )->result_array ();
-		if(count($result) == 0)
+		if ($this->format_get ( 'method',"" ) == 'reset_password')
 		{
-			$this->sms_code ( $mobile, $authcode );
-			$this->output_result(0, 'success', $res);
+			if(count($result) == 0)
+			{
+				$this->output_result(-1, 'failed', '该手机号未注册');
+			}else{
+				$this->sms_code ( $mobile, $authcode );
+				$this->output_result(0, 'success', $res);
+			}
 		}else{
-			if ($this->format_get ( 'method',"" ) == 'reset_password')
+			if(count($result) == 0)
 			{
 				$this->sms_code ( $mobile, $authcode );
 				$this->output_result(0, 'success', $res);
