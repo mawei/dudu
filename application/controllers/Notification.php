@@ -317,7 +317,7 @@ class Notification {
 			$customizedcast->send();
 			//print("Sent SUCCESS\r\n");
 		} catch (Exception $e) {
-			print("Caught exception: " . $e->getMessage());
+			//print("Caught exception: " . $e->getMessage());
 		}
 	}
 }
