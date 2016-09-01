@@ -39,8 +39,8 @@ class Api extends Api_Controller {
 		$this->zhaohuo_notification_key = "57ac4f8467e58ef6d1003707";
 		$this->zhaoche_notification_secret = "oe7rsiprejirbmuhszi4hngymrlrzjm9";
 		$this->zhaohuo_notification_secret = "ssvowwlptvmoifjylyzbqnxqp2b209mk";
-		// 验证˙
-		// $this->auth_token();
+		// 验证˙up
+		//$this->auth_token();
 	}
 	
 	// public function index()
@@ -82,42 +82,42 @@ class Api extends Api_Controller {
 	}
 
 	// 货主登陆
-	public function customerLogin() {
-		$username = $this->format_get ( 'username' );
-		//$authcode = $this->format_get ( 'code' );
-		$password = md5 ( $this->key . $this->format_get ( 'password' ) );
+	// public function customerLogin() {
+	// 	$username = $this->format_get ( 'username' );
+	// 	//$authcode = $this->format_get ( 'code' );
+	// 	$password = md5 ( $this->key . $this->format_get ( 'password' ) );
 		
-		$result = $this->db->query ( "select * from `t_aci_customer` where username = '{$username}'" )->result_array ();
+	// 	$result = $this->db->query ( "select * from `t_aci_customer` where username = '{$username}'" )->result_array ();
 		
-		if (count ( $result ) >= 1) {
-			$result2 = $this->db->query ( "select * from `user` where username = '{$username}' and password='{$password}'" )->result_array ();
-			if (count ( $result2 ) >= 1) {
-				$array ['id'] = $this->encrypt->encode ( $result2 [0] ['id'], $this->key );
-				switch ($array['customer_type']) {
-					case '物流公司':
-						$array ['name'] = $result2 [0] ['wuliu_name'];
-						break;
-					case '企业':
-						$array ['name'] = $result2 [0] ['company_name'];
-						break;
-					case '个人':
-						$array ['name'] = $result2 [0] ['company_name'];
-						break;
+	// 	if (count ( $result ) >= 1) {
+	// 		$result2 = $this->db->query ( "select * from `user` where username = '{$username}' and password='{$password}'" )->result_array ();
+	// 		if (count ( $result2 ) >= 1) {
+	// 			$array ['id'] = $this->encrypt->encode ( $result2 [0] ['id'], $this->key );
+	// 			switch ($array['customer_type']) {
+	// 				case '物流公司':
+	// 					$array ['name'] = $result2 [0] ['wuliu_name'];
+	// 					break;
+	// 				case '企业':
+	// 					$array ['name'] = $result2 [0] ['company_name'];
+	// 					break;
+	// 				case '个人':
+	// 					$array ['name'] = $result2 [0] ['company_name'];
+	// 					break;
 					
-					default:
-						break;
-				}
+	// 				default:
+	// 					break;
+	// 			}
 				
-				$array ['device_token'] = $result2 [0] ['device_token'];
-				$array ['no_secret_id'] = $result2 [0] ['id'];
-				$this->output_result ( 0, 'success', $array );
-			} else {
-				$this->output_result ( - 3, 'failed', '密码错误' );
-			}
-		} else {
-			$this->output_result ( - 2, 'failed', '用户不存在' );
-		}
-	}
+	// 			$array ['device_token'] = $result2 [0] ['device_token'];
+	// 			$array ['no_secret_id'] = $result2 [0] ['id'];
+	// 			$this->output_result ( 0, 'success', $array );
+	// 		} else {
+	// 			$this->output_result ( - 3, 'failed', '密码错误' );
+	// 		}
+	// 	} else {
+	// 		$this->output_result ( - 2, 'failed', '用户不存在' );
+	// 	}
+	// }
 
 	//上传公司营业执照
 	function upload_company_license() {
@@ -231,6 +231,7 @@ class Api extends Api_Controller {
 
 	//按范围获取订单列表（用于地图）
 	public function get_order_list() {
+		$this->db->query("update `t_aci_order` set status='未接单',driver_id=NULL ,accept_order_time=NULL where order_id in (select * from (select order_id from `t_aci_order` where status='接单中' and TIMESTAMPDIFF(SECOND,accept_order_time,CURRENT_TIMESTAMP()) >= 600) t1)");
 
 		$latitude =  $this->format_get ('latitude',0);
 		$longitude =  $this->format_get ('longitude',0);
@@ -1107,7 +1108,7 @@ class Api extends Api_Controller {
 
 			if($r['status'] == '接单中' )
 			{
-				if($r['accept_remain_time']  >= 180)
+				if($r['accept_remain_time']  >= 600)
 				{
 					$this->db->query("update `t_aci_order` set status='未接单',driver_id=NULL ,accept_order_time=NULL where order_id={$order_id}");
 					$r['status'] == '未接单';
@@ -1145,7 +1146,7 @@ class Api extends Api_Controller {
 			$r = $result[0];
 			if($r['status'] == '接单中' )
 			{
-				if($r['accept_remain_time']  >= 180)
+				if($r['accept_remain_time']  >= 600)
 				{
 					$this->db->query("update `t_aci_order` set status='未接单',driver_id=NULL ,accept_order_time=NULL where order_id={$order_id}");
 					$r['status'] == '未接单';
