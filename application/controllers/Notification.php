@@ -312,7 +312,7 @@ class Notification {
 			$customizedcast->setPredefinedKeyValue("badge", 0);
 			$customizedcast->setPredefinedKeyValue("sound", "chime");
 			// Set 'production_mode' to 'true' if your app is under production mode
-			$customizedcast->setPredefinedKeyValue("production_mode", "false");
+			$customizedcast->setPredefinedKeyValue("production_mode", "true");
 			//print("Sending customizedcast notification, please wait...\r\n");
 			$customizedcast->send();
 			//print("Sent SUCCESS\r\n");
