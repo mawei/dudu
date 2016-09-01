@@ -2,3 +2,15 @@
 application/cache
 
 application/logs/log-2016-07-25.php
+
+application/controllers/.DS_Store
+
+application/controllers/api/.DS_Store
+
+application/.DS_Store
+
+application/libraries/.DS_Store
+
+application/controllers/notification/.DS_Store
+
+.DS_Store
