@@ -700,6 +700,7 @@ class Api extends Api_Controller {
 	public function customer_login() {
 		$telephone = $this->format_get ( 'telephone' );
 		$password = md5 ( $this->key . $this->format_get ( 'password' ) );
+		$device_type = $this->format_get ( 'device_type' );
 
 
 		$result = $this->db->query ( "select * from `t_aci_customer` where telephone = '{$telephone}'" )->result_array ();
@@ -715,6 +716,14 @@ class Api extends Api_Controller {
 				$array ['status_memo'] = $result2 [0] ['status_memo'];
 				$array ['last_login'] = $result2 [0] ['last_login'];
 				$array ['customer_type'] = $result2 [0] ['customer_type'];
+
+				if($result2[0]['device_type'] != $device_type)
+				{
+					$this->db->query("update `t_aci_customer` set device_type='{$device_type}' where customer_id={$result2[0]['customer_id']}");
+				}
+				$last_login = date("Y-m-d H:i:s",time());
+				$this->db->query("update `t_aci_customer` set last_login='{$last_login}' where customer_id={$result2[0]['customer_id']}");
+
 				$this->output_result ( 0, 'success', $array );
 			} else {
 				$this->output_result ( - 3, 'failed', '密码错误' );
@@ -907,30 +916,32 @@ class Api extends Api_Controller {
 	public function driver_login() {
 		$telephone = $this->format_get ( 'telephone' );
 		$password = md5 ( $this->key . $this->format_get ( 'password' ) );
-
+		$device_type = $this->format_get( 'device_type' );
 
 		$result = $this->db->query ( "select * from `t_aci_driver` where telephone = '{$telephone}'" )->result_array ();
 		
 		if (count ( $result ) >= 1) {
 			$result2 = $this->db->query ( "select * from `t_aci_driver` where telephone = '{$telephone}' and password='{$password}'" )->result_array ();
 			if (count ( $result2 ) >= 1) {
+
 				$array ['driver_id'] = $this->encrypt->encode ( $result2 [0] ['driver_id'], $this->key );
 				$array ['telephone'] = $result2 [0] ['telephone'];
 				$array ['nickname'] = $result2 [0] ['nickname'];
 				$array ['photo'] = $result2 [0] ['photo'];
 				$array ['truck_size'] = $result2 [0] ['truck_size'];
 				$array ['truck_type'] = $result2 [0] ['truck_type'];
-
-				// $array ['name'] = $result2 [0] ['name'];
-				// $array ['identity'] = $result2 [0] ['identity'];
-				// $array ['wuliu_name'] = $result2 [0] ['wuliu_name'];
-				// $array ['wuliu_license'] = $result2 [0] ['wuliu_license'];
-				// $array ['company_name'] = $result2 [0] ['company_name'];
-				// $array ['company_license'] = $result2 [0] ['company_license'];
 				$array ['status'] = $result2 [0] ['status'];
 				$array ['status_memo'] = $result2 [0] ['status_memo'];
 				$array ['last_login'] = $result2 [0] ['last_login'];
-				//$array ['customer_type'] = $result2 [0] ['customer_type'];
+
+				if($result2[0]['device_type'] != $device_type)
+				{
+					$this->db->query("update `t_aci_driver` set device_type='{$device_type}' where driver_id={$result2[0]['driver_id']}");
+				}
+				$last_login = date("Y-m-d H:i:s",time());
+				$this->db->query("update `t_aci_driver` set last_login='{$last_login}' where driver_id={$result2[0]['driver_id']}");
+
+
 				$this->output_result ( 0, 'success', $array );
 			} else {
 				$this->output_result ( - 3, 'failed', '密码错误' );
