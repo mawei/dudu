@@ -211,8 +211,8 @@ class Api extends Api_Controller {
 		$end_address = $this->db->query("select * from `t_aci_address` where address_id={$end_address_id}")->result_array()[0];
 		$miles = sqrt(POW((6370693.5 * cos($start_address['latitude'] * 0.01745329252) * ($end_address['longitude'] * 0.01745329252 - $start_address['longitude'] * 0.01745329252)),2) + POW((6370693.5 * ($end_address['latitude'] * 0.01745329252 - $start_address['latitude'] * 0.01745329252)),2)) * 1.1;
 		$this->db->query("update `t_aci_order` set miles='{$miles}' where order_id={$order_id}");
-
-		$this->output_result ( 0, 'success', $order_id );		
+		$array["order_id"] = $order_id;
+		$this->output_result ( 0, 'success',  $array);		
 	}
 
 	// //获取订单列表
