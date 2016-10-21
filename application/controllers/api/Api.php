@@ -624,13 +624,26 @@ class Api extends Api_Controller {
 	{
 		$customer_id = $this->encrypt->decode ( $this->format_get ( 'customer_id' ), $this->key );
 		$order_id = $this->format_get('order_id');
-		//$accept_order_time = date("Y-m-d H:i:s",time());
+
+		$config ['upload_path'] = getcwd () . '/upload/sign/';
+		$config ['file_name'] = 'order_' . random_string () . '-' . $order_id;
+		$config ['allowed_types'] = 'gif|jpg|png';
+		$this->load->library ( 'upload', $config );
+		$this->upload->initialize ( $config );
+		if (! $this->upload->do_upload ( 'sign_image' )) {
+			$data ['log'] = $this->upload->display_errors ();
+			$data ['create_time'] = time ();
+			$this->db->insert ( 'log', $data );
+			$this->output_result ( - 1, 'failed', $this->upload->display_errors () );
+		} else {
+			$image_path = '/sign/' . $this->upload->data ()['file_name'];
+		}
 		$r = $this->db->query("select * from `t_aci_order` where order_id={$order_id} and customer_id={$customer_id}")->result_array();
 		if(count($r) == 0)
 		{
 			$this->output_result ( 0, 'failed', '请等待用户确认装货完毕' );
 		}else{
-			$this->db->query("update `t_aci_order` set status='已完成' where order_id={$order_id}");
+			$this->db->query("update `t_aci_order` set status='已完成',sign='{$image_path}' where order_id={$order_id}");
 
 			$customer = $this->db->query("select telephone,device_type from `t_aci_driver` where driver_id={$r[0]['driver_id']}")->result_array()[0];
 			$customer_telephone = $customer["telephone"];
@@ -760,7 +773,6 @@ class Api extends Api_Controller {
 
 	//货主注册
 	public function customer_register() {
-		$telephone = $this->format_get ( 'telephone' );
 		$authcode = $this->format_get ( 'authcode' );
 		// $secret_authcode = $this->format_get ( 'secret_authcode' );
 		// $secret_telephone = $this->format_get ( 'secret_telephone' );
