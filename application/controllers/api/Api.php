@@ -799,7 +799,7 @@ class Api extends Api_Controller {
 		if($be_recommend_code != "")
 		{
 			$count1 = $this->db->query("select count(driver_id) as count from `t_aci_driver` where recommend_code='{$be_recommend_code}'")->result_array()[0]['count'];
-			$count2 = $this->db->query("select count(costomer_id) as count from `t_aci_customer` where recommend_code='{$be_recommend_code}'")->result_array()[0]['count'];
+			$count2 = $this->db->query("select count(customer_id) as count from `t_aci_customer` where recommend_code='{$be_recommend_code}'")->result_array()[0]['count'];
 			if($count1 + $count2 == 0)
 			{
 				$this->output_result ( - 1, 'failed', '请确认邀请码是否填写正确' );
