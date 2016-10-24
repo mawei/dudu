@@ -808,6 +808,17 @@ class Api extends Api_Controller {
 		if (count ( $result ) >= 1) {
 			$this->output_result ( - 1, 'failed', '该用户已注册' );
 		} else {
+			$recommend_code = $this->randStr(5);
+			$count1 = $this->db->query("select count(driver_id) as count from `t_aci_driver` where recommend_code='{$recommend_code}'")->result_array()[0]['count'];
+			$count2 = $this->db->query("select count(customer_id) as count from `t_aci_customer` where recommend_code='{$recommend_code}'")->result_array()[0]['count'];
+			while(($count1 + $count2) > 0)
+			{
+				$recommand_code = randStr(5);
+				$count1 = $this->db->query("select count(id) as count from `t_aci_driver` where recommend_code='{$recommend_code}'")->result_array()[0]['count'];
+				$count2 = $this->db->query("select count(id) as count from `t_aci_customer` where recommend_code='{$recommend_code}'")->result_array()[0]['count'];
+			}
+			$data['recommend_code'] = recommend_code;
+
 			$data['telephone'] = $telephone;
 			$data['password'] = md5 ( $this->key . $password);
 			$data['customer_type'] = $customer_type;
@@ -858,18 +869,6 @@ class Api extends Api_Controller {
 
 	//车主注册
 	public function driver_register() {
-
-		$recommend_code = $this->randStr(5);
-		$count1 = $this->db->query("select count(driver_id) as count from `t_aci_driver` where recommend_code='{$recommend_code}'")->result_array()[0]['count'];
-		$count2 = $this->db->query("select count(customer_id) as count from `t_aci_customer` where recommend_code='{$recommend_code}'")->result_array()[0]['count'];
-		while(($count1 + $count2) > 0)
-		{
-			$recommand_code = randStr(5);
-			$count1 = $this->db->query("select count(id) as count from `t_aci_driver` where recommend_code='{$recommend_code}'")->result_array()[0]['count'];
-			$count2 = $this->db->query("select count(id) as count from `t_aci_customer` where recommend_code='{$recommend_code}'")->result_array()[0]['count'];
-		}
-		echo $recommend_code;die();
-
 		$telephone = $this->format_get ( 'telephone' );
 		$authcode = $this->format_get ( 'authcode' );
 		// $secret_authcode = $this->format_get ( 'secret_authcode' );
@@ -911,16 +910,16 @@ class Api extends Api_Controller {
 		if (count ( $result ) >= 1) {
 			$this->output_result ( - 1, 'failed', '该用户已注册' );
 		} else {
-			$recommand_code = randStr(5);
-			$count1 = $this->db->query("select count(id) as count from `t_aci_driver` where recommand_code='{$recommand_code}'")->result_array()['count'];
-			$count2 = $this->db->query("select count(id) as count from `t_aci_customer` where recommand_code='{$recommand_code}'")->result_array()['count'];
+			$recommend_code = $this->randStr(5);
+			$count1 = $this->db->query("select count(driver_id) as count from `t_aci_driver` where recommend_code='{$recommend_code}'")->result_array()[0]['count'];
+			$count2 = $this->db->query("select count(customer_id) as count from `t_aci_customer` where recommend_code='{$recommend_code}'")->result_array()[0]['count'];
 			while(($count1 + $count2) > 0)
 			{
 				$recommand_code = randStr(5);
-				$count1 = $this->db->query("select count(id) as count from `t_aci_driver` where recommand_code='{$recommand_code}'")->result_array()['count'];
-				$count2 = $this->db->query("select count(id) as count from `t_aci_customer` where recommand_code='{$recommand_code}'")->result_array()['count'];
+				$count1 = $this->db->query("select count(id) as count from `t_aci_driver` where recommend_code='{$recommend_code}'")->result_array()[0]['count'];
+				$count2 = $this->db->query("select count(id) as count from `t_aci_customer` where recommend_code='{$recommend_code}'")->result_array()[0]['count'];
 			}
-			$data['recommand_code'] = recommand_code;
+			$data['recommend_code'] = recommend_code;
 			$data['telephone'] = $telephone;
 			$data['password'] = md5 ( $this->key . $password);
 			$data['truck_type'] = $truck_type;
