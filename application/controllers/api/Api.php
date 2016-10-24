@@ -780,6 +780,7 @@ class Api extends Api_Controller {
 		$telephone = $this->format_get ( 'telephone' );
 		$customer_type = $this->format_get('customer_type');
 		$password = $this->format_get('password');
+		$be_recommend_code = $this->format_get('be_recommend_code');
 
 
 		if($telephone == "")
@@ -793,6 +794,16 @@ class Api extends Api_Controller {
 		if($password == "")
 		{
 			$this->output_result ( - 1, 'failed', '密码不能为空' );
+		}
+
+		if($be_recommend_code != "")
+		{
+			$count1 = $this->db->query("select count(driver_id) as count from `t_aci_driver` where recommend_code='{$be_recommend_code}'")->result_array()[0]['count'];
+			$count2 = $this->db->query("select count(costomer_id) as count from `t_aci_customer` where recommend_code='{$be_recommend_code}'")->result_array()[0]['count'];
+			if($count1 + $count2 == 0)
+			{
+				$this->output_result ( - 1, 'failed', '请确认邀请码是否填写正确' );
+			}
 		}
 
 		$secret_telephone = $this->encrypt->decode ( $this->format_get ( 'secret_telephone' ), $this->key );
@@ -815,10 +826,11 @@ class Api extends Api_Controller {
 			while(($count1 + $count2) > 0)
 			{
 				$recommend_code = randStr(5);
-				$count1 = $this->db->query("select count(id) as count from `t_aci_driver` where recommend_code='{$recommend_code}'")->result_array()[0]['count'];
-				$count2 = $this->db->query("select count(id) as count from `t_aci_customer` where recommend_code='{$recommend_code}'")->result_array()[0]['count'];
+				$count1 = $this->db->query("select count(driver_id) as count from `t_aci_driver` where recommend_code='{$recommend_code}'")->result_array()[0]['count'];
+				$count2 = $this->db->query("select count(customer_id) as count from `t_aci_customer` where recommend_code='{$recommend_code}'")->result_array()[0]['count'];
 			}
 			$data['recommend_code'] = $recommend_code;
+			$data['be_recommend_code'] = $be_recommend_code;
 			$data['telephone'] = $telephone;
 			$data['password'] = md5 ( $this->key . $password);
 			$data['customer_type'] = $customer_type;
@@ -916,8 +928,8 @@ class Api extends Api_Controller {
 			while(($count1 + $count2) > 0)
 			{
 				$recommend_code = randStr(5);
-				$count1 = $this->db->query("select count(id) as count from `t_aci_driver` where recommend_code='{$recommend_code}'")->result_array()[0]['count'];
-				$count2 = $this->db->query("select count(id) as count from `t_aci_customer` where recommend_code='{$recommend_code}'")->result_array()[0]['count'];
+				$count1 = $this->db->query("select count(driver_id) as count from `t_aci_driver` where recommend_code='{$recommend_code}'")->result_array()[0]['count'];
+				$count2 = $this->db->query("select count(customer_id) as count from `t_aci_customer` where recommend_code='{$recommend_code}'")->result_array()[0]['count'];
 			}
 			$data['recommend_code'] = $recommend_code;
 			$data['telephone'] = $telephone;
