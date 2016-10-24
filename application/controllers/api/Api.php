@@ -858,6 +858,18 @@ class Api extends Api_Controller {
 
 	//车主注册
 	public function driver_register() {
+
+		$recommand_code = randStr(5);
+		$count1 = $this->db->query("select count(id) as count from `t_aci_driver` where recommand_code='{$recommand_code}'")->result_array()['count'];
+		$count2 = $this->db->query("select count(id) as count from `t_aci_customer` where recommand_code='{$recommand_code}'")->result_array()['count'];
+		while(($count1 + $count2) > 0)
+		{
+			$recommand_code = randStr(5);
+			$count1 = $this->db->query("select count(id) as count from `t_aci_driver` where recommand_code='{$recommand_code}'")->result_array()['count'];
+			$count2 = $this->db->query("select count(id) as count from `t_aci_customer` where recommand_code='{$recommand_code}'")->result_array()['count'];
+		}
+		echo $recommand_code;die();
+
 		$telephone = $this->format_get ( 'telephone' );
 		$authcode = $this->format_get ( 'authcode' );
 		// $secret_authcode = $this->format_get ( 'secret_authcode' );
@@ -899,6 +911,16 @@ class Api extends Api_Controller {
 		if (count ( $result ) >= 1) {
 			$this->output_result ( - 1, 'failed', '该用户已注册' );
 		} else {
+			$recommand_code = randStr(5);
+			$count1 = $this->db->query("select count(id) as count from `t_aci_driver` where recommand_code='{$recommand_code}'")->result_array()['count'];
+			$count2 = $this->db->query("select count(id) as count from `t_aci_customer` where recommand_code='{$recommand_code}'")->result_array()['count'];
+			while(($count1 + $count2) > 0)
+			{
+				$recommand_code = randStr(5);
+				$count1 = $this->db->query("select count(id) as count from `t_aci_driver` where recommand_code='{$recommand_code}'")->result_array()['count'];
+				$count2 = $this->db->query("select count(id) as count from `t_aci_customer` where recommand_code='{$recommand_code}'")->result_array()['count'];
+			}
+			$data['recommand_code'] = recommand_code;
 			$data['telephone'] = $telephone;
 			$data['password'] = md5 ( $this->key . $password);
 			$data['truck_type'] = $truck_type;
@@ -2003,6 +2025,16 @@ class Api extends Api_Controller {
 	}
 	private function format_post($param, $default = "") {
 		return (isset ( $_POST [$param] ) && $_POST [$param] != "") ? urldecode ( addslashes ( str_replace ( '+', '%2B', urlencode ( $_POST [$param] ) ) ) ) : $default;
+	}
+
+	function randStr($i){
+		$str = "abcdefghijklmnopqrstuvwxyz";
+		$finalStr = "";
+		for($j=0;$j<$i;$j++)
+		{
+		    $finalStr .= substr($str,rand(0,25),1);
+		}
+		return $finalStr;
 	}
 }
 
