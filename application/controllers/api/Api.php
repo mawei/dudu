@@ -865,8 +865,8 @@ class Api extends Api_Controller {
 		while(($count1 + $count2) > 0)
 		{
 			$recommand_code = randStr(5);
-			$count1 = $this->db->query("select count(id) as count from `t_aci_driver` where recommend_code='{$recommend_code}'")->result_array()['count'];
-			$count2 = $this->db->query("select count(id) as count from `t_aci_customer` where recommend_code='{$recommend_code}'")->result_array()['count'];
+			$count1 = $this->db->query("select count(id) as count from `t_aci_driver` where recommend_code='{$recommend_code}'")->result_array()[0]['count'];
+			$count2 = $this->db->query("select count(id) as count from `t_aci_customer` where recommend_code='{$recommend_code}'")->result_array()[0]['count'];
 		}
 		echo $recommend_code;die();
 
