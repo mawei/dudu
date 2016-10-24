@@ -859,7 +859,7 @@ class Api extends Api_Controller {
 	//车主注册
 	public function driver_register() {
 
-		$recommand_code = randStr(5);
+		$recommand_code = $this->randStr(5);
 		$count1 = $this->db->query("select count(id) as count from `t_aci_driver` where recommand_code='{$recommand_code}'")->result_array()['count'];
 		$count2 = $this->db->query("select count(id) as count from `t_aci_customer` where recommand_code='{$recommand_code}'")->result_array()['count'];
 		while(($count1 + $count2) > 0)
@@ -2027,7 +2027,7 @@ class Api extends Api_Controller {
 		return (isset ( $_POST [$param] ) && $_POST [$param] != "") ? urldecode ( addslashes ( str_replace ( '+', '%2B', urlencode ( $_POST [$param] ) ) ) ) : $default;
 	}
 
-	function randStr($i){
+	private function randStr($i){
 		$str = "abcdefghijklmnopqrstuvwxyz";
 		$finalStr = "";
 		for($j=0;$j<$i;$j++)
