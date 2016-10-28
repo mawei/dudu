@@ -839,7 +839,7 @@ class Api extends Api_Controller {
 
 			$member['username'] = $telephone;
 			$member['encrypt'] = random_string('alnum',5);
-			$member['password'] = md5(md5($password.$encrypt));
+			$member['password'] = md5(md5($password.$member['encrypt']));
 			$member['group_id'] = '3';
 			$this->db->insert('t_sys_member',$member);
 
