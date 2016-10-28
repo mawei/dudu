@@ -840,7 +840,7 @@ class Api extends Api_Controller {
 			$member['username'] = $telephone;
 			$member['password'] = md5($password);
 			$member['group_id'] = '3';
-			$this->db->insert('t_aci_member',$member);
+			$this->db->insert('t_sys_member',$member);
 
 			$this->output_result ( 0, 'success', '' );
 		}
