@@ -4,7 +4,7 @@
         <i class='fa fa-table'></i> 订单管理列表
         <div class='panel-tools'>
             <div class='btn-group'>
-                 <a class="btn " href="<?php echo base_url('adminpanel/order/add')?>"><span class="glyphicon glyphicon-plus"></span> 添加 </a>             </div>
+                 <a class="btn " href="<?php echo base_url('adminpanel/order/add')?>"><span class="glyphicon glyphicon-plus"></span> 发单 </a>             </div>
             <div class='badge'><?php echo count($data_list)?></div>
         </div>
     </div>
@@ -132,8 +132,8 @@
                             <td><?php echo $v['status']?></td>
               <td>
                             	<a href="<?php echo base_url('adminpanel/order/readonly/'.$v['order_id'])?>"  class="btn btn-default btn-xs"><span class="glyphicon glyphicon-share-alt"></span> 查看</a>
-                                            <a href="<?php echo base_url('adminpanel/order/edit/'.$v['order_id'])?>"  class="btn btn-default btn-xs"><span class="glyphicon glyphicon-edit"></span> 修改</a>
-                                            <button type="button" class="btn btn-default btn-xs delete-btn" value="<?php echo $v['order_id'];?>"><span class="glyphicon glyphicon-remove"></span> 删除</button>
+                                            <!-- <a href="<?php echo base_url('adminpanel/order/edit/'.$v['order_id'])?>"  class="btn btn-default btn-xs"><span class="glyphicon glyphicon-edit"></span> 修改</a>
+                                            <button type="button" class="btn btn-default btn-xs delete-btn" value="<?php echo $v['order_id'];?>"><span class="glyphicon glyphicon-remove"></span> 删除</button> -->
                 
               </td>
             </tr>

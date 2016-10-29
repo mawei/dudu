@@ -13,7 +13,7 @@
 								<fieldset>
 						<legend>基本信息</legend>
 													
-	<div class="form-group">
+<!-- 	<div class="form-group">
 				<label for="customer_id" class="col-sm-2 control-label form-control-static">货主</label>
 				<div class="col-sm-9 ">
 					<?php $options = process_datasource($this->method_config['customer_list_datasource'])?>
@@ -26,7 +26,7 @@
 
 				</div>
 			</div>
-													
+					 -->								
 	<div class="form-group">
 				<label for="start_place" class="col-sm-2 control-label form-control-static">出发地</label>
 				<div class="col-sm-9 ">
@@ -111,7 +111,7 @@
 				</div>
 			</div>
 													
-	<div class="form-group">
+<!-- 	<div class="form-group">
 				<label for="driver_id" class="col-sm-2 control-label form-control-static">接单司机</label>
 				<div class="col-sm-9 ">
 					<?php $options = process_datasource($this->method_config['driver_list_datasource'])?>
@@ -123,14 +123,14 @@
 					</select>
 
 				</div>
-			</div>
+			</div> -->
 													
-	<div class="form-group">
+	<!-- <div class="form-group">
 				<label for="status" class="col-sm-2 control-label form-control-static">状态</label>
 				<div class="col-sm-9 ">
 					<input type="text" name="status"  id="status"  value='<?php echo isset($data_info['status'])?$data_info['status']:'' ?>'  class="form-control validate[required]"  placeholder="请输入状态" >
 				</div>
-			</div>
+			</div> -->
 											</fieldset>
 							<div class='form-actions'>
 				<button class='btn btn-primary ' type='submit' id="dosubmit">保存</button>
