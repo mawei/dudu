@@ -46,7 +46,7 @@ class Order extends Admin_Controller {
     function index($page_no=0,$sort_id=0)
     {
         $user_name = $this->session->userdata('user_name');
-        $group_id = $this->seesion->userdata('group_id');
+        $group_id = $this->session->userdata('group_id');
 
 
     	$page_no = max(intval($page_no),1);
