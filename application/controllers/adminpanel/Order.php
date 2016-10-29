@@ -67,8 +67,8 @@ class Order extends Admin_Controller {
             		$orderby = $this->method_config['sort_field'][strtolower($order)]." desc," .$orderby;
             }
         }
-                
-        $where ="";
+        $where = "";
+        if($group_id == "3") $where = "customer_id = ".$_arr['customer_id'];
         $_arr = NULL;//从URL GET
         if (isset($_GET['dosubmit'])) {
         	$where_arr = NULL;
