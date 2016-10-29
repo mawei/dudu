@@ -79,14 +79,47 @@
 	<div class="form-group">
 				<label for="truck_type" class="col-sm-2 control-label form-control-static">车型</label>
 				<div class="col-sm-9 ">
-					<input type="text" name="truck_type"  id="truck_type"  value='<?php echo isset($data_info['truck_type'])?$data_info['truck_type']:'' ?>'  class="form-control validate[required]"  placeholder="请输入车型" >
+					<select class="form-control  validate[required]"  name="truck_type"  id="truck_type">
+				<option value="">==请选择==</option>
+								<option value='平板货车' <?php if(isset($data_info['truck_type'])&&($data_info['truck_type']=='平板货车')) { ?> selected="selected" <?php } ?>            >平板货车</option>
+				<option value='高栏货车' <?php if(isset($data_info['truck_type'])&&($data_info['truck_type']=='高栏货车')) { ?> selected="selected" <?php } ?>            >高栏货车</option>
+				<option value='厢式车' <?php if(isset($data_info['truck_type'])&&($data_info['truck_type']=='厢式车')) { ?> selected="selected" <?php } ?>            >厢式车</option>
+				<option value='挂车' <?php if(isset($data_info['truck_type'])&&($data_info['truck_type']=='挂车')) { ?> selected="selected" <?php } ?>            >挂车</option>
+				<option value='自卸车' <?php if(isset($data_info['truck_type'])&&($data_info['truck_type']=='自卸车')) { ?> selected="selected" <?php } ?>            >自卸车</option>
+				<option value='冷藏车' <?php if(isset($data_info['truck_type'])&&($data_info['truck_type']=='冷藏车')) { ?> selected="selected" <?php } ?>            >冷藏车</option>
+				<option value='吊车' <?php if(isset($data_info['truck_type'])&&($data_info['truck_type']=='吊车')) { ?> selected="selected" <?php } ?>            >吊车</option>
+				<option value='叉车' <?php if(isset($data_info['truck_type'])&&($data_info['truck_type']=='叉车')) { ?> selected="selected" <?php } ?>            >叉车</option>
+</select>
 				</div>
 			</div>
 													
-	<div class="form-group">
+<!-- 	<div class="form-group">
 				<label for="truck_size" class="col-sm-2 control-label form-control-static">车长/车重</label>
 				<div class="col-sm-9 ">
 					<input type="text" name="truck_size"  id="truck_size"  value='<?php echo isset($data_info['truck_size'])?$data_info['truck_size']:'' ?>'  class="form-control validate[required]"  placeholder="请输入车长/车重" >
+				</div>
+			</div> -->
+				<div class="form-group">
+				<label for="truck_size" class="col-sm-2 control-label form-control-static">车重/车长</label>
+				<div class="col-sm-9 ">
+					<label class="radio-inline">  <input type="checkbox" class="" name="truck_size[]"  id="truck_size2.8米以下" value="2.8米以下
+"   <?php if(isset($data_info['truck_size'])&&(str_exists($data_info['truck_size'],'2.8米以下'))) { ?> checked="checked" <?php } ?>            > 2.8米以下</label><label class="radio-inline">  <input type="checkbox" class="" name="truck_size[]"  id="truck_size3.5米" value="3.5米
+"   <?php if(isset($data_info['truck_size'])&&(str_exists($data_info['truck_size'],'3.5米'))) { ?> checked="checked" <?php } ?>            > 3.5米</label><label class="radio-inline">  <input type="checkbox" class="" name="truck_size[]"  id="truck_size4.2米" value="4.2米
+"   <?php if(isset($data_info['truck_size'])&&(str_exists($data_info['truck_size'],'4.2米'))) { ?> checked="checked" <?php } ?>            > 4.2米</label><label class="radio-inline">  <input type="checkbox" class="" name="truck_size[]"  id="truck_size4.8米" value="4.8米
+"   <?php if(isset($data_info['truck_size'])&&(str_exists($data_info['truck_size'],'4.8米'))) { ?> checked="checked" <?php } ?>            > 4.8米</label><label class="radio-inline">  <input type="checkbox" class="" name="truck_size[]"  id="truck_size5.2米" value="5.2米
+"   <?php if(isset($data_info['truck_size'])&&(str_exists($data_info['truck_size'],'5.2米'))) { ?> checked="checked" <?php } ?>            > 5.2米</label><label class="radio-inline">  <input type="checkbox" class="" name="truck_size[]"  id="truck_size5.8米" value="5.8米
+"   <?php if(isset($data_info['truck_size'])&&(str_exists($data_info['truck_size'],'5.8米'))) { ?> checked="checked" <?php } ?>            > 5.8米</label><label class="radio-inline">  <input type="checkbox" class="" name="truck_size[]"  id="truck_size6.3米" value="6.3米
+"   <?php if(isset($data_info['truck_size'])&&(str_exists($data_info['truck_size'],'6.3米'))) { ?> checked="checked" <?php } ?>            > 6.3米</label><label class="radio-inline">  <input type="checkbox" class="" name="truck_size[]"  id="truck_size7.2米" value="7.2米
+"   <?php if(isset($data_info['truck_size'])&&(str_exists($data_info['truck_size'],'7.2米'))) { ?> checked="checked" <?php } ?>            > 7.2米</label><label class="radio-inline">  <input type="checkbox" class="" name="truck_size[]"  id="truck_size7.5米" value="7.5米
+"   <?php if(isset($data_info['truck_size'])&&(str_exists($data_info['truck_size'],'7.5米'))) { ?> checked="checked" <?php } ?>            > 7.5米</label><label class="radio-inline">  <input type="checkbox" class="" name="truck_size[]"  id="truck_size7.8米" value="7.8米
+"   <?php if(isset($data_info['truck_size'])&&(str_exists($data_info['truck_size'],'7.8米'))) { ?> checked="checked" <?php } ?>            > 7.8米</label><label class="radio-inline">  <input type="checkbox" class="" name="truck_size[]"  id="truck_size8.5米" value="8.5米
+"   <?php if(isset($data_info['truck_size'])&&(str_exists($data_info['truck_size'],'8.5米'))) { ?> checked="checked" <?php } ?>            > 8.5米</label><label class="radio-inline">  <input type="checkbox" class="" name="truck_size[]"  id="truck_size9.2米" value="9.2米
+"   <?php if(isset($data_info['truck_size'])&&(str_exists($data_info['truck_size'],'9.2米'))) { ?> checked="checked" <?php } ?>            > 9.2米</label><label class="radio-inline">  <input type="checkbox" class="" name="truck_size[]"  id="truck_size9.6米" value="9.6米
+"   <?php if(isset($data_info['truck_size'])&&(str_exists($data_info['truck_size'],'9.6米'))) { ?> checked="checked" <?php } ?>            > 9.6米</label><label class="radio-inline">  <input type="checkbox" class="" name="truck_size[]"  id="truck_size13米" value="13米
+"   <?php if(isset($data_info['truck_size'])&&(str_exists($data_info['truck_size'],'13米'))) { ?> checked="checked" <?php } ?>            > 13米</label><label class="radio-inline">  <input type="checkbox" class="" name="truck_size[]"  id="truck_size17.5米" value="17.5米
+"   <?php if(isset($data_info['truck_size'])&&(str_exists($data_info['truck_size'],'17.5米'))) { ?> checked="checked" <?php } ?>            > 17.5米</label><label class="radio-inline">  <input type="checkbox" class="" name="truck_size[]"  id="truck_size3T" value="3T
+"   <?php if(isset($data_info['truck_size'])&&(str_exists($data_info['truck_size'],'3T'))) { ?> checked="checked" <?php } ?>            > 3T</label><label class="radio-inline">  <input type="checkbox" class="" name="truck_size[]"  id="truck_size5T" value="5T
+"   <?php if(isset($data_info['truck_size'])&&(str_exists($data_info['truck_size'],'5T'))) { ?> checked="checked" <?php } ?>            > 5T</label><label class="radio-inline">  <input type="checkbox" class="" name="truck_size[]"  id="truck_size8T" value="8T"   <?php if(isset($data_info['truck_size'])&&(str_exists($data_info['truck_size'],'8T'))) { ?> checked="checked" <?php } ?>            > 8T</label>
 				</div>
 			</div>
 													
