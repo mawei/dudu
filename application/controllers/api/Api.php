@@ -841,6 +841,7 @@ class Api extends Api_Controller {
 			$member['encrypt'] = random_string('alnum',5);
 			$member['password'] = md5(md5($password.$member['encrypt']));
 			$member['group_id'] = '3';
+			$member['user_id'] = $this->db->insert_id();
 			$this->db->insert('t_sys_member',$member);
 
 			$this->output_result ( 0, 'success', '' );

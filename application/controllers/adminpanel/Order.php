@@ -45,6 +45,10 @@ class Order extends Admin_Controller {
      */
     function index($page_no=0,$sort_id=0)
     {
+        $user_name = $this->session->userdata('user_name');
+        $group_id = $this->seesion->userdata('group_id');
+
+
     	$page_no = max(intval($page_no),1);
         
         $orderby = "order_id desc";
@@ -77,9 +81,6 @@ class Order extends Admin_Controller {
         	$_arr['driver_id'] = isset($_GET["driver_id"])?trim(safe_replace($_GET["driver_id"])):'';
         	if($_arr['driver_id']!="") $where_arr[] = "driver_id = '".$_arr['driver_id']."'";
 
-                
-        
-			
         	$_arr['start_time_1'] =isset($_GET['start_time_1'])?safe_replace(trim($_GET['start_time_1'])):'';
         	$_arr['start_time_2'] =isset($_GET['start_time_2'])?safe_replace(trim($_GET['start_time_2'])):'';
             if($_arr['start_time_1']!="") $where_arr[] = "(start_time >= '".$_arr['start_time_1']."')";
@@ -90,6 +91,7 @@ class Order extends Admin_Controller {
         	$_arr['charge_2'] =isset($_GET['charge_2'])?intval($_GET['charge_2']):'';
             if($_arr['charge_1']!="") $where_arr[] = "(charge >= ".$_arr['charge_1'].")";
         	if($_arr['charge_2']!="") $where_arr[] = "(charge <= ".$_arr['charge_2'].")";
+            if($group_id == 2) $where_arr[] = "(customer_id = ".$_arr['customer_id'].")";
         	if($where_arr)$where = implode(" and ",$where_arr);
         }
 

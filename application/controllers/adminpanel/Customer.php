@@ -1,5 +1,7 @@
 <?php 
 if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+require_once dirname(__FILE__) . '/../'.'Notification.php';
+
 /**
  * AutoCodeIgniter.com
  *
@@ -229,6 +231,14 @@ class Customer extends Admin_Controller {
             $status = $this->customer_model->update($_arr,array('customer_id'=>$id));
             if($status)
             {
+                if($data_info['status'] != $_arr['status'] && $_arr['status'] == "认证成功")
+                {
+                    $this->sms_content($data_info['telephone'],"【嘟嘟找车】恭喜您已通过货主认证");
+                }
+                if($data_info['status'] != $_arr['status'] && $_arr['status'] == "认证失败")
+                {
+                    $this->sms_content($data_info['telephone'],"【嘟嘟找车】您未通过货主认证，请登录app后查看原因后重新认证");
+                }
 				exit(json_encode(array('status'=>true,'tips'=>'信息修改成功')));
             }else
             {
@@ -305,6 +315,42 @@ class Customer extends Admin_Controller {
         	die('缺少上传参数');
         }
 	}
+
+    private function sms_content($mobile, $content) {
+        $url = "http://yunpian.com/v1/sms/send.json";
+        $encoded_text = urlencode ( "$content" );
+        $post_string = "apikey=355e91e02a95574559ebba5a3c1af6c2&text=$content&mobile=$mobile";
+        return $this->sock_post ( $url, $post_string );
+    }
+    
+    /**
+     * url 为服务的url地址
+     * query 为请求串
+     */
+    function sock_post($url, $query) {
+        $data = "";
+        $info = parse_url ( $url );
+        $fp = fsockopen ( $info ["host"], 80, $errno, $errstr, 30 );
+        if (! $fp) {
+            return $data;
+        }
+        $head = "POST " . $info ['path'] . " HTTP/1.0\r\n";
+        $head .= "Host: " . $info ['host'] . "\r\n";
+        $head .= "Referer: http://" . $info ['host'] . $info ['path'] . "\r\n";
+        $head .= "Content-type: application/x-www-form-urlencoded\r\n";
+        $head .= "Content-Length: " . strlen ( trim ( $query ) ) . "\r\n";
+        $head .= "\r\n";
+        $head .= trim ( $query );
+        $write = fputs ( $fp, $head );
+        $header = "";
+        while ( $str = trim ( fgets ( $fp, 4096 ) ) ) {
+            $header .= $str;
+        }
+        while ( ! feof ( $fp ) ) {
+            $data .= fgets ( $fp, 4096 );
+        }
+        return $data;
+    }
 
 }
 
