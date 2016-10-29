@@ -45,11 +45,11 @@
 				</div>
 			</div> -->
 
-<div class="form-group">
+<!-- <div class="form-group">
 <label >出发时间</label>
 <input class="form-control datepicker" type="text" value="<?php echo isset($data_info['start_time_1'])?$data_info['start_time_1']:'' ?> " name="start_time_1"  id="start_timestart_time1"  placeholder="开始时间"/> - 
 <input class="form-control datepicker" type="text" value="<?php echo isset($data_info['start_time_2'])?$data_info['start_time_2']:'' ?> " name="start_time_2"  id="start_timestart_time2"  placeholder="结束时间"/>
-</div>
+</div> -->
 
 <div class="form-group">
 <label for="keywords" class="form-control-static">出价:</label>

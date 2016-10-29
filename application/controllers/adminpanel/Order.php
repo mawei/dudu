@@ -47,6 +47,7 @@ class Order extends Admin_Controller {
     {
         $user_name = $this->session->userdata('user_name');
         $group_id = $this->session->userdata('group_id');
+        $customer_id = $this->session->userdata('user_id');
 
 
     	$page_no = max(intval($page_no),1);
@@ -68,7 +69,7 @@ class Order extends Admin_Controller {
             }
         }
         $where = "";
-        if($group_id == "3") $where = "customer_id = ".$_arr['customer_id'];
+        if($group_id == "3") $where = "customer_id = ".$customer_id;
         $_arr = NULL;//从URL GET
         if (isset($_GET['dosubmit'])) {
         	$where_arr = NULL;
@@ -91,7 +92,7 @@ class Order extends Admin_Controller {
         	$_arr['charge_2'] =isset($_GET['charge_2'])?intval($_GET['charge_2']):'';
             if($_arr['charge_1']!="") $where_arr[] = "(charge >= ".$_arr['charge_1'].")";
         	if($_arr['charge_2']!="") $where_arr[] = "(charge <= ".$_arr['charge_2'].")";
-            if($group_id == "3") $where_arr[] = "(customer_id = ".$_arr['customer_id'].")";
+            if($group_id == "3") $where_arr[] = "(customer_id = ".$customer_id.")";
         	if($where_arr)$where = implode(" and ",$where_arr);
         }
 
