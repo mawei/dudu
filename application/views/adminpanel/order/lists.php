@@ -17,7 +17,7 @@
 <label for="keyword" class="control-label form-control-static">关键词</label>
 <input class="form-control" type="text" name="keyword"  value="<?php echo isset($data_info['keyword'])? $data_info['keyword']:"";?>" id="keyword" placeholder="请输入关键词"/></div>
 
-	<div class="form-group">
+	<!-- <div class="form-group">
 				<label for="customer_id" class="col-sm-5 control-label form-control-static">货主</label>
 				<div class="col-sm-7 ">
 					<?php $options = process_datasource($this->method_config['customer_list_datasource'])?>
@@ -29,9 +29,9 @@
 					</select>
 
 				</div>
-			</div>
+			</div> -->
 
-	<div class="form-group">
+	<!-- <div class="form-group">
 				<label for="driver_id" class="col-sm-5 control-label form-control-static">接单司机</label>
 				<div class="col-sm-7 ">
 					<?php $options = process_datasource($this->method_config['driver_list_datasource'])?>
@@ -43,7 +43,7 @@
 					</select>
 
 				</div>
-			</div>
+			</div> -->
 
 <div class="form-group">
 <label >出发时间</label>
