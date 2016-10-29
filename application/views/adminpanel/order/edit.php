@@ -34,7 +34,7 @@
 				</div>
 			</div>
 													
-	<div class="form-group">
+<!-- 	<div class="form-group">
 				<label for="start_place_latitude" class="col-sm-2 control-label form-control-static">起始点纬度</label>
 				<div class="col-sm-9 ">
 					<input type="text" name="start_place_latitude"  id="start_place_latitude"  value='<?php echo isset($data_info['start_place_latitude'])?$data_info['start_place_latitude']:'' ?>'  class="form-control validate[required]"  placeholder="请输入起始点纬度" >
@@ -46,7 +46,7 @@
 				<div class="col-sm-9 ">
 					<input type="text" name="start_place_longitude"  id="start_place_longitude"  value='<?php echo isset($data_info['start_place_longitude'])?$data_info['start_place_longitude']:'' ?>'  class="form-control validate[required]"  placeholder="请输入起始点经度" >
 				</div>
-			</div>
+			</div> -->
 													
 	<div class="form-group">
 				<label for="end_place" class="col-sm-2 control-label form-control-static">目的地</label>
@@ -55,7 +55,7 @@
 				</div>
 			</div>
 													
-	<div class="form-group">
+<!-- 	<div class="form-group">
 				<label for="end_place_latitude" class="col-sm-2 control-label form-control-static">目的地纬度</label>
 				<div class="col-sm-9 ">
 					<input type="text" name="end_place_latitude"  id="end_place_latitude"  value='<?php echo isset($data_info['end_place_latitude'])?$data_info['end_place_latitude']:'' ?>'  class="form-control validate[required]"  placeholder="请输入目的地纬度" >
@@ -68,7 +68,7 @@
 					<input type="text" name="end_place_longitude"  id="end_place_longitude"  value='<?php echo isset($data_info['end_place_longitude'])?$data_info['end_place_longitude']:'' ?>'  class="form-control validate[required]"  placeholder="请输入目的地经度" >
 				</div>
 			</div>
-													
+					 -->								
 	<div class="form-group">
 				<label for="start_time" class="col-sm-2 control-label form-control-static">出发时间</label>
 				<div class="col-sm-9 ">
@@ -122,7 +122,14 @@
 "   <?php if(isset($data_info['truck_size'])&&(str_exists($data_info['truck_size'],'5T'))) { ?> checked="checked" <?php } ?>            > 5T</label><label class="radio-inline">  <input type="checkbox" class="" name="truck_size[]"  id="truck_size8T" value="8T"   <?php if(isset($data_info['truck_size'])&&(str_exists($data_info['truck_size'],'8T'))) { ?> checked="checked" <?php } ?>            > 8T</label>
 				</div>
 			</div>
-													
+					
+	<div class="form-group">
+		<label for="weight" class="col-sm-2 control-label form-control-static">重量</label>
+		<div class="col-sm-9 ">
+			<input type="number" name="weight"  id="weight"  value='<?php echo isset($data_info['weight'])?$data_info['weight']:'' ?>'   class="form-control  validate[required,custom[integer]]" placeholder="请输入重量" >
+		</div>
+	</div>	
+
 	<div class="form-group">
 				<label for="charge" class="col-sm-2 control-label form-control-static">出价</label>
 				<div class="col-sm-9 ">
@@ -130,19 +137,14 @@
 				</div>
 			</div>
 													
-	<div class="form-group">
-				<label for="weight" class="col-sm-2 control-label form-control-static">重量</label>
-				<div class="col-sm-9 ">
-					<input type="number" name="weight"  id="weight"  value='<?php echo isset($data_info['weight'])?$data_info['weight']:'' ?>'   class="form-control  validate[required,custom[integer]]" placeholder="请输入重量" >
-				</div>
-			</div>
+	
 													
-	<div class="form-group">
+<!-- 	<div class="form-group">
 				<label for="infomation_charge" class="col-sm-2 control-label form-control-static">信息费</label>
 				<div class="col-sm-9 ">
 					<input type="number" name="infomation_charge"  id="infomation_charge"   value='<?php echo isset($data_info['infomation_charge'])?$data_info['infomation_charge']:'' ?>'   class="form-control validate[custom[price]]" placeholder="请输入信息费" >
 				</div>
-			</div>
+			</div> -->
 													
 <!-- 	<div class="form-group">
 				<label for="driver_id" class="col-sm-2 control-label form-control-static">接单司机</label>
@@ -169,6 +171,7 @@
 				<button class='btn btn-primary ' type='submit' id="dosubmit">保存</button>
 			</div>
 </form>
+		<script src="http://webapi.amap.com/maps?v=1.3&key=86a5ab5b85e0393025ffb2726a0e3404"></script>
 			<script language="javascript" type="text/javascript">
 			var is_edit =<?php echo ($is_edit)?"true":"false" ?>;
 			var id =<?php echo $id;?>;
@@ -176,6 +179,21 @@
 			require(['<?php echo SITE_URL?>scripts/common.js'], function (common) {
 		        require(['<?php echo SITE_URL?>scripts/adminpanel/order/edit.js']);
 		    });
+
+			//地图
+		    AMap.plugin('AMap.Autocomplete',function(){//回调函数
+		        //实例化Autocomplete
+		        var autoOptions = {
+		            city: "", //城市，默认全国
+		            input:"start_place"//使用联想输入的input的id
+		        };
+		        autocomplete= new AMap.Autocomplete(autoOptions);
+		        //TODO: 使用autocomplete对象调用相关功能
+		        AMap.event.addListener(autocomplete, "select", function(e){
+			           //TODO 针对选中的poi实现自己的功能
+			    });
+		    });
+
 		</script>
 	
 	
