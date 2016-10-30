@@ -206,8 +206,8 @@
 		        //TODO: 使用autocomplete对象调用相关功能
 		        AMap.event.addListener(autocomplete, "select", function(e){
 			           //TODO 针对选中的poi实现自己的功能
-			           var longitude = e.poi.location.toString().split(",")[0];
-			           var latitude = e.poi.location.toString().split(",")[1];
+			           var start_longitude = e.poi.location.toString().split(",")[0];
+			           var start_latitude = e.poi.location.toString().split(",")[1];
 			           var state = e.poi.district.indexOf("省");
 			           var self_state = e.poi.district.indexOf("自治区");
 			           var city = e.poi.district.indexOf("市");
@@ -249,8 +249,8 @@
 		        //TODO: 使用autocomplete对象调用相关功能
 		        AMap.event.addListener(autocomplete, "select", function(e){
 			           //TODO 针对选中的poi实现自己的功能
-			           var longitude = e.poi.location.toString().split(",")[0];
-			           var latitude = e.poi.location.toString().split(",")[1];
+			           var end_longitude = e.poi.location.toString().split(",")[0];
+			           var end_latitude = e.poi.location.toString().split(",")[1];
 			           var state = e.poi.district.indexOf("省");
 			           var self_state = e.poi.district.indexOf("自治区");
 			           var city = e.poi.district.indexOf("市");
