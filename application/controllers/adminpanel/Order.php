@@ -162,7 +162,7 @@ class Order extends Admin_Controller {
 			}
 			$_arr['truck_type'] = isset($_POST["truck_type"])?trim(safe_replace($_POST["truck_type"])):exit(json_encode(array('status'=>false,'tips'=>'车型必填')));
 			if($_arr['truck_type']=='')exit(json_encode(array('status'=>false,'tips'=>'车型必填')));
-            $_arr['truck_size'] = isset($_POST["truck_size"])?trim(safe_replace($_POST["truck_size"])):'';
+            $_arr['truck_size'] = isset($_POST["truck_size"])?$_POST["truck_size"]:'';
             if(is_array($_arr['truck_size'])) $_arr['truck_size'] = implode(",",$_arr['truck_size']);
 			if($_arr['truck_size']=='')exit(json_encode(array('status'=>false,'tips'=>'车长/车重必填')));
 			$_arr['charge'] = isset($_POST["charge"])?trim(safe_replace($_POST["charge"])):exit(json_encode(array('status'=>false,'tips'=>'出价必填')));
