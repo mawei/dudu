@@ -136,6 +136,21 @@
 					<input type="number" name="charge"  id="charge"   value='<?php echo isset($data_info['charge'])?$data_info['charge']:'' ?>'   class="form-control  validate[required,custom[price]]" placeholder="请输入出价" >
 				</div>
 			</div>
+
+	<input type="hidden" name="start_latitude">
+	<input type="hidden" name="start_longitude">
+	<input type="hidden" name="start_state">
+	<input type="hidden" name="start_city">
+	<input type="hidden" name="start_area">
+	<input type="hidden" name="start_street">
+
+	<input type="hidden" name="end_latitude">
+	<input type="hidden" name="end_longitude">
+	<input type="hidden" name="end_state">
+	<input type="hidden" name="end_city">
+	<input type="hidden" name="end_area">
+	<input type="hidden" name="end_street">
+
 													
 	
 													
@@ -191,6 +206,74 @@
 		        //TODO: 使用autocomplete对象调用相关功能
 		        AMap.event.addListener(autocomplete, "select", function(e){
 			           //TODO 针对选中的poi实现自己的功能
+			           var longitude = e.poi.location.toString().split(",")[0];
+			           var latitude = e.poi.location.toString().split(",")[1];
+			           var state = e.poi.district.indexOf("省");
+			           var self_state = e.poi.district.indexOf("自治区");
+			           var city = e.poi.district.indexOf("市");
+			           var area1 = e.poi.district.indexOf("区");
+			           var area2 = e.poi.district.indexOf("县");
+			           if(state + self_state <= 0)
+			           {
+			           		var start_state = e.poi.district.substring(0,city+1);
+			           		var start_city = e.poi.district.substring(0,city+1);
+			           		var start_area = e.poi.district.substring(city + 1);
+			           }else{
+			           		var start_state = e.poi.district.substring(0,state+self_state+2);
+			           		var start_city = e.poi.district.substring(state+self_state+2,city+1);
+			           		var start_area = e.poi.district.substring(city + 1);
+			           }
+			           var start_street = e.poi.address;
+
+			           $("input[name='start_state']").val(start_state);
+			           $("input[name='start_city']").val(start_city);
+			           $("input[name='start_area']").val(start_area);
+			           $("input[name='start_street']").val(start_street);
+			           $("input[name='start_longitude']").val(start_longitude);
+			           $("input[name='start_latitude']").val(start_latitude);
+			           alert(start_state);
+			           alert(start_city);
+			           alert(start_area);
+			           console.log(e);
+			    });
+		    });
+
+		    //地图
+		    AMap.plugin('AMap.Autocomplete',function(){//回调函数
+		        //实例化Autocomplete
+		        var autoOptions = {
+		            city: "", //城市，默认全国
+		            input:"end_place"//使用联想输入的input的id
+		        };
+		        autocomplete= new AMap.Autocomplete(autoOptions);
+		        //TODO: 使用autocomplete对象调用相关功能
+		        AMap.event.addListener(autocomplete, "select", function(e){
+			           //TODO 针对选中的poi实现自己的功能
+			           var longitude = e.poi.location.toString().split(",")[0];
+			           var latitude = e.poi.location.toString().split(",")[1];
+			           var state = e.poi.district.indexOf("省");
+			           var self_state = e.poi.district.indexOf("自治区");
+			           var city = e.poi.district.indexOf("市");
+			           var area1 = e.poi.district.indexOf("区");
+			           var area2 = e.poi.district.indexOf("县");
+			           if(state + self_state <= 0)
+			           {
+			           		var end_state = e.poi.district.substring(0,city+1);
+			           		var end_city = e.poi.district.substring(0,city+1);
+			           		var end_area = e.poi.district.substring(city + 1);
+			           }else{
+			           		var end_state = e.poi.district.substring(0,state+self_state+2);
+			           		var end_city = e.poi.district.substring(state+self_state+2,city+1);
+			           		var end_area = e.poi.district.substring(city + 1);
+			           }
+			           var end_street = e.poi.address;
+			           $("input[name='end_state']").val(end_state);
+			           $("input[name='end_city']").val(end_city);
+			           $("input[name='end_area']").val(end_area);
+			           $("input[name='end_street']").val(end_street);
+			           $("input[name='end_longitude']").val(end_longitude);
+			           $("input[name='end_latitude']").val(end_latitude);
+			           console.log(e);
 			    });
 		    });
 
