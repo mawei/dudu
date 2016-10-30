@@ -205,6 +205,7 @@ class Order extends Admin_Controller {
             $end_place['address'] = $end_place['state'] == $end_place['city'] ? $end_place['state'] . $end_place['area'] . $end_place['street'] : $end_place['state'] . $end_place['city'] . $end_place['area'] . $end_place['street'];
             $end_place['type'] = "目的地";
 			if($end_place['state'] == '')exit(json_encode(array('status'=>false,'tips'=>'目的地请从自动提示框中选择')));
+            $_arr['customer_id'] = $this->session->userdata('user_id');
 
             $new_id = $this->order_model->insert($_arr);
             if($new_id)
