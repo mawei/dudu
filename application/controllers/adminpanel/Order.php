@@ -186,6 +186,7 @@ class Order extends Admin_Controller {
             $start_place['state'] = isset($_POST["start_state"])?trim(safe_replace($_POST["start_state"])):exit(json_encode(array('status'=>false,'tips'=>'出发地请从自动提示框中选择')));
             $start_place['city'] = isset($_POST["start_city"])?trim(safe_replace($_POST["start_city"])):exit(json_encode(array('status'=>false,'tips'=>'出发地请从自动提示框中选择')));
             $start_place['area'] = isset($_POST["start_area"])?trim(safe_replace($_POST["start_area"])):exit(json_encode(array('status'=>false,'tips'=>'出发地请从自动提示框中选择')));
+            $start_place['street'] = isset($_POST["start_street"])?trim(safe_replace($_POST["start_street"])):exit(json_encode(array('status'=>false,'tips'=>'出发地请从自动提示框中选择')));
             $start_place['latitude'] = isset($_POST["start_latitude"])?trim(safe_replace($_POST["start_latitude"])):exit(json_encode(array('status'=>false,'tips'=>'出发地请从自动提示框中选择')));
             $start_place['longitude'] = isset($_POST["start_longitude"])?trim(safe_replace($_POST["start_longitude"])):exit(json_encode(array('status'=>false,'tips'=>'出发地请从自动提示框中选择')));
             $start_place['address'] = $start_place['state'] == $start_place['city'] ? $start_place['state'] . $start_place['area'] . $start_place['street'] : $start_place['state'] . $start_place['city'] . $start_place['area'] . $start_place['street'];
@@ -197,6 +198,8 @@ class Order extends Admin_Controller {
             $end_place['state'] = isset($_POST["end_state"])?trim(safe_replace($_POST["end_state"])):exit(json_encode(array('status'=>false,'tips'=>'目的地请从自动提示框中选择')));
             $end_place['city'] = isset($_POST["end_city"])?trim(safe_replace($_POST["end_city"])):exit(json_encode(array('status'=>false,'tips'=>'目的地请从自动提示框中选择')));
             $end_place['area'] = isset($_POST["end_area"])?trim(safe_replace($_POST["end_area"])):exit(json_encode(array('status'=>false,'tips'=>'目的地请从自动提示框中选择')));
+            $end_place['street'] = isset($_POST["end_street"])?trim(safe_replace($_POST["end_street"])):exit(json_encode(array('status'=>false,'tips'=>'出发地请从自动提示框中选择')));
+
             $end_place['latitude'] = isset($_POST["end_latitude"])?trim(safe_replace($_POST["end_latitude"])):exit(json_encode(array('status'=>false,'tips'=>'目的地请从自动提示框中选择')));
             $end_place['longitude'] = isset($_POST["end_longitude"])?trim(safe_replace($_POST["end_longitude"])):exit(json_encode(array('status'=>false,'tips'=>'目的地请从自动提示框中选择')));
             $end_place['address'] = $end_place['state'] == $end_place['city'] ? $end_place['state'] . $end_place['area'] . $end_place['street'] : $end_place['state'] . $end_place['city'] . $end_place['area'] . $end_place['street'];
