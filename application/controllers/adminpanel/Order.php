@@ -149,12 +149,12 @@ class Order extends Admin_Controller {
 			// if($_arr['customer_id']=='')exit(json_encode(array('status'=>false,'tips'=>'货主必填')));
 			$_arr['start_place'] = isset($_POST["start_place"])?trim(safe_replace($_POST["start_place"])):exit(json_encode(array('status'=>false,'tips'=>'出发地必填')));
 			if($_arr['start_place']=='')exit(json_encode(array('status'=>false,'tips'=>'出发地必填')));
-			$_arr['start_place_latitude'] = isset($_POST["start_place_latitude"])?trim(safe_replace($_POST["start_place_latitude"])):'';
-			$_arr['start_place_longitude'] = isset($_POST["start_place_longitude"])?trim(safe_replace($_POST["start_place_longitude"])):'';
+			// $_arr['start_place_latitude'] = isset($_POST["start_place_latitude"])?trim(safe_replace($_POST["start_place_latitude"])):'';
+			// $_arr['start_place_longitude'] = isset($_POST["start_place_longitude"])?trim(safe_replace($_POST["start_place_longitude"])):'';
 			$_arr['end_place'] = isset($_POST["end_place"])?trim(safe_replace($_POST["end_place"])):exit(json_encode(array('status'=>false,'tips'=>'目的地必填')));
 			if($_arr['end_place']=='')exit(json_encode(array('status'=>false,'tips'=>'目的地必填')));
-			$_arr['end_place_latitude'] = isset($_POST["end_place_latitude"])?trim(safe_replace($_POST["end_place_latitude"])):'';
-			$_arr['end_place_longitude'] = isset($_POST["end_place_longitude"])?trim(safe_replace($_POST["end_place_longitude"])):'';
+			// $_arr['end_place_latitude'] = isset($_POST["end_place_latitude"])?trim(safe_replace($_POST["end_place_latitude"])):'';
+			// $_arr['end_place_longitude'] = isset($_POST["end_place_longitude"])?trim(safe_replace($_POST["end_place_longitude"])):'';
 			$_arr['start_time'] = isset($_POST["start_time"])?trim(safe_replace($_POST["start_time"])):exit(json_encode(array('status'=>false,'tips'=>'出发时间必填')));
 			if($_arr['start_time']=='')exit(json_encode(array('status'=>false,'tips'=>'出发时间必填')));
 			if($_arr['start_time']!=''){
