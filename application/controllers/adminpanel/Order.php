@@ -145,8 +145,8 @@ class Order extends Admin_Controller {
     	if($this->input->is_ajax_request())
 		{
         	//接收POST参数
-			$_arr['customer_id'] = isset($_POST["customer_id"])?trim(safe_replace($_POST["customer_id"])):exit(json_encode(array('status'=>false,'tips'=>'货主必填')));
-			if($_arr['customer_id']=='')exit(json_encode(array('status'=>false,'tips'=>'货主必填')));
+			// $_arr['customer_id'] = isset($_POST["customer_id"])?trim(safe_replace($_POST["customer_id"])):exit(json_encode(array('status'=>false,'tips'=>'货主必填')));
+			// if($_arr['customer_id']=='')exit(json_encode(array('status'=>false,'tips'=>'货主必填')));
 			$_arr['start_place'] = isset($_POST["start_place"])?trim(safe_replace($_POST["start_place"])):exit(json_encode(array('status'=>false,'tips'=>'出发地必填')));
 			if($_arr['start_place']=='')exit(json_encode(array('status'=>false,'tips'=>'出发地必填')));
 			$_arr['start_place_latitude'] = isset($_POST["start_place_latitude"])?trim(safe_replace($_POST["start_place_latitude"])):'';
@@ -174,12 +174,12 @@ class Order extends Admin_Controller {
 			if($_arr['weight']!=''){
 			if(!is_number($_arr['weight']))exit(json_encode(array('status'=>false,'tips'=>'重量输入错误')));
 			}
-			$_arr['infomation_charge'] = isset($_POST["infomation_charge"])?trim(safe_replace($_POST["infomation_charge"])):'';
-			if($_arr['infomation_charge']!=''){
-			if(!is_price($_arr['infomation_charge']))exit(json_encode(array('status'=>false,'tips'=>'信息费输入错误')));
-			}
-			$_arr['driver_id'] = isset($_POST["driver_id"])?trim(safe_replace($_POST["driver_id"])):'';
-			$_arr['status'] = isset($_POST["status"])?trim(safe_replace($_POST["status"])):'';
+			// $_arr['infomation_charge'] = isset($_POST["infomation_charge"])?trim(safe_replace($_POST["infomation_charge"])):'';
+			// if($_arr['infomation_charge']!=''){
+			// if(!is_price($_arr['infomation_charge']))exit(json_encode(array('status'=>false,'tips'=>'信息费输入错误')));
+			// }
+			// $_arr['driver_id'] = isset($_POST["driver_id"])?trim(safe_replace($_POST["driver_id"])):'';
+			$_arr['status'] = "未接单";
 
             //地点
             $start_place['state'] = isset($_POST["start_state"])?trim(safe_replace($_POST["start_state"])):exit(json_encode(array('status'=>false,'tips'=>'出发地请从自动提示框中选择')));
@@ -189,6 +189,7 @@ class Order extends Admin_Controller {
             $start_place['longitude'] = isset($_POST["start_longitude"])?trim(safe_replace($_POST["start_longitude"])):exit(json_encode(array('status'=>false,'tips'=>'出发地请从自动提示框中选择')));
             $start_place['address'] = $start_place['state'] == $start_place['city'] ? $start_place['state'] . $start_place['area'] . $start_place['street'] : $start_place['state'] . $start_place['city'] . $start_place['area'] . $start_place['street'];
             $start_place['type'] = "出发地";
+            if($start_place['state'] == '')exit(json_encode(array('status'=>false,'tips'=>'出发地请从自动提示框中选择')));
 
 
             //地点
@@ -199,7 +200,8 @@ class Order extends Admin_Controller {
             $end_place['longitude'] = isset($_POST["end_longitude"])?trim(safe_replace($_POST["end_longitude"])):exit(json_encode(array('status'=>false,'tips'=>'目的地请从自动提示框中选择')));
             $end_place['address'] = $end_place['state'] == $end_place['city'] ? $end_place['state'] . $end_place['area'] . $end_place['street'] : $end_place['state'] . $end_place['city'] . $end_place['area'] . $end_place['street'];
             $end_place['type'] = "目的地";
-			
+			if($end_place['state'] == '')exit(json_encode(array('status'=>false,'tips'=>'目的地请从自动提示框中选择')));
+
             $new_id = $this->order_model->insert($_arr);
             if($new_id)
             {

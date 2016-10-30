@@ -231,9 +231,6 @@
 			           $("input[name='start_street']").val(start_street);
 			           $("input[name='start_longitude']").val(start_longitude);
 			           $("input[name='start_latitude']").val(start_latitude);
-			           alert(start_state);
-			           alert(start_city);
-			           alert(start_area);
 			           console.log(e);
 			    });
 		    });
