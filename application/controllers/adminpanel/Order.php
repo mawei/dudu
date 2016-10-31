@@ -207,6 +207,8 @@ class Order extends Admin_Controller {
 			if($end_place['state'] == '')exit(json_encode(array('status'=>false,'tips'=>'目的地请从自动提示框中选择')));
             $_arr['customer_id'] = $this->session->userdata('user_id');
 
+            $_arr['miles'] = sqrt(POW((6370693.5 * cos($start_place['latitude'] * 0.01745329252) * ($end_place['longitude'] * 0.01745329252 - $start_place['longitude'] * 0.01745329252)),2) + POW((6370693.5 * ($end_place['latitude'] * 0.01745329252 - $start_place['latitude'] * 0.01745329252)),2)) * 1.1;
+
             $new_id = $this->order_model->insert($_arr);
             if($new_id)
             {
