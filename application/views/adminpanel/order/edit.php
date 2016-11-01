@@ -48,19 +48,21 @@
 				</div>
 			</div> -->
 													
-		<div class="form-group" id="add_place1">
+		<div class="form-group" id="place1">
 			<label for="end_place" class="col-sm-2 control-label form-control-static">卸货地</label>
 			<div class="col-sm-9 ">
 				<input type="text" name="end_place"  id="end_place"  value='<?php echo isset($data_info['end_place'])?$data_info['end_place']:'' ?>'  class="form-control validate[required]"  placeholder="请输入卸货地" >
 			</div>
-			<button class='btn btn-primary ' type='submit' id="add_place">添加卸货地</button>
 		</div>
 
-		<div class="form-group" id="add_place2" style="display: none">
+		<div class="form-group" id="2place2" style="display: none">
 			<label for="end_place" class="col-sm-2 control-label form-control-static">卸货地2</label>
 			<div class="col-sm-9 ">
 				<input type="text" name="end_place"  id="end_place"  value='<?php echo isset($data_info['end_place'])?$data_info['end_place']:'' ?>'  class="form-control validate[required]"  placeholder="请输入卸货地" >
 			</div>
+		</div>
+		<div class="form-group">
+			<button class='btn btn-primary' id="add_place">添加卸货地</button>
 		</div>
 													
 <!-- 	<div class="form-group">
@@ -196,8 +198,8 @@
 </form>
 		<script src="http://webapi.amap.com/maps?v=1.3&key=86a5ab5b85e0393025ffb2726a0e3404"></script>
 			<script language="javascript" type="text/javascript">
-			$("#add_place2").click(function(){
-				$("#add_place2").show();
+			$("#add_place").click(function(){
+				$("#place2").show();
 			});
 
 			var is_edit =<?php echo ($is_edit)?"true":"false" ?>;
