@@ -48,21 +48,59 @@
 				</div>
 			</div> -->
 													
-		<div class="form-group" id="place1">
-			<label for="end_place" class="col-sm-2 control-label form-control-static">卸货地</label>
+		<div class="form-group">
+			<label for="end_place1" class="col-sm-2 control-label form-control-static">目的地</label>
 			<div class="col-sm-9 ">
-				<input type="text" name="end_place"  id="end_place"  value='<?php echo isset($data_info['end_place'])?$data_info['end_place']:'' ?>'  class="form-control validate[required]"  placeholder="请输入卸货地" >
+				<input type="text" name="end_place"  id="end_place"  value='<?php echo isset($data_info['end_place'])?$data_info['end_place']:'' ?>'  class="form-control validate[required]"  placeholder="请输入目的地" >
+			</div>
+		</div>
+		<div class="form-group" id="end_place_list">
+			<label for="end_place_list" class="col-sm-2 control-label form-control-static">卸货清单</label>
+			<div class="col-sm-9 ">
+				<input type="text" name="end_place_list"  id="end_place_list"  value='<?php echo isset($data_info['end_place_list'])?$data_info['end_place_list']:'' ?>'  class="form-control validate[required]"  placeholder="请输入卸货地" >
 			</div>
 		</div>
 
-		<div class="form-group" id="2place2" style="display: none">
-			<label for="end_place" class="col-sm-2 control-label form-control-static">卸货地2</label>
+		<div class="form-group" id="end_place2_div" style="display: none">
+			<label for="end_place2" class="col-sm-2 control-label form-control-static">卸货地2</label>
 			<div class="col-sm-9 ">
-				<input type="text" name="end_place"  id="end_place"  value='<?php echo isset($data_info['end_place'])?$data_info['end_place']:'' ?>'  class="form-control validate[required]"  placeholder="请输入卸货地" >
+				<input type="text" name="end_place2"  id="end_place2"  value='<?php echo isset($data_info['end_place2'])?$data_info['end_place2']:'' ?>'  class="form-control validate[required]"  placeholder="请输入卸货地" >
+			</div>
+		</div>
+		<div class="form-group" id="end_place2_list" style="display: none">
+			<label for="end_place2_list" class="col-sm-2 control-label form-control-static">对应卸货清单</label>
+			<div class="col-sm-9 ">
+				<input type="text" name="end_place2_list"  value='<?php echo isset($data_info['end_place2_list'])?$data_info['end_place2_list']:'' ?>'  class="form-control validate[required]"  placeholder="请输入卸货地" >
+			</div>
+		</div>
+
+		<div class="form-group" id="end_place3_div" style="display: none">
+			<label for="end_place3" class="col-sm-2 control-label form-control-static">卸货地3</label>
+			<div class="col-sm-9 ">
+				<input type="text" name="end_place3"  id="end_place3"  value='<?php echo isset($data_info['end_place3'])?$data_info['end_place3']:'' ?>'  class="form-control validate[required]"  placeholder="请输入卸货地" >
+			</div>
+		</div>
+		<div class="form-group" id="end_place3_list" style="display: none">
+			<label for="end_place3_list" class="col-sm-2 control-label form-control-static">对应卸货清单</label>
+			<div class="col-sm-9 ">
+				<input type="text" name="end_place3_list"  value='<?php echo isset($data_info['end_place3_list'])?$data_info['end_place3_list']:'' ?>'  class="form-control validate[required]"  placeholder="请输入卸货地" >
+			</div>
+		</div>
+
+				<div class="form-group" id="end_place4_div" style="display: none">
+			<label for="end_place4" class="col-sm-2 control-label form-control-static">卸货地4</label>
+			<div class="col-sm-9 ">
+				<input type="text" name="end_place4"  id="end_place4"  value='<?php echo isset($data_info['end_place4'])?$data_info['end_place4']:'' ?>'  class="form-control validate[required]"  placeholder="请输入卸货地" >
+			</div>
+		</div>
+		<div class="form-group" id="end_place4_list" style="display: none">
+			<label for="end_place4_list" class="col-sm-2 control-label form-control-static">对应卸货清单</label>
+			<div class="col-sm-9 ">
+				<input type="text" name="end_place4_list"  value='<?php echo isset($data_info['end_place4_list'])?$data_info['end_place4_list']:'' ?>'  class="form-control validate[required]"  placeholder="请输入卸货地" >
 			</div>
 		</div>
 		<div class="form-group">
-			<button class='btn btn-primary' id="add_place">添加卸货地</button>
+			<input type="button" value="添加中途卸货地" id="add_place" class='btn btn-primary ' style="margin-left: 200px">
 		</div>
 													
 <!-- 	<div class="form-group">
@@ -161,7 +199,7 @@
 	<input type="hidden" name="end_area">
 	<input type="hidden" name="end_street">
 
-													
+
 	
 													
 <!-- 	<div class="form-group">
@@ -198,9 +236,7 @@
 </form>
 		<script src="http://webapi.amap.com/maps?v=1.3&key=86a5ab5b85e0393025ffb2726a0e3404"></script>
 			<script language="javascript" type="text/javascript">
-			$("#add_place").click(function(){
-				$("#place2").show();
-			});
+
 
 			var is_edit =<?php echo ($is_edit)?"true":"false" ?>;
 			var id =<?php echo $id;?>;
@@ -208,6 +244,7 @@
 			require(['<?php echo SITE_URL?>scripts/common.js'], function (common) {
 		        require(['<?php echo SITE_URL?>scripts/adminpanel/order/edit.js']);
 		    });
+
 
 			//地图
 		    AMap.plugin('AMap.Autocomplete',function(){//回调函数
@@ -287,6 +324,34 @@
 			           console.log(e);
 			    });
 		    });
+
+		    AMap.plugin('AMap.Autocomplete',function(){//回调函数
+		        //实例化Autocomplete
+		        var autoOptions = {
+		            city: "", //城市，默认全国
+		            input:"end_place2"//使用联想输入的input的id
+		        };
+		        autocomplete= new AMap.Autocomplete(autoOptions);
+		    });
+
+		    AMap.plugin('AMap.Autocomplete',function(){//回调函数
+		        //实例化Autocomplete
+		        var autoOptions = {
+		            city: "", //城市，默认全国
+		            input:"end_place3"//使用联想输入的input的id
+		        };
+		        autocomplete= new AMap.Autocomplete(autoOptions);
+		    });
+
+		    AMap.plugin('AMap.Autocomplete',function(){//回调函数
+		        //实例化Autocomplete
+		        var autoOptions = {
+		            city: "", //城市，默认全国
+		            input:"end_place4"//使用联想输入的input的id
+		        };
+		        autocomplete= new AMap.Autocomplete(autoOptions);
+		    });
+
 
 		</script>
 	

@@ -9,7 +9,21 @@
 	require('jquery-ui-dialog-extend');
 	require('datetimepicker');
 
+
+
+
 		$(function () {
+		var i = 2;
+		$("#add_place").click(function(){
+			if(i >= 5){
+				alert("最多只能添加4个卸货地址");
+			}
+			$("#end_place"+i+"_div").show();
+			$("#end_place"+i+"_list").show();
+			i++;
+
+		});
+
 	    $.datepicker.regional['zh-CN'] = {
                 closeText: '关闭',
                 prevText: '<上月',
