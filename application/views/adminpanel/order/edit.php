@@ -58,7 +58,7 @@
 			<label for="end_place_list" class="col-sm-2 control-label form-control-static">货物清单</label>
 			<div class="col-sm-9 ">
 				<input type="textarea" style="width:'100%'; height:'100%';" name="end_place_list"  id="end_place1_detail_list"  value='<?php echo isset($data_info['end_place_list'])?$data_info['end_place_list']:'' ?>'  class="form-control validate[required]" 
-				disabled  >
+				readonly  >
 			</div>
 		</div>
 		<div class="form-group" id="detail_1">
@@ -90,7 +90,7 @@
 		<div class="form-group" id="end_place2_list" style="display: none">
 			<label for="end_place2_list" class="col-sm-2 control-label form-control-static">对应货物清单</label>
 			<div class="col-sm-9 ">
-				<input type="text" name="end_place2_list" id="end_place2_detail_list"  value='<?php echo isset($data_info['end_place2_list'])?$data_info['end_place2_list']:'' ?>'  class="form-control validate[required]"  placeholder="" disabled>
+				<input type="text" name="end_place2_list" id="end_place2_detail_list"  value='<?php echo isset($data_info['end_place2_list'])?$data_info['end_place2_list']:'' ?>'  class="form-control validate[required]"  placeholder="" readonly>
 			</div>
 		</div>
 		<div class="form-group" id="detail_2" style="display: none">
@@ -121,7 +121,7 @@
 		<div class="form-group" id="end_place3_list" style="display: none">
 			<label for="end_place3_list" class="col-sm-2 control-label form-control-static">对应货物清单</label>
 			<div class="col-sm-9 ">
-				<input type="text" name="end_place3_list"  id="end_place3_detail_list" value='<?php echo isset($data_info['end_place3_list'])?$data_info['end_place3_list']:'' ?>'  class="form-control validate[required]"  placeholder="" disabled>
+				<input type="text" name="end_place3_list"  id="end_place3_detail_list" value='<?php echo isset($data_info['end_place3_list'])?$data_info['end_place3_list']:'' ?>'  class="form-control validate[required]"  placeholder="" readonly>
 			</div>
 		</div>
 		<div class="form-group" id="detail_3" style="display: none">
@@ -152,7 +152,7 @@
 		<div class="form-group" id="end_place4_list" style="display: none">
 			<label for="end_place4_list" class="col-sm-2 control-label form-control-static">对应货物清单</label>
 			<div class="col-sm-9 ">
-				<input type="text" name="end_place4_list" id="end_place4_detail_list"  value='<?php echo isset($data_info['end_place4_list'])?$data_info['end_place4_list']:'' ?>'  class="form-control validate[required]"  placeholder="请输入卸货地" disabled>
+				<input type="text" name="end_place4_list" id="end_place4_detail_list"  value='<?php echo isset($data_info['end_place4_list'])?$data_info['end_place4_list']:'' ?>'  class="form-control validate[required]"  placeholder="请输入卸货地" readonly>
 			</div>
 		</div>
 		<div class="form-group" id="detail_4" style="display: none">
