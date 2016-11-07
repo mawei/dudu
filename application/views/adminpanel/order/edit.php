@@ -55,11 +55,31 @@
 			</div>
 		</div>
 		<div class="form-group" id="end_place_list">
-			<label for="end_place_list" class="col-sm-2 control-label form-control-static">卸货清单</label>
+			<label for="end_place_list" class="col-sm-2 control-label form-control-static">货物清单</label>
 			<div class="col-sm-9 ">
-				<input type="text" name="end_place_list"  id="end_place_list"  value='<?php echo isset($data_info['end_place_list'])?$data_info['end_place_list']:'' ?>'  class="form-control validate[required]"  placeholder="请输入卸货地" >
+				<input type="textarea" style="width:'100%'; height:'100%';" name="end_place_list"  id="end_place1_detail_list"  value='<?php echo isset($data_info['end_place_list'])?$data_info['end_place_list']:'' ?>'  class="form-control validate[required]" 
+				disabled  >
 			</div>
 		</div>
+		<div class="form-group" id="detail_1">
+			<div class="col-sm-3 col-sm-offset-2 ">
+				<input type="text" name="detail_name_1"  id="detail_name_1"  class="form-control validate[required]" placeholder="物料描述" >	
+			</div>
+			<div class="col-sm-1">
+				<input type="text" name="detail_unit_1"  id="detail_unit_1"  class="form-control validate[required]" placeholder="单位" >
+			</div>
+			<div class="col-sm-1">
+				<input type="text" name="detail_number_1"  id="detail_number_1"  class="form-control validate[required]" placeholder="数量" >
+			</div>
+			<div class="col-sm-3">
+				<input type="text" name="detail_model_1"  id="detail_model_1"  class="form-control validate[required]" placeholder="规格／型号" >
+			</div>
+
+			<div class="col-sm-2">
+						<input type="button" value="添加货物" id="add_list_1" class='btn btn-primary '>
+			</div>
+		</div>
+
 
 		<div class="form-group" id="end_place2_div" style="display: none">
 			<label for="end_place2" class="col-sm-2 control-label form-control-static">卸货地2</label>
@@ -68,9 +88,27 @@
 			</div>
 		</div>
 		<div class="form-group" id="end_place2_list" style="display: none">
-			<label for="end_place2_list" class="col-sm-2 control-label form-control-static">对应卸货清单</label>
+			<label for="end_place2_list" class="col-sm-2 control-label form-control-static">对应货物清单</label>
 			<div class="col-sm-9 ">
-				<input type="text" name="end_place2_list"  value='<?php echo isset($data_info['end_place2_list'])?$data_info['end_place2_list']:'' ?>'  class="form-control validate[required]"  placeholder="请输入卸货地" >
+				<input type="text" name="end_place2_list" id="end_place2_detail_list"  value='<?php echo isset($data_info['end_place2_list'])?$data_info['end_place2_list']:'' ?>'  class="form-control validate[required]"  placeholder="" disabled>
+			</div>
+		</div>
+		<div class="form-group" id="detail_2" style="display: none">
+			<div class="col-sm-3 col-sm-offset-2 ">
+				<input type="text" id="detail_name_2"  class="form-control validate[required]" placeholder="物料描述" >	
+			</div>
+			<div class="col-sm-1">
+				<input type="text" id="detail_unit_2"  class="form-control validate[required]" placeholder="单位" >
+			</div>
+			<div class="col-sm-1">
+				<input type="text" id="detail_number_2"  class="form-control validate[required]" placeholder="数量" >
+			</div>
+			<div class="col-sm-3">
+				<input type="text" id="detail_model_2"  class="form-control validate[required]" placeholder="规格／型号" >
+			</div>
+
+			<div class="col-sm-2">
+						<input type="button" value="添加货物" id="add_list_2" class='btn btn-primary '>
 			</div>
 		</div>
 
@@ -81,9 +119,27 @@
 			</div>
 		</div>
 		<div class="form-group" id="end_place3_list" style="display: none">
-			<label for="end_place3_list" class="col-sm-2 control-label form-control-static">对应卸货清单</label>
+			<label for="end_place3_list" class="col-sm-2 control-label form-control-static">对应货物清单</label>
 			<div class="col-sm-9 ">
-				<input type="text" name="end_place3_list"  value='<?php echo isset($data_info['end_place3_list'])?$data_info['end_place3_list']:'' ?>'  class="form-control validate[required]"  placeholder="请输入卸货地" >
+				<input type="text" name="end_place3_list"  id="end_place3_detail_list" value='<?php echo isset($data_info['end_place3_list'])?$data_info['end_place3_list']:'' ?>'  class="form-control validate[required]"  placeholder="" disabled>
+			</div>
+		</div>
+		<div class="form-group" id="detail_3" style="display: none">
+			<div class="col-sm-3 col-sm-offset-2 ">
+				<input type="text" id="detail_name_3"  class="form-control validate[required]" placeholder="物料描述" >	
+			</div>
+			<div class="col-sm-1">
+				<input type="text" id="detail_unit_3"  class="form-control validate[required]" placeholder="单位" >
+			</div>
+			<div class="col-sm-1">
+				<input type="text" id="detail_number_3"  class="form-control validate[required]" placeholder="数量" >
+			</div>
+			<div class="col-sm-3">
+				<input type="text" id="detail_model_3"  class="form-control validate[required]" placeholder="规格／型号" >
+			</div>
+
+			<div class="col-sm-2">
+						<input type="button" value="添加货物" id="add_list_3" class='btn btn-primary '>
 			</div>
 		</div>
 
@@ -94,9 +150,27 @@
 			</div>
 		</div>
 		<div class="form-group" id="end_place4_list" style="display: none">
-			<label for="end_place4_list" class="col-sm-2 control-label form-control-static">对应卸货清单</label>
+			<label for="end_place4_list" class="col-sm-2 control-label form-control-static">对应货物清单</label>
 			<div class="col-sm-9 ">
-				<input type="text" name="end_place4_list"  value='<?php echo isset($data_info['end_place4_list'])?$data_info['end_place4_list']:'' ?>'  class="form-control validate[required]"  placeholder="请输入卸货地" >
+				<input type="text" name="end_place4_list" id="end_place4_detail_list"  value='<?php echo isset($data_info['end_place4_list'])?$data_info['end_place4_list']:'' ?>'  class="form-control validate[required]"  placeholder="请输入卸货地" disabled>
+			</div>
+		</div>
+		<div class="form-group" id="detail_4" style="display: none">
+			<div class="col-sm-3 col-sm-offset-2 ">
+				<input type="text" id="detail_name_4"  class="form-control validate[required]" placeholder="物料描述" >	
+			</div>
+			<div class="col-sm-1">
+				<input type="text" id="detail_unit_4"  class="form-control validate[required]" placeholder="单位" >
+			</div>
+			<div class="col-sm-1">
+				<input type="text" id="detail_number_4"  class="form-control validate[required]" placeholder="数量" >
+			</div>
+			<div class="col-sm-3">
+				<input type="text" id="detail_model_4"  class="form-control validate[required]" placeholder="规格／型号" >
+			</div>
+
+			<div class="col-sm-2">
+						<input type="button" value="添加货物" id="add_list_4" class='btn btn-primary '>
 			</div>
 		</div>
 		<div class="form-group">

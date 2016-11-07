@@ -20,9 +20,38 @@
 			}
 			$("#end_place"+i+"_div").show();
 			$("#end_place"+i+"_list").show();
+			$("#detail_"+i).show();
 			i++;
 
 		});
+
+		var getHandler = function(j) {
+		  return function(){
+		  	var name = $("#detail_name_" + j).val();
+				var unit = $("#detail_unit_" + j).val();
+				var number = $("#detail_number_" + j).val();
+				var model = $("#detail_model_" + j).val();
+				var val = $("#end_place"+j+"_detail_list").val();
+				if (val != "")
+				{
+					val = val + ";";
+				}
+				if(name == "" || unit == "" || number == "")
+				{
+					alert("请输入完整");
+					return false;
+				}
+				$("#end_place"+j+"_detail_list").val(val + name + "," + unit + "," + number + "," + model);
+		  };
+		};
+
+		 for (var j = 1; j <=4 ; j++) {
+
+			//var j = 1;
+			$("#add_list_" + j).click(getHandler(j));	
+		 }
+
+		
 
 	    $.datepicker.regional['zh-CN'] = {
                 closeText: '关闭',
