@@ -204,13 +204,14 @@ class Order extends Admin_Controller {
             $end_place['longitude'] = isset($_POST["end_longitude"])?trim(safe_replace($_POST["end_longitude"])):exit(json_encode(array('status'=>false,'tips'=>'目的地请从自动提示框中选择')));
             $end_place['address'] = $end_place['state'] == $end_place['city'] ? $end_place['state'] . $end_place['area'] . $end_place['street'] : $end_place['state'] . $end_place['city'] . $end_place['area'] . $end_place['street'];
             $end_place['type'] = "目的地";
+            $_arr['end_place_list'] = isset($_POST["end_place_list"])?$_POST["end_place_list"]:'';
 
             $_arr['end_place2'] = isset($_POST["end_place2"])?$_POST["end_place2"]:'';
-            $_arr['end_place2_list'] = isset($_POST["end_place2"])?$_POST["end_place2_list"]:'';
-            $_arr['end_place3'] = isset($_POST["end_place2"])?$_POST["end_place3"]:'';
-            $_arr['end_place3_list'] = isset($_POST["end_place2"])?$_POST["end_place3_list"]:'';
-            $_arr['end_place4'] = isset($_POST["end_place2"])?$_POST["end_place4"]:'';
-            $_arr['end_place4_list'] = isset($_POST["end_place2"])?$_POST["end_place4_list"]:'';
+            $_arr['end_place2_list'] = isset($_POST["end_place2_list"])?$_POST["end_place2_list"]:'';
+            $_arr['end_place3'] = isset($_POST["end_place3"])?$_POST["end_place3"]:'';
+            $_arr['end_place3_list'] = isset($_POST["end_place3_list"])?$_POST["end_place3_list"]:'';
+            $_arr['end_place4'] = isset($_POST["end_place4"])?$_POST["end_place4"]:'';
+            $_arr['end_place4_list'] = isset($_POST["end_place4_list"])?$_POST["end_place4_list"]:'';
 
 			if($end_place['state'] == '')exit(json_encode(array('status'=>false,'tips'=>'目的地请从自动提示框中选择')));
             $_arr['customer_id'] = $this->session->userdata('user_id');

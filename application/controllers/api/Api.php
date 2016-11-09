@@ -597,11 +597,11 @@ class Api extends Api_Controller {
 		}
 	}
 
-		//司机任务完成
-	function complete_order_by_driver()
+	function update_sign()
 	{
 		$driver_id = $this->encrypt->decode ( $this->format_get ( 'driver_id' ), $this->key );
 		$order_id = $this->format_get('order_id');
+		$field = $this->format_get('field');
 
 		$config ['upload_path'] = getcwd () . '/upload/sign/';
 		$config ['file_name'] = 'order_' . random_string () . '-' . $order_id;
@@ -616,6 +616,16 @@ class Api extends Api_Controller {
 		} else {
 			$image_path = '/sign/' . $this->upload->data ()['file_name'];
 		}
+		$this->db->query("update `t_aci_order` set {$field}='{$image_path}' where order_id={$order_id}");
+		$this->output_result ( 0, 'success', 'success' );
+	}
+
+		//司机任务完成
+	function complete_order_by_driver()
+	{
+		$driver_id = $this->encrypt->decode ( $this->format_get ( 'driver_id' ), $this->key );
+		$order_id = $this->format_get('order_id');
+
 
 		//$accept_order_time = date("Y-m-d H:i:s",time());
 		$r = $this->db->query("select * from `t_aci_order` where status='货主确认装货完毕' and order_id={$order_id} and driver_id={$driver_id}")->result_array();
@@ -623,7 +633,7 @@ class Api extends Api_Controller {
 		{
 			$this->output_result ( 0, 'failed', '请等待用户确认装货完毕' );
 		}else{
-			$this->db->query("update `t_aci_order` set status='司机完成任务',sign='{$image_path}' where order_id={$order_id}");
+			$this->db->query("update `t_aci_order` set status='司机完成任务' where order_id={$order_id}");
 
 			$customer = $this->db->query("select telephone,device_type from `t_aci_customer` where customer_id={$r[0]['customer_id']}")->result_array()[0];
 			$customer_telephone = $customer["telephone"];
