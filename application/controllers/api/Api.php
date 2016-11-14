@@ -315,7 +315,7 @@ class Api extends Api_Controller {
 		$page = $this->format_get("page");
 		$start = ($page - 1) * $number;
 
-		$query = $this->db->query ( "select * from `t_aci_orderflow` where user_id='{$user_id}' and user_type='{$user_type}' limit {$start},{$number}" );
+		$query = $this->db->query ( "select * from `t_aci_orderflow` where user_id='{$user_id}' and user_type='{$user_type}' order by time desc limit {$start},{$number}" );
 		$this->output_result ( 0, 'success', $query->result_array () );
 	}
 
