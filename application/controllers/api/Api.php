@@ -311,8 +311,11 @@ class Api extends Api_Controller {
 	public function get_orderflow_list() {
 		$user_type = $this->format_get("user_type");
 		$user_id = $this->encrypt->decode ( $this->format_get ( 'user_id' ), $this->key );
+		$number = $this->format_get("number");
+		$page = $this->format_get("page");
+		$start = ($page - 1) * $number;
 
-		$query = $this->db->query ( "select * from `t_aci_orderflow` where user_id='{$user_id}' and user_type='{$user_type}'" );
+		$query = $this->db->query ( "select * from `t_aci_orderflow` where user_id='{$user_id}' and user_type='{$user_type}' limit {$start},{$number}" );
 		$this->output_result ( 0, 'success', $query->result_array () );
 	}
 
