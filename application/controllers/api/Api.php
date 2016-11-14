@@ -348,7 +348,7 @@ class Api extends Api_Controller {
 			$data['type'] = "订单收入";
 			$this->db->insert('t_aci_orderflow',$data);
 
-			if(count($recommend_user) > 0)
+			if(count($recommend_user) > 0 && $driver['be_recommend_code'] != "")
 			{
 				$recommend_fee = (1000*0.05 - 1000*0.03)*0.2;
 				$this->db->query("update `t_aci_customer` set amount = amount + {$recommend_fee} where customer_id = {$recommend_user['customer_id']}");
@@ -379,9 +379,9 @@ class Api extends Api_Controller {
 			$data['type'] = "订单收入(30%)";
 			$this->db->insert('t_aci_orderflow',$data);
 
-			if(count($recommend_user) > 0)
+			if(count($recommend_user) > 0 && $driver['be_recommend_code'] != "")
 			{
-				$recommend_fee = $fee*0.2;
+				$recommend_fee = ($order['charge'] - $fee)*0.2;
 				$this->db->query("update `t_aci_customer` set amount = amount + {$recommend_fee} where customer_id = {$recommend_user['customer_id']}");
 				$data['user_id'] = $recommend_user['customer_id'];
 				$data['time'] = date("Y-m-d H:i:s",time());
