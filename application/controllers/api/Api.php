@@ -331,6 +331,87 @@ class Api extends Api_Controller {
 		}
 	}
 	
+	private function update_amount($order_id){
+		$order = $this->db->query("select * from `t_aci_order` where order_id={$order_id}")->result_array()[0];
+		$driver = $this->db->query("select * from `t_aci_order` where driver_id={$order['driver_id']}")->result_array()[0];
+		$recommend_user = $this->db->query("select * from `t_aci_customer` where recommend_code='{$driver['be_recommend_code']}'")->result_array();
+		if($order['charge'] <= 2000 && $order['status'] == "已接单")
+		{
+			$driver_fee = 2000 - 1000*0.05 - 1000*0.03;
+			$this->db->query("update `t_aci_driver` set amount = amount + {$driver_fee} where driver_id = {$driver['driver_id']}");
+			$data['user_id'] = $driver['driver_id'];
+			$data['time'] = date("Y-m-d H:i:s",time());
+			$data['user_type'] = "driver";
+			$data['order_id'] = $order_id;
+			$data['amount'] = $driver_fee;
+			$data['is_plus'] = "1";
+			$data['type'] = "订单收入";
+			$this->db->insert('t_aci_orderflow',$data);
+
+			if(count($recommend_user) > 0)
+			{
+				$recommend_fee = (1000*0.05 - 1000*0.03)*0.2;
+				$this->db->query("update `t_aci_customer` set amount = amount + {$recommend_fee} where customer_id = {$recommend_user['customer_id']}");
+				$data['user_id'] = $recommend_user['customer_id'];
+				$data['time'] = date("Y-m-d H:i:s",time());
+				$data['user_type'] = "customer";
+				$data['order_id'] = $order_id;
+				$data['amount'] = $recommend_fee;
+				$data['is_plus'] = "1";
+				$data['type'] = "佣金收入";
+				$this->db->insert('t_aci_orderflow',$data);
+			}
+		}
+		if($order['charge'] > 2000 && $order['status'] == "已接单")
+		{
+			$fee = $order['charge'] - 1000*0.05 - ($order['charge']-1000)*0.03;
+			$fee = $order['charge'] - $fee >= 200 ? $order['charge'] - 200:$fee;
+
+			$driver_fee = $fee * 0.3;
+
+			$this->db->query("update `t_aci_driver` set amount = amount + {$driver_fee} where driver_id = {$driver['driver_id']}");
+			$data['user_id'] = $driver['driver_id'];
+			$data['time'] = date("Y-m-d H:i:s",time());
+			$data['user_type'] = "driver";
+			$data['order_id'] = $order_id;
+			$data['amount'] = $driver_fee;
+			$data['is_plus'] = "1";
+			$data['type'] = "订单收入(30%)";
+			$this->db->insert('t_aci_orderflow',$data);
+
+			if(count($recommend_user) > 0)
+			{
+				$recommend_fee = $fee*0.2;
+				$this->db->query("update `t_aci_customer` set amount = amount + {$recommend_fee} where customer_id = {$recommend_user['customer_id']}");
+				$data['user_id'] = $recommend_user['customer_id'];
+				$data['time'] = date("Y-m-d H:i:s",time());
+				$data['user_type'] = "customer";
+				$data['order_id'] = $order_id;
+				$data['amount'] = $recommend_fee;
+				$data['is_plus'] = "1";
+				$data['type'] = "佣金收入";
+				$this->db->insert('t_aci_orderflow',$data);
+			}
+		}
+
+		if($order['charge'] > 2000 && $order['status'] == "已完成")
+		{
+			$fee = $order['charge'] - 1000*0.05 - ($order['charge']-1000)*0.03;
+			$fee = $order['charge'] - $fee >= 200 ? $order['charge'] - 200:$fee;
+
+			$driver_fee = $fee * 0.7;
+
+			$this->db->query("update `t_aci_driver` set amount = amount + {$driver_fee} where driver_id = {$driver['driver_id']}");
+			$data['user_id'] = $driver['driver_id'];
+			$data['time'] = date("Y-m-d H:i:s",time());
+			$data['user_type'] = "driver";
+			$data['order_id'] = $order_id;
+			$data['amount'] = $driver_fee;
+			$data['is_plus'] = "1";
+			$data['type'] = "订单收入(70%)";
+			$this->db->insert('t_aci_orderflow',$data);
+		}
+	}
 
 
 	public function set_default_route()
@@ -413,7 +494,7 @@ class Api extends Api_Controller {
 			$this->output_result ( 0, 'failed', '该订单已超过确认时间，请继续等待' );
 		}else{
 			$this->db->query("update `t_aci_order` set status='已接单' where order_id={$order_id}");
-
+			$this->update_amount($order_id);
 			$customer = $this->db->query("select telephone,device_type from `t_aci_driver` where driver_id={$r[0]['driver_id']}")->result_array()[0];
 			$customer_telephone = $customer["telephone"];
 			$device_type = $customer["device_type"];
@@ -670,7 +751,7 @@ class Api extends Api_Controller {
 			$this->output_result ( 0, 'failed', '请等待用户确认装货完毕' );
 		}else{
 			$this->db->query("update `t_aci_order` set status='已完成' where order_id={$order_id}");
-
+			$this->update_amount($order_id);
 			$customer = $this->db->query("select telephone,device_type from `t_aci_driver` where driver_id={$r[0]['driver_id']}")->result_array()[0];
 			$customer_telephone = $customer["telephone"];
 			$device_type = $customer["device_type"];			
