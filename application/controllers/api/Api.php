@@ -307,6 +307,15 @@ class Api extends Api_Controller {
 		$this->output_result ( 0, 'success', $query->result_array () );
 	}
 
+	//获取流水
+	public function get_orderflow_list() {
+		$user_type = $this->format_get("user_type");
+		$user_id = $this->encrypt->decode ( $this->format_get ( 'user_id' ), $this->key );
+
+		$query = $this->db->query ( "select * from `t_aci_orderflow` where user_id='{$user_id}' and user_type='{$user_type}'" );
+		$this->output_result ( 0, 'success', $query->result_array () );
+	}
+
 	public function get_driver_info_by_id()
 	{
 		$driver_id = $this->encrypt->decode ( $this->format_get ( 'driver_id' ), $this->key );
