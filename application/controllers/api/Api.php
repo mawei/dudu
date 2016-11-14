@@ -351,7 +351,7 @@ class Api extends Api_Controller {
 			if(count($recommend_user) > 0 && $driver['be_recommend_code'] != "")
 			{
 				$recommend_fee = (1000*0.05 - 1000*0.03)*0.2;
-				$this->db->query("update `t_aci_customer` set amount = amount + {$recommend_fee} where customer_id = {$recommend_user['customer_id']}");
+				$this->db->query("update `t_aci_customer` set amount = amount + {$recommend_fee} where customer_id = {$recommend_user[0]['customer_id']}");
 				$data['user_id'] = $recommend_user['customer_id'];
 				$data['time'] = date("Y-m-d H:i:s",time());
 				$data['user_type'] = "customer";
@@ -382,7 +382,7 @@ class Api extends Api_Controller {
 			if(count($recommend_user) > 0 && $driver['be_recommend_code'] != "")
 			{
 				$recommend_fee = ($order['charge'] - $fee)*0.2;
-				$this->db->query("update `t_aci_customer` set amount = amount + {$recommend_fee} where customer_id = {$recommend_user['customer_id']}");
+				$this->db->query("update `t_aci_customer` set amount = amount + {$recommend_fee} where customer_id = {$recommend_user［0]['customer_id']}");
 				$data['user_id'] = $recommend_user['customer_id'];
 				$data['time'] = date("Y-m-d H:i:s",time());
 				$data['user_type'] = "customer";
@@ -491,7 +491,7 @@ class Api extends Api_Controller {
 		$r = $this->db->query("select * from `t_aci_order` where status='接单中' and customer_id={$customer_id}")->result_array();
 		if(count($r) == 0)
 		{
-			$this->output_result ( 0, 'failed', '该订单已超过确认时间，请继续等待' );
+			$this->output_result ( 0, 'failed', '该订单有误，请联系管理员' );
 		}else{
 			$this->db->query("update `t_aci_order` set status='已接单' where order_id={$order_id}");
 			$this->update_amount($order_id);
