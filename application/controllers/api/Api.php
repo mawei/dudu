@@ -382,7 +382,7 @@ class Api extends Api_Controller {
 			if(count($recommend_user) > 0 && $driver['be_recommend_code'] != "")
 			{
 				$recommend_fee = ($order['charge'] - $fee)*0.2;
-				$this->db->query("update `t_aci_customer` set amount = amount + {$recommend_fee} where customer_id = {$recommend_user［0]['customer_id']}");
+				$this->db->query("update `t_aci_customer` set amount = amount + {$recommend_fee} where customer_id = {$recommend_user[0]['customer_id']}");
 				$data['user_id'] = $recommend_user['customer_id'];
 				$data['time'] = date("Y-m-d H:i:s",time());
 				$data['user_type'] = "customer";
