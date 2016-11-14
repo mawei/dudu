@@ -352,7 +352,7 @@ class Api extends Api_Controller {
 			{
 				$recommend_fee = (1000*0.05 - 1000*0.03)*0.2;
 				$this->db->query("update `t_aci_customer` set amount = amount + {$recommend_fee} where customer_id = {$recommend_user[0]['customer_id']}");
-				$data['user_id'] = $recommend_user['customer_id'];
+				$data['user_id'] = $recommend_user[0]['customer_id'];
 				$data['time'] = date("Y-m-d H:i:s",time());
 				$data['user_type'] = "customer";
 				$data['order_id'] = $order_id;
@@ -383,7 +383,7 @@ class Api extends Api_Controller {
 			{
 				$recommend_fee = ($order['charge'] - $fee)*0.2;
 				$this->db->query("update `t_aci_customer` set amount = amount + {$recommend_fee} where customer_id = {$recommend_user[0]['customer_id']}");
-				$data['user_id'] = $recommend_user['customer_id'];
+				$data['user_id'] = $recommend_user[0]['customer_id'];
 				$data['time'] = date("Y-m-d H:i:s",time());
 				$data['user_type'] = "customer";
 				$data['order_id'] = $order_id;
