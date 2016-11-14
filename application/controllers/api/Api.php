@@ -200,6 +200,7 @@ class Api extends Api_Controller {
 		$data ['truck_size'] = $this->format_get ( 'truck_size' );
 		$data ['charge'] = $this->format_get ( 'charge' );
 		$data ['weight'] = $this->format_get ( 'weight' );
+		$data ['is_need_payment'] = $this->format_get ( 'is_need_payment' );
 		$data ['status'] = "未接单";
 		$create_time = date("Y-m-d H:i:s",time());
 		$date ['create_time'] = "{$create_time}";

@@ -212,6 +212,7 @@ class Order extends Admin_Controller {
             $_arr['end_place3_list'] = isset($_POST["end_place3_list"])?$_POST["end_place3_list"]:'';
             $_arr['end_place4'] = isset($_POST["end_place4"])?$_POST["end_place4"]:'';
             $_arr['end_place4_list'] = isset($_POST["end_place4_list"])?$_POST["end_place4_list"]:'';
+            $_arr['is_company'] = "1";
 
 			if($end_place['state'] == '')exit(json_encode(array('status'=>false,'tips'=>'目的地请从自动提示框中选择')));
             $_arr['customer_id'] = $this->session->userdata('user_id');
