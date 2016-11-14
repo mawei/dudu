@@ -337,7 +337,7 @@ class Api extends Api_Controller {
 		$recommend_user = $this->db->query("select * from `t_aci_customer` where recommend_code='{$driver['be_recommend_code']}'")->result_array();
 		if($order['charge'] <= 2000 && $order['status'] == "已接单")
 		{
-			$fee = $order['charge'] >= 1000 ? $order['charge']*0.05 + ($order['charge']-1000)*0.03 : $order['charge']*0.05;
+			$fee = $order['charge'] >= 1000 ? 1000*0.05 + ($order['charge']-1000)*0.03 : $order['charge']*0.05;
 			$driver_fee = $order['charge'] - $fee;
 			$this->db->query("update `t_aci_driver` set amount = amount + {$driver_fee} where driver_id = {$driver['driver_id']}");
 			$data['user_id'] = $driver['driver_id'];
