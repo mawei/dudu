@@ -333,7 +333,7 @@ class Api extends Api_Controller {
 	
 	private function update_amount($order_id){
 		$order = $this->db->query("select * from `t_aci_order` where order_id={$order_id}")->result_array()[0];
-		$driver = $this->db->query("select * from `t_aci_order` where driver_id={$order['driver_id']}")->result_array()[0];
+		$driver = $this->db->query("select * from `t_aci_driver` where driver_id={$order['driver_id']}")->result_array()[0];
 		$recommend_user = $this->db->query("select * from `t_aci_customer` where recommend_code='{$driver['be_recommend_code']}'")->result_array();
 		if($order['charge'] <= 2000 && $order['status'] == "已接单")
 		{
