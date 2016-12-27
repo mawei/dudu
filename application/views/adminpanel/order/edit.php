@@ -66,7 +66,15 @@
 				<input type="text" name="detail_name_1"  id="detail_name_1"  class="form-control validate[required]" placeholder="物料描述" >	
 			</div>
 			<div class="col-sm-1">
-				<input type="text" name="detail_unit_1"  id="detail_unit_1"  class="form-control validate[required]" placeholder="单位" >
+				<select name="detail_unit_1"  id="detail_unit_1" class="form-control">
+					<option value="吨">吨</option>
+					<option value="米">米</option>
+					<option value="千米">千米</option>
+					<option value="个">个</option>
+					<option value="立方">立方</option>
+					<option value="箱">箱</option>
+					<option value="其他">其他</option>
+				</select>
 			</div>
 			<div class="col-sm-1">
 				<input type="text" name="detail_number_1"  id="detail_number_1"  class="form-control validate[required]" placeholder="数量" >
@@ -98,7 +106,15 @@
 				<input type="text" id="detail_name_2"  class="form-control validate[required]" placeholder="物料描述" >	
 			</div>
 			<div class="col-sm-1">
-				<input type="text" id="detail_unit_2"  class="form-control validate[required]" placeholder="单位" >
+				<select name="detail_unit_2"  id="detail_unit_2" class="form-control">
+					<option value="吨">吨</option>
+					<option value="米">米</option>
+					<option value="千米">千米</option>
+					<option value="个">个</option>
+					<option value="立方">立方</option>
+					<option value="箱">箱</option>
+					<option value="其他">其他</option>
+				</select>
 			</div>
 			<div class="col-sm-1">
 				<input type="text" id="detail_number_2"  class="form-control validate[required]" placeholder="数量" >
@@ -129,8 +145,17 @@
 				<input type="text" id="detail_name_3"  class="form-control validate[required]" placeholder="物料描述" >	
 			</div>
 			<div class="col-sm-1">
-				<input type="text" id="detail_unit_3"  class="form-control validate[required]" placeholder="单位" >
+				<select name="detail_unit_3"  id="detail_unit_3" class="form-control">
+					<option value="吨">吨</option>
+					<option value="米">米</option>
+					<option value="千米">千米</option>
+					<option value="个">个</option>
+					<option value="立方">立方</option>
+					<option value="箱">箱</option>
+					<option value="其他">其他</option>
+				</select>
 			</div>
+
 			<div class="col-sm-1">
 				<input type="text" id="detail_number_3"  class="form-control validate[required]" placeholder="数量" >
 			</div>
@@ -160,7 +185,15 @@
 				<input type="text" id="detail_name_4"  class="form-control validate[required]" placeholder="物料描述" >	
 			</div>
 			<div class="col-sm-1">
-				<input type="text" id="detail_unit_4"  class="form-control validate[required]" placeholder="单位" >
+				<select name="detail_unit_4"  id="detail_unit_4" class="form-control">
+					<option value="吨">吨</option>
+					<option value="米">米</option>
+					<option value="千米">千米</option>
+					<option value="个">个</option>
+					<option value="立方">立方</option>
+					<option value="箱">箱</option>
+					<option value="其他">其他</option>
+				</select>
 			</div>
 			<div class="col-sm-1">
 				<input type="text" id="detail_number_4"  class="form-control validate[required]" placeholder="数量" >
