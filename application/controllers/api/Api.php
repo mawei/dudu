@@ -335,7 +335,7 @@ class Api extends Api_Controller {
 		$order = $this->db->query("select * from `t_aci_order` where order_id={$order_id}")->result_array()[0];
 		$driver = $this->db->query("select * from `t_aci_driver` where driver_id={$order['driver_id']}")->result_array()[0];
 		$recommend_user = $this->db->query("select * from `t_aci_customer` where recommend_code='{$driver['be_recommend_code']}'")->result_array();
-		if($order['charge'] <= 2000 && $order['status'] == "已接单")
+		if($order['charge'] <= 2000 && $order['status'] == "货主确认装货完毕")
 		{
 			$fee = $order['charge'] >= 1000 ? 1000*0.05 + ($order['charge']-1000)*0.03 : $order['charge']*0.05;
 			$driver_fee = $order['charge'] - $fee;
@@ -363,7 +363,7 @@ class Api extends Api_Controller {
 				$this->db->insert('t_aci_orderflow',$data);
 			}
 		}
-		if($order['charge'] > 2000 && $order['status'] == "已接单")
+		if($order['charge'] > 2000 && $order['status'] == "货主确认装货完毕")
 		{
 			$fee = $order['charge'] - 1000*0.05 - ($order['charge']-1000)*0.03;
 			$fee = $order['charge'] - $fee >= 200 ? $order['charge'] - 200:$fee;
@@ -495,7 +495,7 @@ class Api extends Api_Controller {
 			$this->output_result ( 0, 'failed', '该订单有误，请联系管理员' );
 		}else{
 			$this->db->query("update `t_aci_order` set status='已接单' where order_id={$order_id}");
-			$this->update_amount($order_id);
+			//$this->update_amount($order_id);
 			$customer = $this->db->query("select telephone,device_type from `t_aci_driver` where driver_id={$r[0]['driver_id']}")->result_array()[0];
 			$customer_telephone = $customer["telephone"];
 			$device_type = $customer["device_type"];
@@ -2003,14 +2003,16 @@ class Api extends Api_Controller {
 			$respCode = $_POST ['respCode']; //判断respCode=00或A6即可认为交易成功
 			if(com\unionpay\acp\sdk\AcpService::validate ( $_POST )&&($respCode == "00" || $respCode == "A6"))
 			{
-				$this->db->query("update `t_aci_order` set status='已接单' where order_id={$order_id}");
-				$this->update_amount($order_id);
+				$this->db->query("update `t_aci_order` set status='货主确认装货完毕' where order_id={$order_id}");
 				$customer = $this->db->query("select telephone,device_type from `t_aci_driver` where driver_id={$r[0]['driver_id']}")->result_array()[0];
 				$customer_telephone = $customer["telephone"];
-				$device_type = $customer["device_type"];
-				$this->zhaohuo_notification("driver_" . $device_type,$customer_telephone,"货主已确认您的接单,点击查看",$order_id);
+				$device_type = $customer["device_type"];			
+				$this->zhaoche_notification("driver_".$device_type,$customer_telephone,"货主已确认装货完毕，点击查看",$order_id);
+				$this->update_amount($order_id);
 
-				$this->sms_content($customer_telephone,"【嘟嘟找货】货主已确认您的接单，请尽快联系车主");
+				$this->sms_content($customer_telephone,"【嘟嘟找货】货主已确认装货完毕");
+
+
 			}else{
 				$this->db->query("update `t_aci_order` set status='已接单' where order_id={$order_id}");
 			}
