@@ -39,10 +39,10 @@ const SDK_Card_Request_Url = 'https://101.231.204.80:5000/gateway/api/cardTransR
 const SDK_App_Request_Url = 'https://101.231.204.80:5000/gateway/api/appTransReq.do';
 
 // 前台通知地址 (商户自行配置通知地址)
-const SDK_FRONT_NOTIFY_URL ='/api/api/pay_back';
+const SDK_FRONT_NOTIFY_URL ='http://dudu.yisunbird.com/api/api/pay_back';
 
 // 后台通知地址 (商户自行配置通知地址，需配置外网能访问的地址)
-const SDK_BACK_NOTIFY_URL = '/api/api/pay_back';
+const SDK_BACK_NOTIFY_URL = 'http://dudu.yisunbird.com/api/api/pay_back';
 
 //文件下载目录 
 const SDK_FILE_DOWN_PATH = './';
