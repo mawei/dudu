@@ -322,7 +322,7 @@ class Api extends Api_Controller {
 	public function get_driver_info_by_id()
 	{
 		$driver_id = $this->encrypt->decode ( $this->format_get ( 'driver_id' ), $this->key );
-		$result = $this->db->query( "select nickname,photo,telephone,truck_type,truck_size,truck_head_photo,drive_license,truck_full_photo,status,status_memo,default_route_id,recommend_code,amount from `t_aci_driver` where driver_id={$driver_id}" )->result_array();
+		$result = $this->db->query( "select nickname,photo,telephone,truck_type,truck_size,truck_head_photo,drive_license,truck_full_photo,status,status_memo,default_route_id,recommend_code,amount,rest_amount from `t_aci_driver` where driver_id={$driver_id}" )->result_array();
 		if(count($result) > 0)
 		{
 			$this->output_result ( 0, 'success', $result[0] );
@@ -339,7 +339,7 @@ class Api extends Api_Controller {
 		{
 			$fee = $order['charge'] >= 1000 ? 1000*0.05 + ($order['charge']-1000)*0.03 : $order['charge']*0.05;
 			$driver_fee = $order['charge'] - $fee;
-			$this->db->query("update `t_aci_driver` set amount = amount + {$driver_fee} where driver_id = {$driver['driver_id']}");
+			$this->db->query("update `t_aci_driver` set amount = amount + {$driver_fee},rest_amount = rest_amount + {$driver_fee} where driver_id = {$driver['driver_id']}");
 			$data['user_id'] = $driver['driver_id'];
 			$data['time'] = date("Y-m-d H:i:s",time());
 			$data['user_type'] = "driver";
@@ -352,7 +352,7 @@ class Api extends Api_Controller {
 			if(count($recommend_user) > 0 && $driver['be_recommend_code'] != "")
 			{
 				$recommend_fee = $fee*0.2;
-				$this->db->query("update `t_aci_customer` set amount = amount + {$recommend_fee} where customer_id = {$recommend_user[0]['customer_id']}");
+				$this->db->query("update `t_aci_customer` set amount = amount + {$recommend_fee},rest_amount = rest_amount + {$recommend_fee} where customer_id = {$recommend_user[0]['customer_id']}");
 				$data['user_id'] = $recommend_user[0]['customer_id'];
 				$data['time'] = date("Y-m-d H:i:s",time());
 				$data['user_type'] = "customer";
@@ -370,7 +370,7 @@ class Api extends Api_Controller {
 
 			$driver_fee = $fee * 0.3;
 
-			$this->db->query("update `t_aci_driver` set amount = amount + {$driver_fee} where driver_id = {$driver['driver_id']}");
+			$this->db->query("update `t_aci_driver` set amount = amount + {$driver_fee},rest_amount = rest_amount + {$driver_fee} where driver_id = {$driver['driver_id']}");
 			$data['user_id'] = $driver['driver_id'];
 			$data['time'] = date("Y-m-d H:i:s",time());
 			$data['user_type'] = "driver";
@@ -383,7 +383,7 @@ class Api extends Api_Controller {
 			if(count($recommend_user) > 0 && $driver['be_recommend_code'] != "")
 			{
 				$recommend_fee = ($order['charge'] - $fee)*0.2;
-				$this->db->query("update `t_aci_customer` set amount = amount + {$recommend_fee} where customer_id = {$recommend_user[0]['customer_id']}");
+				$this->db->query("update `t_aci_customer` set amount = amount + {$recommend_fee},rest_amount = rest_amount + {$recommend_fee} where customer_id = {$recommend_user[0]['customer_id']}");
 				$data['user_id'] = $recommend_user[0]['customer_id'];
 				$data['time'] = date("Y-m-d H:i:s",time());
 				$data['user_type'] = "customer";
@@ -402,7 +402,7 @@ class Api extends Api_Controller {
 
 			$driver_fee = $fee * 0.7;
 
-			$this->db->query("update `t_aci_driver` set amount = amount + {$driver_fee} where driver_id = {$driver['driver_id']}");
+			$this->db->query("update `t_aci_driver` set amount = amount + {$driver_fee},rest_amount = rest_amount + {$driver_fee} where driver_id = {$driver['driver_id']}");
 			$data['user_id'] = $driver['driver_id'];
 			$data['time'] = date("Y-m-d H:i:s",time());
 			$data['user_type'] = "driver";
@@ -426,7 +426,7 @@ class Api extends Api_Controller {
 	public function get_customer_info_by_id()
 	{
 		$customer_id = $this->encrypt->decode ( $this->format_get ( 'customer_id' ), $this->key );
-		$result = $this->db->query( "select nickname,photo,telephone,status,customer_type,name,identity_photo,status_memo,recommend_code,amount from `t_aci_customer` where customer_id={$customer_id}" )->result_array();
+		$result = $this->db->query( "select nickname,photo,telephone,status,customer_type,name,identity_photo,status_memo,recommend_code,amount,rest_amount from `t_aci_customer` where customer_id={$customer_id}" )->result_array();
 		if(count($result) > 0)
 		{
 			$this->output_result ( 0, 'success', $result[0] );
@@ -2021,6 +2021,62 @@ class Api extends Api_Controller {
 			echo '签名为空';
 		}
 
+	}
+
+	public function to_cash_by_driver()
+	{
+		$bank = $this->format_get("bank");
+		$driver_id = $this->encrypt->decode ( $this->format_get ( 'driver_id' ), $this->key );
+		$bankcard = $this->format_get("bankcard");
+		$bankarea = $this->format_get("bankarea");
+		$money = $this->format_get("money");
+		$name = $this->format_get("name");
+		$driver = $this->db->query("select * from `t_aci_driver` where driver_id = {$driver_id}")->result_array()[0];
+		if($money > $driver['rest_amount'])
+		{
+			$this->output_result ( -1, 'failed', '提现金额不能超过余额' );
+		}else{
+			$data['user_type'] = 'driver';
+			$data['user_id'] = $driver_id;
+			$data['bank'] = $bank;
+			$data['bankcard'] = $bankcard;
+			$data['bankarea'] = $bankarea;
+			$data['money'] = $money;
+			$data['name'] = $name;
+			$data['status'] = '未审核'; 
+			$data['time'] = date("Y-m-d H:i:s",time());
+			$this->db->insert('t_aci_cash',$data);	
+			$this->db->query('update `t_aci_driver` set rest_amount=rest_amount-{$money} where driver_id={$driver_id}');	
+			$this->output_result ( 0, 'success', '提现成功' );
+		}
+	}
+
+	public function to_cash_by_customer()
+	{
+		$bank = $this->format_get("bank");
+		$customer_id = $this->encrypt->decode ( $this->format_get ( 'customer_id' ), $this->key );
+		$bankcard = $this->format_get("bankcard");
+		$bankarea = $this->format_get("bankarea");
+		$money = $this->format_get("money");
+		$name = $this->format_get("name");
+		$customer = $this->db->query("select * from `t_aci_customer` where customer_id = {$customer_id}")->result_array()[0];
+		if($money > $driver['rest_amount'])
+		{
+			$this->output_result ( -1, 'failed', '提现金额不能超过余额' );
+		}else{
+			$data['user_type'] = 'driver';
+			$data['user_id'] = $customer_id;
+			$data['bank'] = $bank;
+			$data['bankcard'] = $bankcard;
+			$data['bankarea'] = $bankarea;
+			$data['money'] = $money;
+			$data['name'] = $name;
+			$data['status'] = '未审核'; 
+			$data['time'] = date("Y-m-d H:i:s",time());
+			$this->db->insert('t_aci_cash',$data);	
+			$this->db->query('update `t_aci_customer` set rest_amount=rest_amount-{$money} where customer_id={$customer_id}');	
+			$this->output_result ( 0, 'success', '提现成功' );
+		}
 	}
 
 
