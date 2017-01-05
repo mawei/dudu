@@ -2046,7 +2046,7 @@ class Api extends Api_Controller {
 			$data['status'] = '未审核'; 
 			$data['time'] = date("Y-m-d H:i:s",time());
 			$this->db->insert('t_aci_cash',$data);	
-			$this->db->query('update `t_aci_driver` set rest_amount=rest_amount-{$money} where driver_id={$driver_id}');	
+			$this->db->query("update `t_aci_driver` set rest_amount=rest_amount-{$money} where driver_id={$driver_id}");	
 			$this->output_result ( 0, 'success', '提现成功' );
 		}
 	}
@@ -2074,7 +2074,7 @@ class Api extends Api_Controller {
 			$data['status'] = '未审核'; 
 			$data['time'] = date("Y-m-d H:i:s",time());
 			$this->db->insert('t_aci_cash',$data);	
-			$this->db->query('update `t_aci_customer` set rest_amount=rest_amount-{$money} where customer_id={$customer_id}');	
+			$this->db->query("update `t_aci_customer` set rest_amount=rest_amount-{$money} where customer_id={$customer_id}");	
 			$this->output_result ( 0, 'success', '提现成功' );
 		}
 	}
