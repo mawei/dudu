@@ -975,6 +975,8 @@ class Api extends Api_Controller {
 			$this->output_result ( - 1, 'failed', '密码不能为空' );
 		}
 
+
+
 		$secret_telephone = $this->encrypt->decode ( $this->format_get ( 'secret_telephone' ), $this->key );
 		if ($telephone != $secret_telephone) {
 			$this->output_result ( - 888, 'failed', '非法操作' );
@@ -1007,6 +1009,7 @@ class Api extends Api_Controller {
 		$password = $this->format_get('password');
 
 
+
 		if($telephone == "")
 		{
 			$this->output_result ( - 1, 'failed', '手机号码不能为空' );
@@ -1022,6 +1025,18 @@ class Api extends Api_Controller {
 		if($password == "")
 		{
 			$this->output_result ( - 1, 'failed', '密码不能为空' );
+		}
+
+		$be_recommend_code = $this->format_get('be_recommend_code');
+
+		if($be_recommend_code != "")
+		{
+			$count1 = $this->db->query("select count(driver_id) as count from `t_aci_driver` where recommend_code='{$be_recommend_code}'")->result_array()[0]['count'];
+			$count2 = $this->db->query("select count(customer_id) as count from `t_aci_customer` where recommend_code='{$be_recommend_code}'")->result_array()[0]['count'];
+			if($count1 + $count2 == 0)
+			{
+				$this->output_result ( - 1, 'failed', '请确认邀请码是否填写正确' );
+			}
 		}
 
 		$secret_telephone = $this->encrypt->decode ( $this->format_get ( 'secret_telephone' ), $this->key );
@@ -1048,6 +1063,7 @@ class Api extends Api_Controller {
 				$count2 = $this->db->query("select count(customer_id) as count from `t_aci_customer` where recommend_code='{$recommend_code}'")->result_array()[0]['count'];
 			}
 			$data['recommend_code'] = $recommend_code;
+			$data['be_recommend_code'] = $be_recommend_code;
 			$data['telephone'] = $telephone;
 			$data['password'] = md5 ( $this->key . $password);
 			$data['truck_type'] = $truck_type;
