@@ -1119,6 +1119,7 @@ class Api extends Api_Controller {
 				$array ['status'] = $result2 [0] ['status'];
 				$array ['status_memo'] = $result2 [0] ['status_memo'];
 				$array ['last_login'] = $result2 [0] ['last_login'];
+				$array ['recommend_code'] = $result2 [0] ['recommend_code'];
 
 				if($result2[0]['device_type'] != $device_type)
 				{
