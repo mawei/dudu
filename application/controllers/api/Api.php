@@ -2077,11 +2077,11 @@ class Api extends Api_Controller {
 		$money = $this->format_get("money");
 		$name = $this->format_get("name");
 		$customer = $this->db->query("select * from `t_aci_customer` where customer_id = {$customer_id}")->result_array()[0];
-		if($money > $driver['rest_amount'])
+		if($money > $customer['rest_amount'])
 		{
 			$this->output_result ( -1, 'failed', '提现金额不能超过余额' );
 		}else{
-			$data['user_type'] = 'driver';
+			$data['user_type'] = 'customer';
 			$data['user_id'] = $customer_id;
 			$data['bank'] = $bank;
 			$data['bankcard'] = $bankcard;
