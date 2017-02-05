@@ -701,6 +701,7 @@ class Api extends Api_Controller {
 		$config ['upload_path'] = getcwd () . '/upload/sign/';
 		$config ['file_name'] = 'order_' . random_string () . '-' . $order_id;
 		$config ['allowed_types'] = 'gif|jpg|png';
+
 		$this->load->library ( 'upload', $config );
 		$this->upload->initialize ( $config );
 		if (! $this->upload->do_upload ( 'sign_image' )) {
