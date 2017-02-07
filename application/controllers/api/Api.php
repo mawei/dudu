@@ -670,27 +670,27 @@ class Api extends Api_Controller {
 	}
 
 	//装货完毕
-	function loading_complete_by_customer()
-	{
-		$customer_id = $this->encrypt->decode ( $this->format_get ( 'customer_id' ), $this->key );
-		$order_id = $this->format_get('order_id');
-		//$accept_order_time = date("Y-m-d H:i:s",time());
-		$r = $this->db->query("select * from `t_aci_order` where order_id={$order_id} and customer_id={$customer_id}")->result_array();
-		if(count($r) == 0)
-		{
-			$this->output_result ( 0, 'failed', '非法操作' );
-		}else{
-			$this->db->query("update `t_aci_order` set status='货主确认装货完毕' where order_id={$order_id}");
+	// function loading_complete_by_customer()
+	// {
+	// 	$customer_id = $this->encrypt->decode ( $this->format_get ( 'customer_id' ), $this->key );
+	// 	$order_id = $this->format_get('order_id');
+	// 	//$accept_order_time = date("Y-m-d H:i:s",time());
+	// 	$r = $this->db->query("select * from `t_aci_order` where order_id={$order_id} and customer_id={$customer_id}")->result_array();
+	// 	if(count($r) == 0)
+	// 	{
+	// 		$this->output_result ( 0, 'failed', '非法操作' );
+	// 	}else{
+	// 		$this->db->query("update `t_aci_order` set status='货主确认装货完毕' where order_id={$order_id}");
 
-			$customer = $this->db->query("select telephone,device_type from `t_aci_driver` where driver_id={$r[0]['driver_id']}")->result_array()[0];
-			$customer_telephone = $customer["telephone"];
-			$device_type = $customer["device_type"];			
-			$this->zhaoche_notification("driver_".$device_type,$customer_telephone,"货主已确认装货完毕，点击查看",$order_id);
+	// 		$customer = $this->db->query("select telephone,device_type from `t_aci_driver` where driver_id={$r[0]['driver_id']}")->result_array()[0];
+	// 		$customer_telephone = $customer["telephone"];
+	// 		$device_type = $customer["device_type"];			
+	// 		$this->zhaoche_notification("driver_".$device_type,$customer_telephone,"货主已确认装货完毕，点击查看",$order_id);
 
-			$this->sms_content($customer_telephone,"【嘟嘟找货】货主已确认装货完毕");
-			$this->output_result ( 0, 'success', 'success' );
-		}
-	}
+	// 		$this->sms_content($customer_telephone,"【嘟嘟找货】货主已确认装货完毕");
+	// 		$this->output_result ( 0, 'success', 'success' );
+	// 	}
+	// }
 
 	function update_sign()
 	{
@@ -2027,10 +2027,7 @@ class Api extends Api_Controller {
 				$device_type = $customer["device_type"];			
 				$this->zhaoche_notification("driver_".$device_type,$customer_telephone,"货主已确认装货完毕，点击查看",$order_id);
 				$this->update_amount($order_id);
-
 				$this->sms_content($customer_telephone,"【嘟嘟找货】货主已确认装货完毕");
-
-
 			}else{
 				$this->db->query("update `t_aci_order` set status='已接单' where order_id={$order_id}");
 			}
@@ -2038,7 +2035,6 @@ class Api extends Api_Controller {
 		} else {
 			echo '签名为空';
 		}
-
 	}
 
 	public function to_cash_by_driver()
