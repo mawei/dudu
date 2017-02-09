@@ -337,7 +337,7 @@ class Api extends Api_Controller {
 		$recommend_user = $this->db->query("select * from `t_aci_customer` where recommend_code='{$driver['be_recommend_code']}'")->result_array();
 		if($order['status'] == "货主确认装货完毕")
 		{
-			$fee = max($order['charge'] * 0.05,300);
+			$fee = min($order['charge'] * 0.05,300);
 			$driver_fee = $order['charge'] - $fee;
 			$this->db->query("update `t_aci_driver` set amount = amount + {$driver_fee},rest_amount = rest_amount + {$driver_fee} where driver_id = {$driver['driver_id']}");
 			$data['user_id'] = $driver['driver_id'];
@@ -448,12 +448,12 @@ class Api extends Api_Controller {
 		}else{
 			$this->db->query("update `t_aci_order` set status='已接单' where order_id={$order_id}");
 			//$this->update_amount($order_id);
-			$customer = $this->db->query("select telephone,device_type from `t_aci_driver` where driver_id={$r[0]['driver_id']}")->result_array()[0];
-			$customer_telephone = $customer["telephone"];
-			$device_type = $customer["device_type"];
-			$this->zhaohuo_notification("driver_" . $device_type,$customer_telephone,"货主已确认您的接单,点击查看",$order_id);
+			$driver = $this->db->query("select telephone,device_type from `t_aci_driver` where driver_id={$r[0]['driver_id']}")->result_array()[0];
+			$driver_telephone = $driver["telephone"];
+			$device_type = $driver["device_type"];
+			$this->zhaohuo_notification("driver_" . $device_type,$driver_telephone,"货主已确认您的接单,点击查看",$order_id);
 
-			$this->sms_content($customer_telephone,"【嘟嘟找货】货主已确认您的接单，请尽快联系车主");
+			$this->sms_content($driver_telephone,"【嘟嘟找货】货主已确认您的接单，请尽快联系货主");
 			$this->output_result ( 0, 'success', 'success' );
 		}
 	}
@@ -498,12 +498,12 @@ class Api extends Api_Controller {
 			}else{
 				$this->db->query("update `t_aci_order` set status='货主取消订单' where order_id={$order_id}");
 
-				$customer = $this->db->query("select telephone,device_type from `t_aci_driver` where driver_id={$r[0]['driver_id']}")->result_array()[0];
-				$customer_telephone = $customer["telephone"];
-				$device_type = $customer["device_type"];				
-				$this->zhaoche_notification("driver_".$device_type,$customer_telephone,"货主已取消订单,点击查看",$order_id);
+				$driver = $this->db->query("select telephone,device_type from `t_aci_driver` where driver_id={$r[0]['driver_id']}")->result_array()[0];
+				$driver_telephone = $driver["telephone"];
+				$device_type = $driver["device_type"];				
+				$this->zhaoche_notification("driver_".$device_type,$driver_telephone,"货主已取消订单,点击查看",$order_id);
 
-				$this->sms_content($customer_telephone,"【嘟嘟找货】货主已取消订单，请查看信息");
+				$this->sms_content($driver_telephone,"【嘟嘟找货】货主已取消订单，请查看信息");
 				$this->output_result ( 0, 'success', 'success' );
 			}
 		}
@@ -1979,9 +1979,9 @@ class Api extends Api_Controller {
 				$driver = $this->db->query("select telephone,device_type from `t_aci_driver` where driver_id={$r[0]['driver_id']}")->result_array()[0];
 				$driver_telephone = $driver["telephone"];
 				$device_type = $driver["device_type"];			
-				$this->zhaoche_notification("driver_".$device_type,$driver_telephone,"货主已确认装货完毕，点击查看",$order_id);
+				$this->zhaohuo_notification("driver_".$device_type,$driver_telephone,"货主已确认装货完毕，点击查看",$order_id);
 				$this->update_amount($order_id);
-				$this->sms_content($driver_telephone,"【嘟嘟找货】货主已确认装货完毕");
+				$this->sms_content($driver_telephone,"【嘟嘟找货】货主已付款");
 			}else{
 				$this->db->query("update `t_aci_order` set status='已接单' where order_id={$order_id}");
 			}
