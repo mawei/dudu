@@ -1623,7 +1623,7 @@ class Api extends Api_Controller {
 			$data ['log'] = $this->upload->display_errors ();
 			$data ['create_time'] = time ();
 			$this->db->insert ( 'log', $data );
-			$this->output_result ( - 1, 'failed', $this->upload->display_errors () );
+			$this->output_result ( - 2, 'failed', $this->upload->display_errors () );
 		} else {
 			$truck_head_image = '/driver/' . $this->upload->data ()['file_name'];
 		}
@@ -1631,7 +1631,7 @@ class Api extends Api_Controller {
 			$data ['log'] = $this->upload->display_errors ();
 			$data ['create_time'] = time ();
 			$this->db->insert ( 'log', $data );
-			$this->output_result ( - 1, 'failed', $this->upload->display_errors () );
+			$this->output_result ( - 3, 'failed', $this->upload->display_errors () );
 		} else {
 			$truck_full_image = '/driver/' . $this->upload->data ()['file_name'];
 			
