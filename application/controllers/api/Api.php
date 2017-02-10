@@ -1307,7 +1307,7 @@ class Api extends Api_Controller {
 			$r = $result[0];
 			$this->output_result ( 0, 'success', $r );
 		}else{
-			$this->output_result ( 0, 'failed', '当前没有未处理完订单' );
+			$this->output_result ( -1, 'failed', '当前没有未处理完订单' );
 		}
 	}
 
