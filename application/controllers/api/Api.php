@@ -1326,7 +1326,7 @@ class Api extends Api_Controller {
 			if(count($address) > 0)
 			{
 				$r['end_place_latitude'] = $address[0]['latitude'];
-				$r['end_place_longitude'] = $address[0]['end_place_longitude'];
+				$r['end_place_longitude'] = $address[0]['longitude'];
 			}
 			if($r['status'] == '接单中' )
 			{
