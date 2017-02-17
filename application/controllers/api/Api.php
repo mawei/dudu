@@ -324,7 +324,7 @@ class Api extends Api_Controller {
 	public function get_driver_info_by_id()
 	{
 		$driver_id = $this->encrypt->decode ( $this->format_get ( 'driver_id' ), $this->key );
-		$result = $this->db->query( "select nickname,photo,telephone,truck_type,truck_size,truck_head_photo,drive_license,truck_full_photo,status,status_memo,default_route_id,recommend_code,amount,rest_amount from `t_aci_driver` where driver_id={$driver_id}" )->result_array();
+		$result = $this->db->query( "select nickname,photo,telephone,truck_type,truck_size,truck_head_photo,jiashi_photo,yingyun_photo,drive_license,truck_full_photo,status,status_memo,default_route_id,recommend_code,amount,rest_amount from `t_aci_driver` where driver_id={$driver_id}" )->result_array();
 		if(count($result) > 0)
 		{
 			$this->output_result ( 0, 'success', $result[0] );
