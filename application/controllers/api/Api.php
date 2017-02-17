@@ -1646,7 +1646,25 @@ class Api extends Api_Controller {
 			$truck_full_image = '/driver/' . $this->upload->data ()['file_name'];
 			
 		}
-		$this->db->query ( "update `t_aci_driver` set drive_license='{$driver_license_image}',truck_head_photo='{$truck_head_image}',truck_full_photo='{$truck_full_image}',status='认证中' where driver_id={$driver_id}" );
+		if (! $this->upload->do_upload ( 'yingyun_image' )) {
+			$data ['log'] = $this->upload->display_errors ();
+			$data ['create_time'] = time ();
+			$this->db->insert ( 'log', $data );
+			$this->output_result ( - 3, 'failed', $this->upload->display_errors () );
+		} else {
+			$yingyun_image = '/driver/' . $this->upload->data ()['file_name'];
+			
+		}
+		if (! $this->upload->do_upload ( 'jiashi_image' )) {
+			$data ['log'] = $this->upload->display_errors ();
+			$data ['create_time'] = time ();
+			$this->db->insert ( 'log', $data );
+			$this->output_result ( - 3, 'failed', $this->upload->display_errors () );
+		} else {
+			$jiashi_image = '/driver/' . $this->upload->data ()['file_name'];
+			
+		}
+		$this->db->query ( "update `t_aci_driver` set drive_license='{$driver_license_image}',truck_head_photo='{$truck_head_image}',truck_full_photo='{$truck_full_image}',yingyun_photo='{$yingyun_image}',jiashi_photo='{$jiashi_image}',status='认证中' where driver_id={$driver_id}" );
 
 		$this->output_result ( 0, 'success', '' );
 	}
