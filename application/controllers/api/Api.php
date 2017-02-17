@@ -223,7 +223,7 @@ class Api extends Api_Controller {
 			$info=curl_exec($ch);
 			curl_close($ch);
 			$miles = json_decode($info, true)["results"][0]["distance"];
-		}catch(){
+		}catch(Exception $e){
 			$miles = sqrt(POW((6370693.5 * cos($start_address['latitude'] * 0.01745329252) * ($end_address['longitude'] * 0.01745329252 - $start_address['longitude'] * 0.01745329252)),2) + POW((6370693.5 * ($end_address['latitude'] * 0.01745329252 - $start_address['latitude'] * 0.01745329252)),2)) * 1.1;
 		}
 		
