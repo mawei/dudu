@@ -213,7 +213,16 @@ class Api extends Api_Controller {
 		$this->db->query("update `t_aci_address` set order_id='{$order_id}' where address_id in ({$start_address_id},{$end_address_id})");
 		$start_address = $this->db->query("select * from `t_aci_address` where address_id={$start_address_id}")->result_array()[0];
 		$end_address = $this->db->query("select * from `t_aci_address` where address_id={$end_address_id}")->result_array()[0];
-		$miles = sqrt(POW((6370693.5 * cos($start_address['latitude'] * 0.01745329252) * ($end_address['longitude'] * 0.01745329252 - $start_address['longitude'] * 0.01745329252)),2) + POW((6370693.5 * ($end_address['latitude'] * 0.01745329252 - $start_address['latitude'] * 0.01745329252)),2)) * 1.1;
+		$requesturl = "http://restapi.amap.com/v3/distance?origins=".$start_address['longitude'].",".$start_address['latitude']."&destination=".$end_address['longitude'].",".$end_address['latitude']."&output=json&key=2259abc9c19f491821619c7beb353fac&type=1";
+		$ch = curl_init();
+		curl_setopt($ch, CURLOPT_URL, $requesturl);
+		curl_setopt($ch, CURLOPT_HEADER, 0);
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER,1);
+		$info=curl_exec($ch);
+		curl_close($ch);
+		$miles ＝ json_decode($info, true)["results"]["distance"];
+
+		//$miles = sqrt(POW((6370693.5 * cos($start_address['latitude'] * 0.01745329252) * ($end_address['longitude'] * 0.01745329252 - $start_address['longitude'] * 0.01745329252)),2) + POW((6370693.5 * ($end_address['latitude'] * 0.01745329252 - $start_address['latitude'] * 0.01745329252)),2)) * 1.1;
 		$this->db->query("update `t_aci_order` set miles='{$miles}' where order_id={$order_id}");
 		$array["order_id"] = "{$order_id}";
 		$this->output_result ( 0, 'success',  $array);		
