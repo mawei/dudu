@@ -285,19 +285,19 @@ class Api extends Api_Controller {
 				SELECT t1.order_id,
 				t1.`latitude` as start_place_latitude,t1.`longitude` as start_place_longitude,t2.`latitude`  as end_place_latitude,t2.`longitude` as end_place_longitude FROM `t_aci_address`  t1  LEFT join `t_aci_address` t2 on t1.order_id=t2.order_id where  t1.state='{$start_state}'" . $str . " and t1.type='出发地'
 				and  t2.state='{$end_state}' and t2.type='目的地'
-    		) t4 on t3.order_id=t4.order_id where t3.status='未接单' order by t3.start_time desc
+    		) t4 on t3.order_id=t4.order_id where t3.status='未接单' where t3.end_time > now() order by t3.start_time desc
 			";
 		}else{
 			// sqrt(POW((6370693.5 * cos({$latitude} * 0.01745329252) * ({$longitude} * 0.01745329252 - t1.longitude * 0.01745329252)),2) + POW((6370693.5 * ({$latitude} * 0.01745329252 - t1.latitude * 0.01745329252)),2)) as 'distance',
 			// 		sqrt(POW((6370693.5 * cos({$maplatitude} * 0.01745329252) * ({$maplongitude} * 0.01745329252 - t1.longitude * 0.01745329252)),2) + POW((6370693.5 * ({$maplatitude} * 0.01745329252 - t1.latitude * 0.01745329252)),2)) as 'mapdistance',
 			$distance = $distance >= 50000 ? 50000 : $distance;
 			$query_str = "
-			select t4.*,t3.`truck_type`,t3.`truck_size`,t3.start_place,t3.end_place,t3.charge,t3.miles from t_aci_order  t3
+			select t4.*,t3.`truck_type`,t3.`truck_size`,t3.start_place,t3.end_place,t3.charge,t3.miles,t3.start_time,t3.end_time from t_aci_order  t3
 			JOIN(
 				SELECT t1.order_id,0 as 'distance',0 as 'mapdistance',
 				t1.`latitude` as start_place_latitude,t1.`longitude` as start_place_longitude FROM `t_aci_address`  t1
 				where t1.type='出发地' and t1.latitude between ($maplatitude - 0.1) and ($maplatitude + 0.1) and t1.longitude between ($maplongitude - 0.1) and ($maplongitude + 0.1)
-    		) t4 on t3.order_id=t4.order_id where t3.status='未接单' and t4.mapdistance <= $distance order by t4.distance desc
+    		) t4 on t3.order_id=t4.order_id where t3.status='未接单' and t4.mapdistance <= $distance where t3.end_time > now() order by t4.distance desc
 			";
 		}
 		
