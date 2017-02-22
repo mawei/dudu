@@ -196,6 +196,7 @@ class Api extends Api_Controller {
 		$data ['start_place'] = $this->format_get ( 'start_place' );
 		$data ['end_place'] = $this->format_get ( 'end_place' );
 		$data ['start_time'] = $this->format_get ( 'start_time' );
+		$data ['end_time'] = $this->format_get ( 'end_time' );
 		$data ['truck_type'] = $this->format_get ( 'truck_type' );
 		$data ['truck_size'] = $this->format_get ( 'truck_size' );
 		$data ['charge'] = $this->format_get ( 'charge' );
@@ -279,7 +280,7 @@ class Api extends Api_Controller {
 				$str .= " and t2.area='{$end_area}'";
 			}
 			$query_str = "
-			select t4.*,t3.`truck_type`,t3.`truck_size`,t3.start_place,t3.end_place,t3.charge,t3.miles from t_aci_order  t3
+			select t4.*,t3.`truck_type`,t3.`truck_size`,t3.start_place,t3.end_place,t3.charge,t3.miles,t3.start_time,t3.end_time from t_aci_order  t3
 			JOIN(
 				SELECT t1.order_id,
 				t1.`latitude` as start_place_latitude,t1.`longitude` as start_place_longitude,t2.`latitude`  as end_place_latitude,t2.`longitude` as end_place_longitude FROM `t_aci_address`  t1  LEFT join `t_aci_address` t2 on t1.order_id=t2.order_id where  t1.state='{$start_state}'" . $str . " and t1.type='出发地'
